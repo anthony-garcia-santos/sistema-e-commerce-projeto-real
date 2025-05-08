@@ -1,0 +1,15 @@
+# Ignorar dependências do front-end
+/Front_end/node_modules
+
+# Ignorar dependências do back-end
+/backend/node_modules
+
+# Ignorar variáveis de ambiente
+/Front_end/.env
+/backend/.env
+
+# Ignorar arquivos de build
+/Front_end/dist
+/Front_end/build
+/backend/dist
+/backend/build
