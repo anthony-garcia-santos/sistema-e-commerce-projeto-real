@@ -1,19 +1,25 @@
-//src/routes/UserRoutes.js
+//backend/src/routes/UserRoutes.js
 
 const express = require('express');
-const { registerUser, getUsers, getUserById, helloword } = require('../controllers/UserController');
+const { RegistrarUsuario, BuscarUsuario, BuscarUsuarioPorID, helloword } = require('../controllers/RegisterController');
+const { LogarUsuario } = require('../controllers/LoginController');
+const { validateRegister, validateLogin } = require('../validator/ValidatorUsers');
 
 const router = express.Router();
 
-// Rota para registrar um novo usuário
-router.post('/register', registerUser);
-
-// Rota para listar todos os usuários
+// Teste de rota básica
 router.get('/', helloword);
 
-router.get("/usuarios", getUsers)
+// Rota de registro com validação
+router.post('/registrar', validateRegister, RegistrarUsuario);
+
+// Rota de login com validação
+router.post('/login', validateLogin, LogarUsuario);
+
+// Rota para listar todos os usuários (sem senhas)
+router.get('/usuarios', BuscarUsuario);
 
 // Rota para buscar um usuário por ID
-router.get('/:id', getUserById);
+router.get('/:id', BuscarUsuarioPorID);
 
 module.exports = router;

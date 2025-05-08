@@ -1,14 +1,12 @@
-//src/server.js
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-// Importação das rotas
-const userRoutes = require('./routes/UserRoutes');
-const authRoutes = require('./middleware/validationlogin');
+// Importação das rotas e validações
+const userRoutes = require('./src/routes/UserRoutes');
+const { validateRegister, validateLogin } = require('./src/validator/ValidatorUsers');
 
 const app = express();
 
@@ -23,7 +21,10 @@ app.use(bodyParser.json());
 
 // Usando as rotas
 app.use("/", userRoutes);
-app.use("/api/auth", authRoutes);
+
+// Rotas de autenticação com validação
+app.post("/api/auth/register", validateRegister, require('./src/controllers/RegisterController').RegistrarUsuario);
+app.post("/api/auth/login", validateLogin, require('./src/controllers/LoginController').LogarUsuario);
 
 // Inicializa o servidor
 const port = process.env.PORT || 3000;

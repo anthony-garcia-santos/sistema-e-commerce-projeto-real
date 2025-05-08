@@ -1,10 +1,10 @@
-//src/controller/authController.js
+//src/controller/LoginController.js
 
 const { validationResult } = require('express-validator');
 const Usuarios = require('../models/UserModel');
 
 // Função para login
-const loginUser = async (req, res) => {
+const LogarUsuario = async (req, res) => {
 
     const erros = validationResult(req);
     if (!erros.isEmpty()) {
@@ -32,4 +32,4 @@ const loginUser = async (req, res) => {
     }
 };
 
-module.exports = { loginUser };
+module.exports = { LogarUsuario };

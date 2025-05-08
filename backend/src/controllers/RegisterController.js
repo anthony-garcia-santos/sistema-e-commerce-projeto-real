@@ -1,4 +1,4 @@
-//src/controller/UserController.js
+//src/controller/RegisterController.js
 
 const Usuarios = require('../models/UserModel');
 
@@ -13,7 +13,8 @@ const helloword = async (req, res) => {
 
 
 
-const registerUser = async (req, res) => {
+const RegistrarUsuario = async (req, res) => {
+    
     const { nome, email, senha } = req.body;
 
     try {
@@ -27,7 +28,7 @@ const registerUser = async (req, res) => {
 };
 
 // Função para listar todos os usuários
-const getUsers = async (req, res) => {
+const BuscarUsuario = async (req, res) => {
     try {
         const usuarios = await Usuarios.find({}, "-senha");
         console.log(usuarios);  // Verifique o que está sendo retornado
@@ -39,8 +40,11 @@ const getUsers = async (req, res) => {
 };
 
 // Função para buscar um usuário pelo ID
-const getUserById = async (req, res) => {
+const BuscarUsuarioPorID = async (req, res) => {
     const { id } = req.params;
+
+    if (id === 'favicon.ico') return res.status(204).end();
+
 
     try {
         const usuario = await Usuarios.findById(id);
@@ -54,4 +58,4 @@ const getUserById = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, getUsers, getUserById, helloword};
+module.exports = { RegistrarUsuario, BuscarUsuario, BuscarUsuarioPorID, helloword};
