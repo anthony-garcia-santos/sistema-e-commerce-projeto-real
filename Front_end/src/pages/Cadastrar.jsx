@@ -1,5 +1,7 @@
+// Front_end/src/pages/Cadastrar.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { registrarUsuario } from "../services/authService";
 
 export default function Cadastrar() {
     const navigate = useNavigate();
@@ -7,17 +9,30 @@ export default function Cadastrar() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [nome, setNome] = useState("");
+    const [loading, setLoading] = useState(false);  // Para controlar o estado de carregamento
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Cadastro enviado:", { nome, email, senha });
-        // Aqui você pode enviar os dados para o servidor.
+        setLoading(true);  // Começa o loading ao enviar o formulário
+
+        try {
+            const response = await registrarUsuario({ nome, email, senha });
+            console.log("Resposta:", response.data);
+            
+            alert(response.data.message || "Conta criada com sucesso!");
+            navigate("/login");  // Redireciona para o login após sucesso
+
+        } catch (error) {
+            console.error("Erro ao registrar:", error);
+            alert(error.response?.data?.message || "Erro ao criar conta.");
+
+        } finally {
+            setLoading(false);  // Finaliza o loading, independente do sucesso ou erro
+        }
     };
 
     const inputClasses = "w-full p-3 rounded border border-gray-300 focus:outline-none";
-
     const buttonClasses = "flex-1 py-4 px-5 rounded transition-transform duration-300 hover:scale-90";
-
     const buttonStyles = {
         registro: "bg-green-600 text-white hover:bg-green-700",
         login: "bg-blue-600 text-white hover:bg-blue-700",
@@ -26,9 +41,7 @@ export default function Cadastrar() {
 
     return (
         <div className="min-h-screen p-4 w-full h-screen bg-[url(../../public/logo.png)]  bg-cover bg-no-repeat">
-
             <form onSubmit={handleSubmit} className="mt-20 ml-20 w-full max-w-md space-y-5 bg-white p-10 rounded-4xl shadow-lg">
-
                 <input
                     type="text"
                     name="nome"
@@ -38,7 +51,6 @@ export default function Cadastrar() {
                     onChange={(e) => setNome(e.target.value)}
                     className={inputClasses}
                 />
-
                 <input
                     type="email"
                     name="email"
@@ -48,10 +60,7 @@ export default function Cadastrar() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className={inputClasses}
-
                 />
-
-                {/* senha */}
                 <input
                     type="password"
                     name="senha"
@@ -63,19 +72,15 @@ export default function Cadastrar() {
                     className={inputClasses}
                 />
 
-
-                {/* botão enviar registro*/}
                 <div className="flex justify-between space-x-2">
                     <button
                         type="submit"
                         className={`${buttonClasses} ${buttonStyles.registro}`}
+                        disabled={loading}  // Desativa o botão enquanto está carregando
                     >
-                        Criar conta
-
+                        {loading ? "Cadastrando..." : "Criar conta"}
                     </button>
 
-
-                    {/* botão ir para login*/}
                     <button
                         type="button"
                         onClick={() => navigate("/login")}
@@ -84,7 +89,6 @@ export default function Cadastrar() {
                         Fazer login
                     </button>
 
-                    {/* botão ir para home*/}
                     <button
                         type="button"
                         onClick={() => navigate("/")}
