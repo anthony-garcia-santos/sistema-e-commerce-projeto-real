@@ -1,6 +1,7 @@
-//src/controller/RegisterController.js
+//backend/src/controller/RegisterController.js
 
 const Usuarios = require('../models/UserModel');
+const bcrypt = require('bcryptjs'); // IMPORTANTE
 
 // Função para registrar um novo usuário
 
@@ -13,19 +14,31 @@ const helloword = async (req, res) => {
 
 
 
+
 const RegistrarUsuario = async (req, res) => {
     
     const { nome, email, senha } = req.body;
 
     try {
-        const novoUsuario = new Usuarios({ nome, email, senha });
+
+        const senhahash = await bcrypt.hash(senha, 10);
+
+        const novoUsuario = new Usuarios({ nome, email, senha: await bcrypt.hash(senha, 10), role: role || 'user',});
+
         await novoUsuario.save();
+
         res.status(201).json({ message: "Usuário registrado com sucesso!" });
+
+
     } catch (erro) {
         console.error("Erro ao salvar no MongoDB:", erro);
         res.status(500).json({ message: "Erro interno ao salvar no banco de dados" });
     }
 };
+
+
+
+
 
 // Função para listar todos os usuários
 const BuscarUsuario = async (req, res) => {

@@ -15,10 +15,17 @@ export default function Cadastrar() {
         e.preventDefault();
         setLoading(true);  // Começa o loading ao enviar o formulário
 
+        if (!nome || !email || !senha) {
+            alert("Preencha todos os campos.");
+            setLoading(false);
+            return;
+        }
+
+
         try {
             const response = await registrarUsuario({ nome, email, senha });
             console.log("Resposta:", response.data);
-            
+
             alert(response.data.message || "Conta criada com sucesso!");
             navigate("/login");  // Redireciona para o login após sucesso
 

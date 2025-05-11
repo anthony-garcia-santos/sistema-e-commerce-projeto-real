@@ -1,14 +1,17 @@
-//src/models/UserModel.js
+//backend/src/models/UserModel.js
 
 const mongoose = require('mongoose');
 
-// Definindo o esquema do usuário
-const userSchema = new mongoose.Schema({
-    nome: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    senha: { type: String, required: true },
+const UserSchema = new mongoose.Schema({
+    nome: String,
+    email: String,
+    senha: String,
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user'
+    }
 });
 
-const Usuarios = mongoose.model('Usuarios', userSchema,);
+module.exports = mongoose.model('Usuario', UserSchema);
 
-module.exports = Usuarios;
