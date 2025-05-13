@@ -1,4 +1,6 @@
 // Front_end/src/pages/Cadastrar.jsx
+
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registrarUsuario } from "../services/authService";
@@ -9,11 +11,11 @@ export default function Cadastrar() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [nome, setNome] = useState("");
-    const [loading, setLoading] = useState(false);  // Para controlar o estado de carregamento
+    const [loading, setLoading] = useState(false);  
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);  // Começa o loading ao enviar o formulário
+        setLoading(true);  
 
         if (!nome || !email || !senha) {
             alert("Preencha todos os campos.");
@@ -108,3 +110,5 @@ export default function Cadastrar() {
         </div>
     );
 }
+
+

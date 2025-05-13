@@ -28,3 +28,5 @@ export const obterAdminData = () => {
     console.error("Erro ao acessar dados do admin:", error);
   });
 };
+
+

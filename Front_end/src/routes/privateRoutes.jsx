@@ -16,9 +16,8 @@ const PrivateRoute = ({ children }) => {
       return <Navigate to="/Login" />;
     }
 
-    // VERIFICAÇÃO DE PAPEL DO USUÁRIO (apenas "admin" pode acessar)
     if (decodedToken.role !== "admin") {
-      return <Navigate to="/" />; // ou para uma tela de acesso negado
+      return <Navigate to="/" />; 
     }
 
   } catch (error) {
@@ -29,3 +28,6 @@ const PrivateRoute = ({ children }) => {
 };
 
 export default PrivateRoute;
+
+
+

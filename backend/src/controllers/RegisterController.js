@@ -1,9 +1,8 @@
 //backend/src/controller/RegisterController.js
 
 const Usuarios = require('../models/UserModel');
-const bcrypt = require('bcryptjs'); // IMPORTANTE
+const bcrypt = require('bcryptjs');
 
-// Função para registrar um novo usuário
 
 const helloword = async (req, res) => {
 
@@ -16,14 +15,17 @@ const helloword = async (req, res) => {
 
 
 const RegistrarUsuario = async (req, res) => {
-    
-    const { nome, email, senha } = req.body;
 
+    const { nome, email, senha } = req.body;
+    const usuarioExistente = await Usuarios.findOne({ email });
+
+    if (usuarioExistente) {
+        return res.status(400).json({ mensagem: "E-mail já cadastrado." });
+    }
+    
     try {
 
-        const senhahash = await bcrypt.hash(senha, 10);
-
-        const novoUsuario = new Usuarios({ nome, email, senha: await bcrypt.hash(senha, 10), role: role || 'user',});
+        const novoUsuario = new Usuarios({ nome, email, senha: await bcrypt.hash(senha, 10), role: 'user', });
 
         await novoUsuario.save();
 
@@ -44,7 +46,7 @@ const RegistrarUsuario = async (req, res) => {
 const BuscarUsuario = async (req, res) => {
     try {
         const usuarios = await Usuarios.find({}, "-senha");
-        console.log(usuarios);  // Verifique o que está sendo retornado
+        console.log(usuarios);
         res.json(usuarios);
     } catch (erro) {
         console.error("Erro ao buscar usuários:", erro);
@@ -71,4 +73,4 @@ const BuscarUsuarioPorID = async (req, res) => {
     }
 };
 
-module.exports = { RegistrarUsuario, BuscarUsuario, BuscarUsuarioPorID, helloword};
+module.exports = { RegistrarUsuario, BuscarUsuario, BuscarUsuarioPorID, helloword };
