@@ -3,28 +3,40 @@
 const jwt = require('jsonwebtoken');
 
 const verificarToken = (req, res, next) => {
-    const authHeader = req.headers.authorization;
+  const token = req.cookies.token;
+  console.log('Token recebido:', token); // 👈 Novo log
 
-    if (!authHeader) {
-        return res.status(401).json({ mensagem: 'Token não fornecido.' });
+  if (!token) {
+    console.log('Nenhum token encontrado!');
+    return res.status(401).json({ mensagem: 'Token não fornecido.' });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, usuario) => {
+    if (err) {
+      console.error("Token inválido:", err);
+      return res.status(403).json({ mensagem: 'Token inválido.' });
     }
 
-    const token = authHeader.split(' ')[1];
-
-    jwt.verify(token, process.env.JWT_SECRET, (err, usuario) => {
-        if (err) return res.status(403).json({ mensagem: 'Token inválido.' });
-
-        req.usuario = usuario;
-        next();
-    });
+    req.usuario = usuario;
+    next();
+  });
 };
+
+
+
+
+
+
+
+
 
 const verificarAdmin = (req, res, next) => {
   if (req.usuario.role === 'admin') {
+    console.log(`Usuário ${req.usuario.email} acessou como admin`);
     next();
-  } else {
-    return res.status(403).json({ mensagem: 'Acesso negado' });
+  } else {(req.usuario.role !== 'admin')
+    console.log(`Usuário ${req.usuario.email} logou como usuario`);
+    next();
   }
 };
-
 module.exports = { verificarToken, verificarAdmin };

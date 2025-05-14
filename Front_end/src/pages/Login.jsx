@@ -1,5 +1,3 @@
-//src/pages/Login.jsx
-
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { logarUsuario } from '../services/authService';
@@ -14,37 +12,45 @@ export default function Login() {
         e.preventDefault();
         setErro("");
 
-        try {
-            const response = await logarUsuario({ email, senha });
+        // Lógica para lidar com o código 429 (Too Many Requests)
+        setTimeout(async () => {
+            try {
+                const response = await logarUsuario({ email, senha });
 
-            if (response.status === 200 && response.data.token) {
-                localStorage.setItem('authToken', response.data.token);
-                console.log('Token armazenado:', response.data.token);
-                navigate('/admin');
-            } else {
-                console.error("Token não encontrado na resposta");
-                setErro('Erro ao processar login. Verifique suas credenciais.');
+                if (response.status === 200) {
+                    console.log('Login bem-sucedido');
+
+                    const { role } = response.data.usuario;
+
+                    // Redireciona com base na role
+                    if (role === 'admin') {
+                        navigate('/admin');
+                    } else {
+                        navigate('/'); // ou qualquer outra rota de usuários comuns
+                    }
+
+                } else {
+                    setErro('Erro ao processar login. Verifique suas credenciais.');
+                }
+
+            } catch (error) {
+                console.error('Erro ao fazer login:', error);
+
+                if (error.response) {
+                    setErro(error.response.data.mensagem || 'Erro no login');
+                } else if (error.request) {
+                    setErro('Erro de rede. O servidor não respondeu.');
+                } else {
+                    setErro('Erro desconhecido: ' + error.message);
+                }
             }
-
-        } catch (error) {
-            console.error('Erro ao fazer login:', error);
-
-            if (error.response) {
-                setErro(error.response.data.mensagem || 'Erro no login');
-            } else if (error.request) {
-                setErro('Erro de rede. O servidor não respondeu.');
-            } else {
-                setErro('Erro desconhecido: ' + error.message);
-            }
-        }
+        }, 1000);
     };
 
     return (
         <form onSubmit={handleSubmit}>
             <div className="min-h-screen flex items-center justify-center bg-[url(../../public/login.png)] bg-cover bg-no-repeat">
                 <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
-
-                    <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
 
                     {erro && (
                         <div className="bg-red-100 text-red-700 p-3 rounded-lg mb-4 text-sm text-center">

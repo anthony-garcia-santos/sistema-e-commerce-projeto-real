@@ -74,7 +74,7 @@ export default function Cadastrar() {
                     type="password"
                     name="senha"
                     id="senha"
-                    placeholder="Sua senha"
+                    placeholder="senha"
                     autoComplete="current-password"
                     value={senha}
                     onChange={(e) => setSenha(e.target.value)}

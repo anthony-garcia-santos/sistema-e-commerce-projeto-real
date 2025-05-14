@@ -7,26 +7,26 @@ export const registrarUsuario = (dados) => {
 };
 
 export const logarUsuario = ({ email, senha }) => {
-  return api.post("/api/login", { email, senha });
+  return api.post("/api/login", { email, senha }, { withCredentials: true });
 };
 
-export const obterAdminData = () => {
-  const token = localStorage.getItem("authToken");
 
-  if (!token) {
-    console.error("Token não encontrado! O usuário não está autenticado.");
-    return;
+
+
+export const obterAdminData = async () => {
+  try {
+    // Adicione /api antes da rota
+    const response = await api.get("/api/admin", { 
+      withCredentials: true 
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao verificar admin:", error);
+    throw error;
   }
-
-  return api.get("/api/admin", {
-    headers: { Authorization: `Bearer ${token}` }
-  })
-  .then(response => {
-    console.log("Dados do admin:", response.data);
-  })
-  .catch(error => {
-    console.error("Erro ao acessar dados do admin:", error);
-  });
 };
 
 
+export const logoutUsuario = () => {
+  return api.post("/api/logout", {}, { withCredentials: true });
+};

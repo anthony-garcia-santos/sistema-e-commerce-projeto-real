@@ -1,33 +1,18 @@
 import { Navigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { useEffect, useState } from "react";
+import { obterAdminData } from "../services/authService";
 
 const PrivateRoute = ({ children }) => {
-  const token = localStorage.getItem("authToken");
+  const [autorizado, setAutorizado] = useState(null);
 
-  if (!token) {
-    return <Navigate to="/" />;
-  }
+  useEffect(() => {
+    obterAdminData()
+      .then(() => setAutorizado(true))
+      .catch(() => setAutorizado(false));
+  }, []);
 
-  try {
-    const decodedToken = jwtDecode(token);
-    const currentTime = Date.now() / 1000;
-
-    if (decodedToken.exp < currentTime) {
-      return <Navigate to="/Login" />;
-    }
-
-    if (decodedToken.role !== "admin") {
-      return <Navigate to="/" />; 
-    }
-
-  } catch (error) {
-    return <Navigate to="/Login" />;
-  }
-
-  return children;
+  if (autorizado === null) return <div>Carregando...</div>;
+  return autorizado ? children : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;
-
-
-

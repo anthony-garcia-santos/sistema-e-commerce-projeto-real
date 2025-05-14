@@ -1,8 +1,11 @@
-//Front_end/pages/administração.jsx
+
+
+6//Front_end/pages/administração.jsx
 
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
+import { obterAdminData } from '../services/authService';
 
 const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,49 +18,31 @@ const Admin = () => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [NomeDoProduto, setNomeDoProduto] = useState("");
     const [PreçoDoProduto, setPreçoDoProduto] = useState("")
+
+
     useEffect(() => {
+        const verificarAdmin = async () => {
+            try {
+                await obterAdminData();
+                setIsAdmin(true);
+            } catch (error) {
+                setIsAdmin(false);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-        const token = localStorage.getItem('authToken');
-
-        if (token) {
-            // Verifique se o token é válido chamando o backend com Axios
-            axios
-                .get('/admin', {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                })
-                .then((response) => {
-                    if (response.status === 200) {
-                        setIsAdmin(true);
-                    } else {
-                        setIsAdmin(false);
-                    }
-                })
-                .catch((error) => {
-                    console.error('Erro ao verificar o token:', error);
-                    setIsAdmin(false);
-                })
-                .finally(() => setLoading(false));
-        } else {
-            setIsAdmin(false);
-            setLoading(false);
-        }
+        verificarAdmin();
     }, []);
 
+    if (loading) return <div>Carregando...</div>;
+    if (!isAdmin) return <Navigate to="/" />;
 
+    // ... restante do código
 
-
-    if (loading) {
-        return <div>Carregando...</div>;
-    }
-
-    if (!isAdmin && !loading) {
-        return <Navigate to="/" />;
-    }
 
     const inputClasses = "w-full p-3 mb-4 rounded border border-gray-300 focus:outline-none";
-    
+
     const buttonClasses = "flex-1 py-4 px-5 rounded transition-transform duration-300 hover:scale-90";
     const criarProduto = "flex1-1 bg-green-600 text-white hover:bg-green-700"
 
@@ -83,25 +68,25 @@ const Admin = () => {
 
                     <input type="text"
 
-                    name='preço do produto'
-                    id='preço do produto'
-                    placeholder='preço do produto'
-                    value={PreçoDoProduto}
-                    onChange={(e) => setPreçoDoProduto(e.target.value)}
-                    className={inputClasses}
-                     />
+                        name='preço do produto'
+                        id='preço do produto'
+                        placeholder='preço do produto'
+                        value={PreçoDoProduto}
+                        onChange={(e) => setPreçoDoProduto(e.target.value)}
+                        className={inputClasses}
+                    />
 
 
                 </div>
 
                 <div className='flex justify-center'>
-                    <button 
-                    
-                    type='submit'
-                    className={`${buttonClasses} ${criarProduto}`}> criar produto
+                    <button
+
+                        type='submit'
+                        className={`${buttonClasses} ${criarProduto}`}> criar produto
 
 
-                    
+
                     </button>
 
 

@@ -19,7 +19,6 @@ export default function Rotas() {
         <Route path="/Cadastrar" element={<Cadastrar />} />
         <Route path="/" element={<Home />} />
         <Route path="/Login" element={<Login />} />
-
         <Route path='/admin' element={<PrivateRoute><Admin /></PrivateRoute>} />
       </Routes>
 

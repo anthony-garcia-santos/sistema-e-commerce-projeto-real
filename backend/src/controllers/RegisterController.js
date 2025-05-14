@@ -22,7 +22,7 @@ const RegistrarUsuario = async (req, res) => {
     if (usuarioExistente) {
         return res.status(400).json({ mensagem: "E-mail já cadastrado." });
     }
-    
+
     try {
 
         const novoUsuario = new Usuarios({ nome, email, senha: await bcrypt.hash(senha, 10), role: 'user', });
@@ -54,23 +54,5 @@ const BuscarUsuario = async (req, res) => {
     }
 };
 
-// Função para buscar um usuário pelo ID
-const BuscarUsuarioPorID = async (req, res) => {
-    const { id } = req.params;
 
-    if (id === 'favicon.ico') return res.status(204).end();
-
-
-    try {
-        const usuario = await Usuarios.findById(id);
-        if (!usuario) {
-            return res.status(404).json({ mensagem: "Usuário não encontrado" });
-        }
-        res.json(usuario);
-    } catch (erro) {
-        console.error("Erro ao buscar usuário:", erro);
-        res.status(401).json({ mensagem: "Usuário não encontrado" });
-    }
-};
-
-module.exports = { RegistrarUsuario, BuscarUsuario, BuscarUsuarioPorID, helloword };
+module.exports = { RegistrarUsuario, BuscarUsuario, helloword };
