@@ -16,8 +16,8 @@ export const logarUsuario = ({ email, senha }) => {
 export const obterAdminData = async () => {
   try {
     // Adicione /api antes da rota
-    const response = await api.get("/api/admin", { 
-      withCredentials: true 
+    const response = await api.get("/api/admin", {
+      withCredentials: true
     });
     return response.data;
   } catch (error) {
@@ -29,4 +29,28 @@ export const obterAdminData = async () => {
 
 export const logoutUsuario = () => {
   return api.post("/api/logout", {}, { withCredentials: true });
+};
+
+
+
+
+export const criarProduto = (dados) => {
+  return api.post('/api/produtos', dados, { 
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const listarProdutos = async () => {
+  try {
+    const response = await api.get("/api/produtos", {
+      withCredentials: true
+    });
+    return response.data || []; // Retorna array vazio se response.data for undefined
+  } catch (error) {
+    console.error("Erro ao listar produtos:", error);
+    throw error;
+  }
 };

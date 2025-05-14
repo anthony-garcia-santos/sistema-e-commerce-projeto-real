@@ -1,24 +1,39 @@
-
-
-6//Front_end/pages/administração.jsx
-
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import axios from 'axios';
-import { obterAdminData } from '../services/authService';
+import { obterAdminData, criarProduto } from '../services/authService';
 
-const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-}
-
-const Admin = () => {
+export default function Admin() {
     const [loading, setLoading] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
-    const [NomeDoProduto, setNomeDoProduto] = useState("");
-    const [PreçoDoProduto, setPreçoDoProduto] = useState("")
+    const [form, setForm] = useState({
+        nome: '',
+        descricao: '',
+        preco: '',
+        imagem: '',
+    });
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+            await criarProduto({
+                ...form,
+                preco: parseFloat(form.preco)
+            });
+            alert('Produto cadastrado com sucesso!');
+            setForm({
+                nome: '',
+                descricao: '',
+                preco: '',
+                imagem: '',
+            });
+        } catch (error) {
+            alert('Erro ao cadastrar produto');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
         const verificarAdmin = async () => {
@@ -31,70 +46,70 @@ const Admin = () => {
                 setLoading(false);
             }
         };
-
         verificarAdmin();
     }, []);
 
     if (loading) return <div>Carregando...</div>;
     if (!isAdmin) return <Navigate to="/" />;
 
-    // ... restante do código
-
-
     const inputClasses = "w-full p-3 mb-4 rounded border border-gray-300 focus:outline-none";
-
     const buttonClasses = "flex-1 py-4 px-5 rounded transition-transform duration-300 hover:scale-90";
-    const criarProduto = "flex1-1 bg-green-600 text-white hover:bg-green-700"
 
     return (
         <form onSubmit={handleSubmit} className="mt-20 ml-20 w-full max-w-md space-y-5 bg-white p-10 rounded-4xl shadow-lg">
-
             <div>
-                <h1 className='flex justify-center text-5xl p-10'>Criar produto
-                </h1>
-
+                <h1 className='flex justify-center text-5xl p-10'>Criar produto</h1>
                 <div>
                     <input
-
                         type="text"
-                        name='Nome do produto'
-                        id='Nome do produto'
+                        name='nome'
                         placeholder="Nome do produto"
-                        value={NomeDoProduto}
-                        onChange={(e) => setNomeDoProduto(e.target.value)}
+                        value={form.nome}
+                        onChange={(e) => setForm({ ...form, nome: e.target.value })}
                         className={inputClasses}
-
+                        required
                     />
 
-                    <input type="text"
-
-                        name='preço do produto'
-                        id='preço do produto'
-                        placeholder='preço do produto'
-                        value={PreçoDoProduto}
-                        onChange={(e) => setPreçoDoProduto(e.target.value)}
+                    <input
+                        type="text"
+                        name='descricao'
+                        placeholder='Descrição do produto'
+                        value={form.descricao}
+                        onChange={(e) => setForm({ ...form, descricao: e.target.value })}
                         className={inputClasses}
                     />
 
+                    <input
+                        type="number"
+                        name='preco'
+                        placeholder='Preço do produto'
+                        value={form.preco}
+                        onChange={(e) => setForm({ ...form, preco: e.target.value })}
+                        className={inputClasses}
+                        required
+                        step="0.01"
+                    />
 
+                    <input
+                        type="text"
+                        name='imagem'
+                        placeholder='URL da imagem'
+                        value={form.imagem}
+                        onChange={(e) => setForm({ ...form, imagem: e.target.value })}
+                        className={inputClasses}
+                    />
                 </div>
 
                 <div className='flex justify-center'>
                     <button
-
                         type='submit'
-                        className={`${buttonClasses} ${criarProduto}`}> criar produto
-
-
-
+                        className={`${buttonClasses} bg-green-600 text-white hover:bg-green-700`}
+                        disabled={loading}
+                    >
+                        {loading ? 'Enviando...' : 'Criar produto'}
                     </button>
-
-
-
                 </div>
             </div>
         </form>
     );
-};
-
-export default Admin;
+}

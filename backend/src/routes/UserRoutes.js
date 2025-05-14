@@ -5,6 +5,7 @@ const { verificarToken, verificarAdmin } = require('../validator/verifyToken');
 const { LogarUsuario, LogoutUsuario } = require("../controllers/LoginController");
 const rateLimit = require('express-rate-limit');
 const controllerAdmin = require('../controllers/ControllersAdmin');
+const { criarProduto, listarProdutos } = require('../controllers/productController');
 
 // Limiter aplicado APENAS ao login (5 tentativas em 15 minutos)
 const loginLimiter = rateLimit({
@@ -16,10 +17,14 @@ const loginLimiter = rateLimit({
 const router = express.Router();
 
 // Rotas
-router.get('/', helloword);
+
 router.post('/registrar', validateRegister, RegistrarUsuario);
 router.post('/login', loginLimiter, LogarUsuario);
 router.post('/logout', LogoutUsuario);
+router.post('/produtos', verificarToken, verificarAdmin, criarProduto);
+
+router.get('/produtos', listarProdutos);
+router.get('/', helloword);
 router.get('/usuarios', BuscarUsuario);
 router.get('/admin', verificarToken, verificarAdmin, controllerAdmin);
 
