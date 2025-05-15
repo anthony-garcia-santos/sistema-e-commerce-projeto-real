@@ -29,14 +29,13 @@ export default function Cadastrar() {
             console.log("Resposta:", response.data);
 
             alert(response.data.message || "Conta criada com sucesso!");
-            navigate("/login");  // Redireciona para o login após sucesso
-
+            navigate("/login");  
         } catch (error) {
             console.error("Erro ao registrar:", error);
             alert(error.response?.data?.message || "Erro ao criar conta.");
 
         } finally {
-            setLoading(false);  // Finaliza o loading, independente do sucesso ou erro
+            setLoading(false);  
         }
     };
 

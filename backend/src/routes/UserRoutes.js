@@ -7,10 +7,9 @@ const rateLimit = require('express-rate-limit');
 const controllerAdmin = require('../controllers/ControllersAdmin');
 const { criarProduto, listarProdutos } = require('../controllers/productController');
 
-// Limiter aplicado APENAS ao login (5 tentativas em 15 minutos)
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
-  max: 5, // 5 tentativas
+  max: 5,
   message: "Muitas tentativas de login. Tente novamente mais tarde."
 });
 

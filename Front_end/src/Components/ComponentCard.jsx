@@ -1,4 +1,5 @@
-// frontend/src/components/ProductCard.jsx
+// frontend/src/components/ComponentCard.jsx
+
 export default function ProductCard({ produto }) {
   return (
     <div className="border rounded-lg overflow-hidden shadow-lg">

@@ -1,0 +1,45 @@
+
+Copyright 2025 Anthony Garcia Santos
+
+
+Todos os direitos reservados.
+
+Este código-fonte é propriedade exclusiva de Anthony Garcia Santos e está protegido por direitos autorais.
+
+Este projeto é disponibilizado unicamente para fins de portfólio pessoal.  
+Qualquer uso, cópia, modificação, distribuição ou sublicenciamento deste código, 
+total ou parcialmente, é expressamente proibido sem autorização prévia por escrito do autor.
+
+Partes deste código podem conter elementos protegidos pela empresa para qual foi desenvolvido, 
+incluindo, mas não se limitando a, imagens, textos e funcionalidades específicas, 
+que não podem ser utilizados fora do contexto autorizado.
+
+O autor reserva-se o direito de modificar e criar novos códigos baseados neste projeto para outros usos, 
+desde que não infrinjam os direitos da empresa mencionada.
+
+Ao utilizar este código para fins que não os permitidos,
+o usuário estará violando os direitos autorais do autor e poderá estar sujeito a ações legais.
+
+
+---
+
+Copyright 2025 Anthony Garcia Santos
+
+All rights reserved.
+
+This source code is the exclusive property of Anthony Garcia Santos and is protected by copyright law.
+
+This project is made available solely for personal portfolio purposes.  
+Any use, copying, modification, distribution, or sublicensing of this code, in whole or in part, 
+is expressly prohibited without prior written permission from the author.
+
+Parts of this code may contain elements protected by the company for which it was developed, 
+including but not limited to images, texts, and specific functionalities, 
+which cannot be used outside the authorized context.
+
+The author reserves the right to modify and create new code based on this project for other uses, 
+provided it does not infringe the rights of the mentioned company.
+
+Use of this code for purposes not permitted herein constitutes a violation of the author's 
+copyright and may be subject to legal action.
+

@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const verificarToken = (req, res, next) => {
   const token = req.cookies.token;
-  console.log('Token recebido:', token); // 👈 Novo log
+  console.log('Token recebido:', token);
 
   if (!token) {
     console.log('Nenhum token encontrado!');

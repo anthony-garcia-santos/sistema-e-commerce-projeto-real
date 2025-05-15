@@ -21,12 +21,12 @@ const LogarUsuario = async (req, res) => {
     try {
         const usuario = await Usuarios.findOne({
             email: { $regex: new RegExp(`^${email}$`, 'i') }
-        }).select('+senha'); // Inclui o campo senha que está oculto por padrão
+        }).select('+senha'); 
 
         if (!usuario) {
             return res.status(401).json({
                 sucesso: false,
-                mensagem: "Credenciais inválidas" // Mensagem genérica por segurança
+                mensagem: "Credenciais inválidas"
             });
         }
 
@@ -35,7 +35,7 @@ const LogarUsuario = async (req, res) => {
         if (!SenhaCorreta) {
             return res.status(401).json({
                 sucesso: false,
-                mensagem: "Credenciais inválidas" // Mesma mensagem para não dar dicas
+                mensagem: "Credenciais inválidas" 
             });
         }
 
@@ -52,6 +52,7 @@ const LogarUsuario = async (req, res) => {
         );
 
         // Configura o cookie seguro
+
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
@@ -63,6 +64,7 @@ const LogarUsuario = async (req, res) => {
 
 
         // Retorna resposta SEM o token no body
+        
         return res.status(200).json({
             sucesso: true,
             mensagem: `Bem-vindo, ${usuario.nome}!`,
