@@ -76,27 +76,6 @@ Sistema desenvolvido para **automatizar e otimizar processos de vendas**, resolv
 | Axios              | BcryptJS           |                    |
 | TailwindCSS        | Express Validator  |                    |
 
-## 📂 Estrutura do Projeto
-
-📦 Lolo_Personalizado
-├── 📂 frontend
-│   ├── 📂 public
-│   └── 📂 src
-│       ├── 📂 components
-│       ├── 📂 pages
-│       ├── 📂 routes
-│       ├── 📂 services
-│       └── App.jsx
-└── 📂 backend
-    ├── 📂 src
-    │   ├── 📂 controllers
-    │   ├── 📂 models
-    │   ├── 📂 routes
-    │   ├── 📂 validator
-    │   └── server.js
-    └── .env
-
-
 
 ## 🔐 Fluxo de Autenticação
 1. Usuário faz login/cadastro
