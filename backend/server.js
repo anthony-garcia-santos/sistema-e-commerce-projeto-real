@@ -4,28 +4,28 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const app = express();
 
-const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
 
 const userRoutes = require('./src/routes/UserRoutes');
+const ProductRoutes = require('./src/routes/productsRoutes');
 
-const { validateRegister, validateLogin } = require('./src/validator/ValidatorUsers');
 
 
-const app = express();
 
 mongoose.connect(process.env.MONGO_URL)
-    .then(() => console.log("Conectado ao MongoDB Atlas"))
-    .catch((erro) => console.error("Erro ao conectar ao MongoDB:", erro));
+  .then(() => console.log("Conectado ao MongoDB Atlas"))
+  .catch((erro) => console.error("Erro ao conectar ao MongoDB:", erro));
 
 
 
 app.use(cors({
   origin: 'http://localhost:5173',
   credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 
@@ -34,9 +34,11 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use("/api", userRoutes);
+app.use("/api", ProductRoutes);
+
 
 
 const port = process.env.PORT;
 app.listen(port, () => {
-    console.log(`Servidor rodando em http://localhost:${port}/api`);
+  console.log(`Servidor rodando em http://localhost:${port}/api`);
 });

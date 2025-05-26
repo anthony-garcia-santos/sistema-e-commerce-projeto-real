@@ -1,11 +1,15 @@
 const express = require('express');
 const { RegistrarUsuario, BuscarUsuario, helloword } = require('../controllers/RegisterController');
-const { validateRegister, validateLogin } = require('../validator/ValidatorUsers');
-const { verificarToken, verificarAdmin } = require('../validator/verifyToken');
+const { validateRegister} = require('../validator/ValidatorUsers');
+
+const { verificarAdmin } = require('../validator/verifyAdmin');
+const controllerAdmin = require('../controllers/ControllersAdmin');
+const { verificarUsuario } = require('../validator/verifyUsers')
+
 const { LogarUsuario, LogoutUsuario } = require("../controllers/LoginController");
 const rateLimit = require('express-rate-limit');
-const controllerAdmin = require('../controllers/ControllersAdmin');
-const { criarProduto, listarProdutos } = require('../controllers/productController');
+
+
 
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
@@ -15,16 +19,22 @@ const loginLimiter = rateLimit({
 
 const router = express.Router();
 
-// Rotas
 
 router.post('/registrar', validateRegister, RegistrarUsuario);
 router.post('/login', loginLimiter, LogarUsuario);
 router.post('/logout', LogoutUsuario);
-router.post('/produtos', verificarToken, verificarAdmin, criarProduto);
 
-router.get('/produtos', listarProdutos);
 router.get('/', helloword);
 router.get('/usuarios', BuscarUsuario);
-router.get('/admin', verificarToken, verificarAdmin, controllerAdmin);
+
+router.get("/verificar", verificarUsuario, (req, res) => {
+  // Se chegou aqui, o usuário está autenticado
+  res.status(200).json({
+    message: "Usuário autenticado",
+    usuario: req.usuario // Opcional: dados do usuário
+  });
+});
+
+router.get('/admin', verificarAdmin, controllerAdmin);
 
 module.exports = router;

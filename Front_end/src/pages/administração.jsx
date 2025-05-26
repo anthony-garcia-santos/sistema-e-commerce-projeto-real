@@ -49,7 +49,7 @@ export default function Admin() {
         verificarAdmin();
     }, []);
 
-    if (loading) return <div>Carregando...</div>;
+    if (loading) return <div className='flex justify-center'>Carregando...</div>;
     if (!isAdmin) return <Navigate to="/" />;
 
     const inputClasses = "w-full p-3 mb-4 rounded border border-gray-300 focus:outline-none";

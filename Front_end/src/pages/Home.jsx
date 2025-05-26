@@ -57,7 +57,10 @@ export default function Home() {
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         {produtos.map(produto => (
-                            <ProductCard key={produto._id} produto={produto} />
+                            <ProductCard key={produto._id}
+                                produto={produto}
+                                onClick={() => navigate(`/produto/${produto._id}`)}
+                            />
                         ))}
                     </div>
                 )}

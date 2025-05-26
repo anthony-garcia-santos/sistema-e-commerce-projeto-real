@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const Usuarios = require('../models/UserModel');
 
-// Função para login
 const LogarUsuario = async (req, res) => {
 
 
@@ -21,7 +20,7 @@ const LogarUsuario = async (req, res) => {
     try {
         const usuario = await Usuarios.findOne({
             email: { $regex: new RegExp(`^${email}$`, 'i') }
-        }).select('+senha'); 
+        }).select('+senha');
 
         if (!usuario) {
             return res.status(401).json({
@@ -35,7 +34,7 @@ const LogarUsuario = async (req, res) => {
         if (!SenhaCorreta) {
             return res.status(401).json({
                 sucesso: false,
-                mensagem: "Credenciais inválidas" 
+                mensagem: "Credenciais inválidas"
             });
         }
 
@@ -64,7 +63,7 @@ const LogarUsuario = async (req, res) => {
 
 
         // Retorna resposta SEM o token no body
-        
+
         return res.status(200).json({
             sucesso: true,
             mensagem: `Bem-vindo, ${usuario.nome}!`,
