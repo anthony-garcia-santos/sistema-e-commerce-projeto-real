@@ -6,13 +6,13 @@ const router = express.Router();
 const { criarProduto, listarProdutos, produtoId} = require('../controllers/productController');
 
 const { verificarAdmin } = require('../validator/verifyAdmin');
-const { verificarUsuario } = require('../validator/verifyUsers');
+// const { verificarUsuario } = require('../validator/verifyUsers');
 
 
 router.get('/produtos', listarProdutos ); // protegida
-router.get('/produtos/:id', verificarUsuario, produtoId);  // protegida
+router.get('/produtos/:id', produtoId);  // protegida
 
-router.post('/produtos', verificarUsuario, verificarAdmin, criarProduto); // protegida + admin
+router.post('/produtos', verificarAdmin, criarProduto); // protegida + admin
 
 
 

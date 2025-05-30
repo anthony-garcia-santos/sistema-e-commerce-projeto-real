@@ -12,7 +12,7 @@ require("dotenv").config();
 
 const userRoutes = require('./src/routes/UserRoutes');
 const ProductRoutes = require('./src/routes/productsRoutes');
-
+const UploadRoutes = require('./src/routes/UploadRoutes')
 
 
 
@@ -33,6 +33,7 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+app.use("/api", UploadRoutes)
 app.use("/api", userRoutes);
 app.use("/api", ProductRoutes);
 

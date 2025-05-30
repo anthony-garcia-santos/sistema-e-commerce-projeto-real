@@ -1,19 +1,7 @@
-// frontend/src/components/ComponentCard.jsx
-//         <h3 className="font-bold text-lg">{produto.nome}</h3>
-
 export default function ProductCard({ produto, onClick }) {
-
-
-
-
-
-
-
   return (
     <div
-      className="rounded-lg overflow-hidden shadow-2xl 
-      transition-transform duration-200 hover:scale-105 
-      active:scale-95 cursor-pointer"
+      className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-transform duration-300 hover:scale-105 active:scale-95 cursor-pointer"
       id={`produto-${produto.id}`}
       onClick={onClick}
       role="button"
@@ -29,8 +17,10 @@ export default function ProductCard({ produto, onClick }) {
         alt={produto.nome}
         className="w-full h-48 object-cover"
       />
-      <div className="p-4">
-        <p className="font-bold text-amber-600">R$ {produto.preco.toFixed(2)}</p>
+
+      <div className="p-4 space-y-2">
+        <h3 className="text-gray-800 font-semibold text-lg truncate">{produto.nome}</h3>
+        <p className="text-green-600 font-bold text-xl">R$ {produto.preco.toFixed(2)}</p>
       </div>
     </div>
   );

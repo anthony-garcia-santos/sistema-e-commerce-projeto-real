@@ -1,6 +1,6 @@
 const express = require('express');
 const { RegistrarUsuario, BuscarUsuario, helloword } = require('../controllers/RegisterController');
-const { validateRegister} = require('../validator/ValidatorUsers');
+const { validateRegister } = require('../validator/ValidatorUsers');
 
 const { verificarAdmin } = require('../validator/verifyAdmin');
 const controllerAdmin = require('../controllers/ControllersAdmin');
@@ -31,7 +31,7 @@ router.get("/verificar", verificarUsuario, (req, res) => {
   // Se chegou aqui, o usuário está autenticado
   res.status(200).json({
     message: "Usuário autenticado",
-    usuario: req.usuario // Opcional: dados do usuário
+    usuario: req.usuario
   });
 });
 

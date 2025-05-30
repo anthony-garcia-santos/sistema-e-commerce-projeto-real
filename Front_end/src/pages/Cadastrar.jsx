@@ -39,6 +39,8 @@ export default function Cadastrar() {
         }
     };
 
+
+
     const inputClasses = "w-full p-3 rounded border border-gray-300 focus:outline-none";
     const buttonClasses = "flex-1 py-4 px-5 rounded transition-transform duration-300 hover:scale-90";
     const buttonStyles = {

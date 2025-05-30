@@ -79,3 +79,22 @@ export const produtoId = async (id) => {
 };
 
 
+// Front_end/src/services/uploadService.js
+
+
+export const uploadImagem = async (imagem) => {
+  const formData = new FormData();
+  formData.append("imagem", imagem);
+
+  const response = await api.post("/api/upload", formData, {
+    withCredentials: true,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return response.data; // { url: 'https://...cloudinary.com/...' }
+};
+
+
+
