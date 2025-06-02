@@ -78,6 +78,21 @@ export const produtoId = async (id) => {
   }
 };
 
+export const BuscarProduto = async (query = "") => {
+  try {
+    const res = await api.get("/api/buscar-produto", {
+      params: { q: query },
+    });
+    return res.data;
+  } catch (error) {
+    console.error("erro ao buscar produto", error.response?.data || error.message);
+    throw error;
+  }
+}
+
+
+
+
 
 // Front_end/src/services/uploadService.js
 
@@ -95,6 +110,5 @@ export const uploadImagem = async (imagem) => {
 
   return response.data; // { url: 'https://...cloudinary.com/...' }
 };
-
 
 
