@@ -32,6 +32,15 @@ app.use(cors({
 
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'self'; img-src 'self' data:; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com"
+  );
+  next();
+});
+
+
 
 app.use("/api", UploadRoutes)
 app.use("/api", userRoutes);
