@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 exports.criarProduto = async (req, res) => {
   try {
 
-    const { nome, preco, imagem, descricao } = req.body;
-    const novoProduto = new ProdutoModel({ nome, preco, imagem, descricao });
+    const { nome, preco, imagem, descricao, descricaoDetalhada } = req.body;
+    const novoProduto = new ProdutoModel({ nome, preco, imagem, descricao, descricaoDetalhada });
     await novoProduto.save();
     res.status(201).json(novoProduto);
     

@@ -39,7 +39,6 @@ const LogarUsuario = async (req, res) => {
         }
 
 
-
         const token = jwt.sign(
             {
                 id: usuario._id,
@@ -47,20 +46,15 @@ const LogarUsuario = async (req, res) => {
                 role: usuario.role
             },
             process.env.JWT_SECRET,
-            { expiresIn: process.env.JWT_EXPIRES || '1h' }
+            { expiresIn: process.env.JWT_EXPIRES}
         );
-
-        // Configura o cookie seguro
-
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
-            maxAge: 3600000, // 1 hora
+            maxAge: 3600000, 
             path: '/'
         });
-
-
 
         // Retorna resposta SEM o token no body
 

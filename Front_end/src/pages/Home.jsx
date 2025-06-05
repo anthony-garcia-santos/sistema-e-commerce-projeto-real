@@ -12,8 +12,6 @@ export default function Home() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-
-
     const [buscar, setBuscar] = useState("")
     const [query, setQuery] = useState("")
 
@@ -22,9 +20,10 @@ export default function Home() {
         const carregar = async () => {
             setLoading(true);
             try {
-                const data =
-                    query.trim() === "" ? await listarProdutos() : await BuscarProduto(query);
+                const data = query.trim() === "" ? await listarProdutos() : await BuscarProduto(query);
+
                 if (isMounted) setProdutos(data);
+                
             } catch (err) {
                 if (isMounted) {
                     setError("Erro ao carregar produtos");
@@ -41,16 +40,13 @@ export default function Home() {
         };
     }, [query]);
 
-
     return (
-
         <div className="w-full min-h-screen">
-
             {/* Header com botões */}
-            <div className="flex justify-end pr-10 py-[15px] gap-2 bg-white mb-8 font-semibold border-b border-gray-300 ">
-                <div className="relative w-[160px] h-[40px]">
+            <div className="flex justify-end pr-10 py-[7px] gap-5 bg-white mb-8 font-semibold border-b border-gray-300 ">
+                <div className="relative w-[164px] h-[40px]">
                     <input
-                        className="w-full h-full pl-10 pr-4 rounded-[6px] bg-[#F5EDE8] text-[#9C784A] font-normal text-center"
+                        className="w-full h-full pl-5 pr-2 rounded-[6px] text-[12px] bg-[#F5EDE8] text-[#9C784A] font-normal text-center"
                         type="text"
                         placeholder="Search"
                         style={{
@@ -64,8 +60,6 @@ export default function Home() {
                                 setQuery(buscar.trim());
                             }
                         }}
-
-
                     />
                     <img
                         src="/busca.svg"
@@ -76,7 +70,7 @@ export default function Home() {
 
                 <button
                     onClick={IrLogin}
-                    className="flex items-center justify-center rounded-[20px] w-[84px] h-[40px] bg-[#F5EDE8] font-bold text-center"
+                    className="flex items-center justify-center rounded-[20px] text-[12px] w-[84px] h-[40px] bg-[#F5EDE8] font-bold text-center cursor-pointer"
                     style={{
                         fontFamily: "'Be Vietnam Pro', sans-serif",
                         lineHeight: '21px',
@@ -86,10 +80,30 @@ export default function Home() {
                 </button>
             </div>
 
-
-
-
             {/* Conteúdo */}
+            <div className="flex justify-center mb-5 mt-[-10px]">
+                <div className="relative rounded-2xl overflow-hidden w-full max-w-[955px] aspect-[928/500]">
+                    <img
+                        src="/login.png"
+                        alt="imagem"
+                        className="w-full h-full object-cover"
+                    />
+
+                    {/* Degradê por cima da imagem */}
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.1),rgba(0,0,0,0.4))]"></div>
+
+                    {/* Botão centralizado por cima de tudo */}
+                    <div className="absolute inset-0 z-30 flex justify-center items-center top-[350px]">
+                        <button className="bg-orange-400 text-white font-semibold px-6 py-2 rounded-full shadow-md hover:bg-orange-500 transition cursor-pointer"
+                            onClick={IrCadastro}
+                        >
+                            começar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
             <div className="container mx-auto px-4">
                 {loading ? (
                     <div className="text-center py-16 text-lg text-gray-500 animate-pulse">
@@ -100,14 +114,17 @@ export default function Home() {
                         {error}
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-                        {produtos.map(produto => (
-                            <ProductCard
-                                key={produto._id}
-                                produto={produto}
-                                onClick={() => navigate(`/produto/${produto._id}`)}
-                            />
-                        ))}
+                    <div className="w-full flex justify-center">
+
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 justify-items-center">
+                            {produtos.map(produto => (
+                                <ProductCard
+                                    key={produto._id}
+                                    produto={produto}
+                                    onClick={() => navigate(`/produto/${produto._id}`)}
+                                />
+                            ))}
+                        </div>
                     </div>
                 )}
             </div>

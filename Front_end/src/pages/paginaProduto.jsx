@@ -1,35 +1,81 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { produtoId } from '../services/authService';
+import ProductCard from '../Components/ComponentCard';
+import { useNavigate } from 'react-router-dom';
+import { listarProdutos, BuscarProduto } from '../services/authService';
+import '../index.css/index.css'
+
 
 export default function PaginaProduto() {
+    const navigate = useNavigate();
+    const IrCadastro = () => navigate("/Cadastrar");
+    const IrLogin = () => navigate("/Login");
+    const Home = () => navigate("/");
+
     const { id } = useParams();
     const [produto, setProduto] = useState(null);
+    const [produtos, setProdutos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [erro, setErro] = useState(null);
-    const [quantidade, setQuantidade] = useState(1);
 
+    // ---------- Primeira lógica de carregamento (já existia) ----------
     useEffect(() => {
+        let isMounted = true;
+
         const carregar = async () => {
             try {
                 setLoading(true);
                 const data = await produtoId(id);
-
-                // Força preco a ser número
                 data.preco = parseFloat(data.preco);
-
                 setProduto(data);
+
+                const lista = await listarProdutos();
+                if (isMounted) setProdutos(lista);
             } catch (err) {
+                if (isMounted) { setErro("erro ao carregar produtos"); }
+                setProdutoLista([]);
                 setErro('Produto não encontrado');
             } finally {
                 setLoading(false);
             }
         };
-        carregar();
-    }, [id]);
 
-    const aumentar = () => setQuantidade((prev) => prev + 1);
-    const diminuir = () => setQuantidade((prev) => (prev > 1 ? prev - 1 : 1));
+        carregar();
+        return () => {
+            isMounted = false;
+        };
+    }, [id]);
+    // ------------------------------------------------------------------
+
+    // Referência ao container do carrossel
+    const scrollRef = useRef(null);
+
+    // Funções para rolar com os botões de seta
+    const scrollLeft = () => {
+        scrollRef.current?.scrollBy({ left: -300, behavior: 'smooth' });
+    };
+    const scrollRight = () => {
+        scrollRef.current?.scrollBy({ left: 300, behavior: 'smooth' });
+    };
+
+    // Segundo useEffect: converte scroll vertical em horizontal
+    useEffect(() => {
+        const container = scrollRef.current;
+        if (!container) return;
+
+        const handleWheel = (e) => {
+            if (e.deltaY !== 0) {
+                e.preventDefault();
+                container.scrollLeft += e.deltaY;
+            }
+        };
+
+        container.addEventListener("wheel", handleWheel, { passive: false });
+        return () => {
+            container.removeEventListener("wheel", handleWheel);
+        };
+    }, []);
 
     if (loading) {
         return (
@@ -48,55 +94,111 @@ export default function PaginaProduto() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100 py-12 px-6">
-            <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-lg overflow-hidden p-8 md:p-12 flex flex-col md:flex-row gap-10">
+        <div
+            className="relative flex size-full min-h-screen flex-col bg-[#fcfaf8] overflow-x-hidden"
+            style={{ fontFamily: '"Be Vietnam Pro", "Noto Sans", sans-serif' }}
+        >
+            {/* Home/Produto */}
+            <div className="relative left-40 top-6 p-4 px-10">
+                <button
+                    onClick={Home}
+                    className="text-[#9c7849] text-base font-medium leading-normal cursor-pointer"
+                >
+                    Home
+                </button>
+                <span className="text-[#9c7849] text-base font-medium leading-normal">/</span>
+                <span className="text-[#1c150d] text-base font-medium leading-normal">Produto</span>
+            </div>
 
-                <div className="md:w-1/2 flex justify-center items-center">
-                    <img
-                        src={produto.imagem}
-                        alt={produto.nome}
-                        className="w-full h-auto rounded-xl shadow-md object-cover max-h-[500px]"
-                    />
-                </div>
+            {/* Área Principal */}
+            <div className="px-10 flex justify-center py-5">
+                <div className="flex flex-col max-w-[960px] flex-1 w-full">
+                    <div className="p-4">
+                        <div className="flex flex-col md:flex-row gap-6 items-start">
+                            {/* Imagem do Produto */}
+                            <div className="w-full md:w-[464px]">
+                                <img
+                                    src={produto.imagem}
+                                    alt={produto.nome}
+                                    className="w-[464px] h-[256px] object-cover rounded-xl"
+                                />
+                            </div>
 
-                <div className="md:w-1/2 flex flex-col justify-between">
-                    <div>
-                        <h1 className="text-4xl font-bold text-gray-800 mb-4">{produto.nome}</h1>
-                        <p className="text-lg text-gray-600 mb-6">{produto.descricao}</p>
+                            {/* Detalhes do Produto */}
+                            <div className="flex flex-col justify-center gap-4 w-full">
+                                <p className="text-[#9c7849] text-sm font-light">
+                                    R$ {produto.preco.toFixed(2)}
+                                </p>
+                                <p className="text-[#1c150d] text-xl font-bold">
+                                    {produto.nome}
+                                </p>
+                                <p className="text-[#9c7849] text-sm font-light">
+                                    {produto.descricao}
+                                </p>
+                                <button
+                                    className="h-12 w-fit px-6 rounded-full bg-[#f28f0d] text-[#1c150d] text-sm font-medium cursor-pointer"
+                                >
+                                    Adicionar ao carrinho
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
-                        <p className="text-3xl text-green-600 font-semibold mb-4">
-                            R$ {produto.preco.toFixed(2)}
+
+                    {/* Detalhes do Produto */}
+                    <div className="px-4">
+                        <h2 className="text-[#1c150d] text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-5">
+                            Detalhes do Produto
+                        </h2>
+                        <p className="text-[#1c150d] text-base font-normal leading-normal pb-3 pt-1">
+                            {produto.descricaoDetalhada}
                         </p>
+                    </div>
 
-                        <div className="flex items-center gap-4 mb-6">
-                            <button
-                                onClick={diminuir}
-                                className="w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 text-xl font-bold transition"
-                            >
-                                −
-                            </button>
-                            <span className="text-xl font-semibold w-8 text-center">{quantidade}</span>
-                            <button
-                                onClick={aumentar}
-                                className="w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 text-xl font-bold transition"
-                            >
-                                +
-                            </button>
+
+
+
+                    {/* Carrossel de Produtos Similares */}
+                    <div className="flex items-center px-4 py-6 relative">
+                        {/* Botão Esquerda */}
+                        <button
+                            onClick={scrollLeft}
+                            className="bg-orange-400 hover:bg-orange-500 rounded-full shadow p-3 cursor-pointer"
+                        >
+                            ◀
+                        </button>
+
+                        {/* Carrossel */}
+                        <div
+                            ref={scrollRef}
+                            className="overflow-x-auto whitespace-nowrap scrollbar-hide snap-x snap-mandatory scroll-smooth flex-1 mx-4"
+                        >
+                            <div className="flex gap-4">
+                                {produtos.map((produto) => (
+                                    <div
+                                        key={produto._id}
+                                        className="inline-block w-[200px] min-w-[200px] rounded-lg snap-start"
+                                    >
+                                        <ProductCard
+                                            produto={produto}
+                                            onClick={() => navigate(`/produto/${produto._id}`)}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
                         </div>
 
-                        <p className="text-lg text-gray-800">
-                            Total:{' '}
-                            <span className="font-bold text-green-700">
-                                R$ {(produto.preco * quantidade).toFixed(2)}
-                            </span>
-                        </p>
-                    </div>
-
-                    <div className="mt-10">
-                        <button className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md transition-transform hover:scale-95 text-lg font-medium">
-                            Adicionar ao carrinho
+                        {/* Botão Direita */}
+                        <button
+                            onClick={scrollRight}
+                            className="bg-orange-400 hover:bg-orange-500 rounded-full shadow p-3 cursor-pointer"
+                        >
+                            ▶
                         </button>
                     </div>
+
+
+
                 </div>
             </div>
         </div>

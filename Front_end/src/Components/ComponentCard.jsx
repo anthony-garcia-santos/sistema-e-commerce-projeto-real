@@ -1,21 +1,21 @@
 export default function ProductCard({ produto, onClick }) {
   return (
     <div
-      className="bg-white rounded-lg overflow-hidden hover:shadow-lg transition-transform duration-300 hover:scale-105 active:scale-95 cursor-pointer w-[176px]"
+      className="rounded-lg  cursor-pointer "
       onClick={onClick}
     >
       {/* Imagem com tamanho fixo */}
-      <div className="flex justify-center">
+      <div className="flex justify-center overflow-hidden transition-transform duration-300 hover:scale-105 active:scale-95">
         <img
           src={produto.imagem}
           alt={produto.nome}
-          className="w-[176px] h-[175px] object-cover rounded-[6px]"
+          className="w-[176px] h-[176px] object-cover rounded-[12px]"
         />
       </div>
 
       {/* Conteúdo abaixo da imagem */}
-      <div className="p-3 space-y-1">
-        <h3 className="text-gray-800 font-medium text-sm truncate text-[16px]"
+      <div className="p-4 space-y-1">
+        <h3 className="text-[#1C140D] font-medium text-sm truncate text-[16px]"
           style={{
             fontFamily: "'Be Vietnam Pro', sans-serif",
             lineHeight: '24px',
@@ -24,9 +24,9 @@ export default function ProductCard({ produto, onClick }) {
           {produto.nome}</h3>
 
         <p className="text-[#9C784A] font-normal text-sm"
-                  style={{
+          style={{
             fontFamily: "'Be Vietnam Pro', sans-serif",
-            lineHeight: '14px',
+            lineHeight: '21px',
           }}> R$ {produto.preco.toFixed(2)}</p>
       </div>
     </div>

@@ -7,6 +7,7 @@ const productSchema = new mongoose.Schema({
     preco: Number,
     imagem: String,
     descricao: String,
+    descricaoDetalhada: String,
     role: {
         type: String,
         enum: ['user', 'admin'],
