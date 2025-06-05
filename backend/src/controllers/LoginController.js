@@ -51,9 +51,8 @@ const LogarUsuario = async (req, res) => {
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            maxAge: 3600000, 
-            path: '/'
+            sameSite: 'none',
+            maxAge:  24 * 60 * 60 * 1000
         });
 
         // Retorna resposta SEM o token no body
@@ -86,9 +85,11 @@ const LogoutUsuario = (req, res) => {
     res.clearCookie('token', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        sameSite: 'none',
         path: '/'
     });
+    res.status(200).json({ message: 'Logout realizado com sucesso' });
+
 
     return res.status(200).json({
         sucesso: true,

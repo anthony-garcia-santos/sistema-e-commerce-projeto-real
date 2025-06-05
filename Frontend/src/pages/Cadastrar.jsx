@@ -50,7 +50,7 @@ export default function Cadastrar() {
     };
 
     return (
-        <div className="min-h-screen p-4 w-full h-screen bg-[url(../../public/logo.png)]  bg-cover bg-no-repeat">
+        <div className="min-h-screen p-4 w-full h-screen bg-[url(public/logo.png)]  bg-cover bg-no-repeat">
             <form onSubmit={handleSubmit} className="mt-20 ml-20 w-full max-w-md space-y-5 bg-white p-10 rounded-4xl shadow-lg">
                 <input
                     type="text"

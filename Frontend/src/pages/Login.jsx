@@ -49,7 +49,7 @@ export default function Login() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className="min-h-screen flex items-center justify-center bg-[url(../../public/login.png)] bg-cover bg-no-repeat">
+            <div className="min-h-screen flex items-center justify-center bg-[url(/login.png)] bg-cover bg-no-repeat">
                 <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
 
                     {erro && (

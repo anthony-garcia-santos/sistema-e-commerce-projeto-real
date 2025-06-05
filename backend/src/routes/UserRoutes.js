@@ -14,7 +14,10 @@ const rateLimit = require('express-rate-limit');
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
   max: 5,
-  message: "Muitas tentativas de login. Tente novamente mais tarde."
+  message: "Muitas tentativas de login. Tente novamente mais tarde.",
+  skipSuccessfulRequests: true
+
+
 });
 
 const router = express.Router();
