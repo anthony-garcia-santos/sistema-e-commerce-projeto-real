@@ -23,7 +23,7 @@ export default function Home() {
                 const data = query.trim() === "" ? await listarProdutos() : await BuscarProduto(query);
 
                 if (isMounted) setProdutos(data);
-                
+
             } catch (err) {
                 if (isMounted) {
                     setError("Erro ao carregar produtos");
@@ -114,18 +114,28 @@ export default function Home() {
                         {error}
                     </div>
                 ) : (
-                    <div className="w-full flex justify-center">
 
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 justify-items-center">
-                            {produtos.map(produto => (
+
+
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 justify-items-center">
+                        {Array.isArray(produtos) ? (
+                            produtos.map((produto) => (
                                 <ProductCard
                                     key={produto._id}
                                     produto={produto}
                                     onClick={() => navigate(`/produto/${produto._id}`)}
                                 />
-                            ))}
-                        </div>
+                            ))
+                        ) : (
+                            <p className="text-gray-500">Nenhum produto encontrado.</p>
+                        )}
                     </div>
+
+
+
+
+
                 )}
             </div>
         </div>

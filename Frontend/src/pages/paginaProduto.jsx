@@ -32,10 +32,13 @@ export default function PaginaProduto() {
 
                 const lista = await listarProdutos();
                 if (isMounted) setProdutos(lista);
-            } catch (err) {
-                if (isMounted) { setErro("erro ao carregar produtos"); }
-                setProdutoLista([]);
-                setErro('Produto não encontrado');
+            }
+            catch (err) {
+                if (isMounted) {
+                    setErro("erro ao carregar produtos");
+                    setProdutos([]);      // <- aqui
+                }
+
             } finally {
                 setLoading(false);
             }
@@ -47,7 +50,7 @@ export default function PaginaProduto() {
         };
     }, [id]);
 
-    
+
     // ------------------------------------------------------------------
 
     // Referência ao container do carrossel
@@ -163,10 +166,7 @@ export default function PaginaProduto() {
                     {/* Carrossel de Produtos Similares */}
                     <div className="flex items-center px-4 py-6 relative">
                         {/* Botão Esquerda */}
-                        <button
-                            onClick={scrollLeft}
-                            className="bg-orange-400 hover:bg-orange-500 rounded-full shadow p-3 cursor-pointer z-10"
-                        >
+                        <button onClick={scrollLeft} className="bg-orange-400 hover:bg-orange-500 rounded-full shadow p-3 cursor-pointer z-10">
                             ◀
                         </button>
 
@@ -176,28 +176,30 @@ export default function PaginaProduto() {
                             className="overflow-x-auto whitespace-nowrap no-scrollbar snap-x snap-mandatory scroll-smooth mx-1 flex items-center h-[280px]"
                         >
                             <div className="flex gap-4 items-center">
-                                {produtos.map((produto) => (
-                                    <div
-                                        key={produto._id}
-                                        className="inline-block w-[200px] min-w-[200px] rounded-lg snap-center"
-                                    >
-                                        <ProductCard
-                                            produto={produto}
-                                            onClick={() => navigate(`/produto/${produto._id}`)}
-                                        />
-                                    </div>
-                                ))}
+                                {Array.isArray(produtos) ? (
+                                    produtos.map((produto) => (
+                                        <div
+                                            key={produto._id}
+                                            className="inline-block w-[200px] min-w-[200px] rounded-lg snap-center"
+                                        >
+                                            <ProductCard
+                                                produto={produto}
+                                                onClick={() => navigate(`/produto/${produto._id}`)}
+                                            />
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className="text-gray-500">Nenhum produto disponível.</p>
+                                )}
                             </div>
                         </div>
 
                         {/* Botão Direita */}
-                        <button
-                            onClick={scrollRight}
-                            className="bg-orange-400 hover:bg-orange-500 rounded-full shadow p-3 cursor-pointer z-10"
-                        >
+                        <button onClick={scrollRight} className="bg-orange-400 hover:bg-orange-500 rounded-full shadow p-3 cursor-pointer z-10">
                             ▶
                         </button>
                     </div>
+
 
 
 
