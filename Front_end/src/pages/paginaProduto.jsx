@@ -46,6 +46,8 @@ export default function PaginaProduto() {
             isMounted = false;
         };
     }, [id]);
+
+    
     // ------------------------------------------------------------------
 
     // Referência ao container do carrossel
@@ -53,10 +55,10 @@ export default function PaginaProduto() {
 
     // Funções para rolar com os botões de seta
     const scrollLeft = () => {
-        scrollRef.current?.scrollBy({ left: -300, behavior: 'smooth' });
+        scrollRef.current?.scrollBy({ left: -250, behavior: 'smooth' });
     };
     const scrollRight = () => {
-        scrollRef.current?.scrollBy({ left: 300, behavior: 'smooth' });
+        scrollRef.current?.scrollBy({ left: 200, behavior: 'smooth' });
     };
 
     // Segundo useEffect: converte scroll vertical em horizontal
@@ -163,7 +165,7 @@ export default function PaginaProduto() {
                         {/* Botão Esquerda */}
                         <button
                             onClick={scrollLeft}
-                            className="bg-orange-400 hover:bg-orange-500 rounded-full shadow p-3 cursor-pointer"
+                            className="bg-orange-400 hover:bg-orange-500 rounded-full shadow p-3 cursor-pointer z-10"
                         >
                             ◀
                         </button>
@@ -171,13 +173,13 @@ export default function PaginaProduto() {
                         {/* Carrossel */}
                         <div
                             ref={scrollRef}
-                            className="overflow-x-auto whitespace-nowrap scrollbar-hide snap-x snap-mandatory scroll-smooth flex-1 mx-4"
+                            className="overflow-x-auto whitespace-nowrap no-scrollbar snap-x snap-mandatory scroll-smooth mx-1 flex items-center h-[280px]"
                         >
-                            <div className="flex gap-4">
+                            <div className="flex gap-4 items-center">
                                 {produtos.map((produto) => (
                                     <div
                                         key={produto._id}
-                                        className="inline-block w-[200px] min-w-[200px] rounded-lg snap-start"
+                                        className="inline-block w-[200px] min-w-[200px] rounded-lg snap-center"
                                     >
                                         <ProductCard
                                             produto={produto}
@@ -191,11 +193,13 @@ export default function PaginaProduto() {
                         {/* Botão Direita */}
                         <button
                             onClick={scrollRight}
-                            className="bg-orange-400 hover:bg-orange-500 rounded-full shadow p-3 cursor-pointer"
+                            className="bg-orange-400 hover:bg-orange-500 rounded-full shadow p-3 cursor-pointer z-10"
                         >
                             ▶
                         </button>
                     </div>
+
+
 
 
 
