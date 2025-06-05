@@ -62,7 +62,7 @@ export default function Home() {
                         }}
                     />
                     <img
-                        src="/busca.svg"
+                        src="../busca.svg"
                         alt="ícone de busca"
                         className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4"
                     />
