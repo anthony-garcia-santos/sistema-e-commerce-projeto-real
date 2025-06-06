@@ -1,6 +1,5 @@
 // Front_end/src/pages/Cadastrar.jsx
 
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registrarUsuario } from "../services/authService";
@@ -11,11 +10,11 @@ export default function Cadastrar() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [nome, setNome] = useState("");
-    const [loading, setLoading] = useState(false);  
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);  
+        setLoading(true);
 
         if (!nome || !email || !senha) {
             alert("Preencha todos os campos.");
@@ -23,93 +22,162 @@ export default function Cadastrar() {
             return;
         }
 
-
         try {
             const response = await registrarUsuario({ nome, email, senha });
             console.log("Resposta:", response.data);
 
             alert(response.data.message || "Conta criada com sucesso!");
-            navigate("/login");  
+            navigate("/login");
         } catch (error) {
             console.error("Erro ao registrar:", error);
             alert(error.response?.data?.message || "Erro ao criar conta.");
-
         } finally {
-            setLoading(false);  
+            setLoading(false);
         }
     };
 
-
-
-    const inputClasses = "w-full p-3 rounded border border-gray-300 focus:outline-none";
-    const buttonClasses = "flex-1 py-4 px-5 rounded transition-transform duration-300 hover:scale-90";
-    const buttonStyles = {
-        registro: "bg-green-600 text-white hover:bg-green-700",
-        login: "bg-blue-600 text-white hover:bg-blue-700",
-        home: "bg-gray-600 text-white hover:bg-gray-700",
-    };
-
     return (
-        <div className="min-h-screen p-4 w-full h-screen bg-[url(public/logo.png)]  bg-cover bg-no-repeat">
-            <form onSubmit={handleSubmit} className="mt-20 ml-20 w-full max-w-md space-y-5 bg-white p-10 rounded-4xl shadow-lg">
-                <input
-                    type="text"
-                    name="nome"
-                    id="nome"
-                    placeholder="Seu nome"
-                    value={nome}
-                    onChange={(e) => setNome(e.target.value)}
-                    className={inputClasses}
-                />
-                <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="Seu email"
-                    autoComplete="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className={inputClasses}
-                />
-                <input
-                    type="password"
-                    name="senha"
-                    id="senha"
-                    placeholder="senha"
-                    autoComplete="current-password"
-                    value={senha}
-                    onChange={(e) => setSenha(e.target.value)}
-                    className={inputClasses}
-                />
 
-                <div className="flex justify-between space-x-2">
-                    <button
-                        type="submit"
-                        className={`${buttonClasses} ${buttonStyles.registro}`}
-                        disabled={loading}  // Desativa o botão enquanto está carregando
-                    >
-                        {loading ? "Cadastrando..." : "Criar conta"}
-                    </button>
+        //navbar 
 
-                    <button
-                        type="button"
-                        onClick={() => navigate("/login")}
-                        className={`${buttonClasses} ${buttonStyles.login}`}
-                    >
-                        Fazer login
-                    </button>
+        <div
+            className="relative flex w-full h-screen flex-col bg-[#fcfaf8] overflow-hidden"
+            style={{
+                fontFamily: '"Be Vietnam Pro", "Noto Sans", sans-serif'
+            }}
+        >
+            <div className="layout-container flex h-full grow flex-col">
 
-                    <button
-                        type="button"
-                        onClick={() => navigate("/")}
-                        className={`${buttonClasses} ${buttonStyles.home}`}
-                    >
-                        Voltar
-                    </button>
+                <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f4eee7] px-10 py-3">
+
+                    <div className="flex items-center gap-4 text-[#1c150d]">
+
+                        <h2 className="text-[#1c150d] text-lg font-bold leading-tight tracking-[-0.015em]">
+                            Lolo_Personalizado</h2>
+                    </div>
+
+                </header>
+
+
+                {/* inputs etc */}
+
+                <div className="relative -top-10 px-40 flex flex-1 justify-center py-5">
+
+                    <form onSubmit={handleSubmit} className="layout-content-container flex flex-col w-[512px] py-5 max-w-[960px] flex-1">
+
+                        <h1 className="text-[#1c150d] tracking-light text-[32px] font-bold leading-tight px-4 text-center pb-3 pt-6">
+
+                            Let's get to know you
+
+                        </h1>
+
+                        <p className="text-[#1c150d] text-base font-normal leading-normal pb-3 pt-1 px-4 text-center">
+
+                            We will use this information to personalize your experience
+
+                        </p>
+
+
+
+                        {/* Name Field */}
+                        <div className="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+
+                            <label className="flex flex-col min-w-40 flex-1">
+
+                                <p className="text-[#1c150d] text-base font-medium leading-normal pb-2">
+
+                                    Full name
+
+                                </p>
+
+                                <input
+                                    type="text"
+                                    placeholder="Your name"
+                                    value={nome}
+                                    onChange={(e) => setNome(e.target.value)}
+                                    className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#1c150d] focus:outline-0 focus:ring-0 border-none bg-[#f4eee7] focus:border-none h-14 placeholder:text-[#9c7849] p-4 text-base font-normal leading-normal"
+                                />
+
+                            </label>
+
+                        </div>
+
+                        {/* Email Field */}
+                        <div className="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+
+                            <label className="flex flex-col min-w-40 flex-1">
+
+                                <p className="text-[#1c150d] text-base font-medium leading-normal pb-2">
+
+                                    Email
+
+                                </p>
+
+                                <input
+                                    type="email"
+                                    placeholder="Your email"
+                                    autoComplete="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#1c150d] focus:outline-0 focus:ring-0 border-none bg-[#f4eee7] focus:border-none h-14 placeholder:text-[#9c7849] p-4 text-base font-normal leading-normal"
+                                />
+
+                            </label>
+                        </div>
+
+                        {/* Password Field */}
+                        <div className="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+
+                            <label className="flex flex-col min-w-40 flex-1">
+
+                                <p className="text-[#1c150d] text-base font-medium leading-normal pb-2">
+
+                                    Password
+
+                                </p>
+
+                                <input
+                                    type="password"
+                                    placeholder="Password"
+                                    autoComplete="current-password"
+                                    value={senha}
+                                    onChange={(e) => setSenha(e.target.value)}
+                                    className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#1c150d] focus:outline-0 focus:ring-0 border-none bg-[#f4eee7] focus:border-none h-14 placeholder:text-[#9c7849] p-4 text-base font-normal leading-normal"
+                                />
+
+                            </label>
+                        </div>
+
+
+
+                        {/* Submit Button */}
+                        <div className="flex px-4 py-3">
+
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 flex-1 bg-[#f28f0d] text-[#1c150d] text-sm font-bold leading-normal tracking-[0.015em]"
+                            >
+                                <span className="truncate">{loading ? "Creating account..." : "Continue"}</span>
+                            </button>
+                        </div>
+
+                        {/* Login Link */}
+                        <div className="flex justify-center px-4 py-3">
+
+                            <button
+                                type="button"
+                                onClick={() => navigate("/login")}
+                                className="text-[#1c150d] text-sm font-medium underline cursor-pointer hover:text-[#f28f0d] "
+                            >
+                                Already have an account? Login
+
+                            </button>
+
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     );
 }
-
-

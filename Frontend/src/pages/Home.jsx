@@ -93,13 +93,16 @@ export default function Home() {
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.1),rgba(0,0,0,0.4))]"></div>
 
                     {/* Botão centralizado por cima de tudo */}
-                    <div className="absolute inset-0 z-30 flex justify-center items-center top-[350px]">
-                        <button className="bg-orange-400 text-white font-semibold px-6 py-2 rounded-full shadow-md hover:bg-orange-500 transition cursor-pointer"
+                    <div className="absolute inset-0 z-30 top-9/12 flex justify-center items-center">
+                        <button
+                            className="bg-orange-400 text-white font-semibold px-6 py-2 rounded-full shadow-md hover:bg-orange-500 transition cursor-pointer"
                             onClick={IrCadastro}
                         >
                             começar
                         </button>
                     </div>
+
+
                 </div>
             </div>
 
