@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import ProductCard from '../Components/ComponentCard';
 import { listarProdutos, BuscarProduto } from '../services/authService';
 
+import busca from '../index.css/assets/busca.svg'
+import login from '../index.css/assets/login.png'
+
+
 export default function Home() {
     const navigate = useNavigate();
     const IrCadastro = () => navigate("/Cadastrar");
@@ -71,7 +75,7 @@ export default function Home() {
                             }}
                         />
                         <img
-                            src={new URL('/busca.svg', import.meta.url).href} alt="ícone de busca"
+                            src={busca} alt="busca"
                             className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4"
                         />
                     </div>
@@ -95,7 +99,7 @@ export default function Home() {
                 <div className="relative rounded-2xl overflow-hidden w-full max-w-[955px] aspect-[928/500]">
 
 
-                    <img src={new URL('/login.png', import.meta.url).href} alt="incode da logo"
+                    <img src={login} alt="login"
                         className="w-full h-full object-cover"
                     />
 
