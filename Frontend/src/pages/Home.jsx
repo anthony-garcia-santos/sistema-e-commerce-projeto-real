@@ -43,49 +43,59 @@ export default function Home() {
     return (
         <div className="w-full min-h-screen">
             {/* Header com botões */}
-            <div className="flex justify-end pr-10 py-[7px] gap-5 bg-white mb-8 font-semibold border-b border-gray-300 ">
-                <div className="relative w-[164px] h-[40px]">
-                    <input
-                        className="w-full h-full pl-5 pr-2 rounded-[6px] text-[12px] bg-[#F5EDE8] text-[#9C784A] font-normal text-center"
-                        type="text"
-                        placeholder="Search"
+
+            <div className="grid grid-cols-2 items-center px-10 py-[7px] bg-white mb-8 font-semibold border-b border-gray-300">
+                {/* Coluna da esquerda - Título */}
+                <h1 className="text-left" style={{
+                    fontFamily: "'Be Vietnam Pro', sans-serif",
+                    lineHeight: '21px',
+                }}> Lolo_Personalizado</h1>
+
+                {/* Coluna da direita - Campo de busca + botão */}
+                <div className="flex justify-end items-center gap-5">
+                    <div className="relative w-[164px] h-[40px]">
+                        <input
+                            className="w-full h-full pl-5 pr-2 rounded-[6px] text-[12px] bg-[#F5EDE8] text-[#9C784A] font-normal text-center"
+                            type="text"
+                            placeholder="Search"
+                            style={{
+                                fontFamily: "'Be Vietnam Pro', sans-serif",
+                                lineHeight: '21px',
+                            }}
+                            value={buscar}
+                            onChange={e => setBuscar(e.target.value)}
+                            onKeyDown={e => {
+                                if (e.key === 'Enter') {
+                                    setQuery(buscar.trim());
+                                }
+                            }}
+                        />
+                        <img
+                            src={new URL('/busca.svg', import.meta.url).href} alt="ícone de busca"
+                            className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4"
+                        />
+                    </div>
+
+                    <button
+                        onClick={IrLogin}
+                        className="flex items-center justify-center rounded-[20px] text-[12px] w-[84px] h-[40px] bg-[#F5EDE8] font-bold text-center cursor-pointer"
                         style={{
                             fontFamily: "'Be Vietnam Pro', sans-serif",
                             lineHeight: '21px',
                         }}
-                        value={buscar}
-                        onChange={e => setBuscar(e.target.value)}
-                        onKeyDown={e => {
-                            if (e.key === 'Enter') {
-                                setQuery(buscar.trim());
-                            }
-                        }}
-                    />
-                    <img
-                        src="/busca.svg"
-                        alt="ícone de busca"
-                        className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4"
-                    />
+                    >
+                        Log in
+                    </button>
                 </div>
-
-                <button
-                    onClick={IrLogin}
-                    className="flex items-center justify-center rounded-[20px] text-[12px] w-[84px] h-[40px] bg-[#F5EDE8] font-bold text-center cursor-pointer"
-                    style={{
-                        fontFamily: "'Be Vietnam Pro', sans-serif",
-                        lineHeight: '21px',
-                    }}
-                >
-                    Log in
-                </button>
             </div>
+
 
             {/* Conteúdo */}
             <div className="flex justify-center mb-5 mt-[-10px]">
                 <div className="relative rounded-2xl overflow-hidden w-full max-w-[955px] aspect-[928/500]">
-                    <img
-                        src="/login.png"
-                        alt="imagem"
+
+
+                    <img src={new URL('/login.png', import.meta.url).href} alt="incode da logo"
                         className="w-full h-full object-cover"
                     />
 
@@ -95,10 +105,10 @@ export default function Home() {
                     {/* Botão centralizado por cima de tudo */}
                     <div className="absolute inset-0 z-30 top-9/12 flex justify-center items-center">
                         <button
-                            className="bg-orange-400 text-white font-semibold px-6 py-2 rounded-full shadow-md hover:bg-orange-500 transition cursor-pointer"
+                            className="bg-orange-400 text-black font-semibold px-6 py-2 rounded-full shadow-md hover:bg-orange-500 transition cursor-pointer"
                             onClick={IrCadastro}
                         >
-                            começar
+                            Get started
                         </button>
                     </div>
 

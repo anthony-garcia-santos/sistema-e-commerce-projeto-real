@@ -68,97 +68,147 @@ export default function Admin() {
     if (loading) return <div className="flex justify-center mt-10">Carregando...</div>;
     if (!isAdmin) return <Navigate to="/" />;
 
-    const inputClasses = "w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring focus:ring-blue-200";
-    const buttonClasses = "py-2 px-6 rounded font-semibold transition-transform duration-300 hover:scale-95";
-
     return (
-        <section className="flex justify-center items-center h-screen overflow-hidden">
-            <form onSubmit={handleSubmit} className="w-full max-w-xl bg-white p-10  gap-5 rounded-2xl shadow-lg overflow-y-auto max-h-[90vh]">
-                <h1 className="text-4xl text-center font- mb-10">Criar Produto</h1>
+        <div className="relative flex w-full h-screen flex-col bg-[#fcfaf8]"
+            style={{ fontFamily: '"Be Vietnam Pro", "Noto Sans", sans-serif' }}>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input
-                        type="text"
-                        name="nome"
-                        placeholder="Nome do produto"
-                        value={form.nome}
-                        onChange={(e) => setForm({ ...form, nome: e.target.value })}
-                        className={inputClasses}
-                        required
-                    />
-                    <input
-                        type="text"
-                        name="descricao"
-                        placeholder="Descrição resumida"
-                        value={form.descricao}
-                        onChange={(e) => setForm({ ...form, descricao: e.target.value })}
-                        className={inputClasses}
-                    />
-                    <input
-                        type="text"
-                        name="descricaoDetalhada"
-                        placeholder="Descrição detalhada"
-                        value={form.descricaoDetalhada}
-                        onChange={(e) => setForm({ ...form, descricaoDetalhada: e.target.value })}
-                        className={inputClasses}
-                    />
-                    <input
-                        type="number"
-                        name="preco"
-                        placeholder="Preço"
-                        value={form.preco}
-                        onChange={(e) => setForm({ ...form, preco: e.target.value })}
-                        className={inputClasses}
-                        step="0.01"
-                        required
-                    />
-                    <input
-                        type="text"
-                        name="imagem"
-                        placeholder="URL da imagem (opcional)"
-                        value={form.imagem}
-                        onChange={(e) => setForm({ ...form, imagem: e.target.value })}
-                        className={inputClasses}
-                    />
-                </div>
+            <div className="layout-container flex h-full grow flex-col">
+                <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f4eee7] px-10 py-3">
+                    <div className="flex items-center gap-4 text-[#1c150d]">
+                        <h2 className="text-[#1c150d] text-lg font-bold leading-tight tracking-[-0.015em]">
+                            Lolo_Personalizado
+                        </h2>
+                    </div>
+                </header>
 
-                <div className="space-y-3 mt-2">
-                    <label className="block">
-                        <span className="inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-4 py-2 rounded cursor-pointer">
-                            Selecionar imagem
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={(e) => setImagem(e.target.files[0])}
-                                className="hidden"
-                            />
-                        </span>
-                    </label>
-                    <button
-                        onClick={handleUpload}
-                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded"
-                    >
-                        Enviar imagem
-                    </button>
 
-                    {url && (
-                        <div className="text-center mt-4 mb-7">
-                            <p className="mb-2 text-gray-700">Imagem enviada para o banco de dados:</p>
-                            <img src={url} alt="Preview" className="w-48 mx-auto rounded-lg shadow" />
+
+                <div className="relative -top-16 px-40 flex flex-1 justify-center py-5">
+
+                    <form onSubmit={handleSubmit} className="layout-content-container flex flex-col w-[512px] py-5 max-w-[960px] flex-1">
+
+                        <h1 className="text-[#1c150d] tracking-light text-[32px] font-bold leading-tight px-4 text-center pb-3 pt-6">
+                            Criar Novo Produto
+                        </h1>
+
+                        <p className="text-[#1c150d] text-base font-normal leading-normal pb-3 pt-1 px-4 text-center">
+                            Preencha os detalhes do produto abaixo
+                        </p>
+
+
+
+
+
+                        {/* Campos do Produto */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-[960px] mx-auto px-4">
+                            <div>
+                                <label className="text-[#1c150d] text-base font-medium leading-normal pb-2 block">
+                                    Nome do Produto
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="Nome do produto"
+                                    value={form.nome}
+                                    onChange={(e) => setForm({ ...form, nome: e.target.value })}
+                                    className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#1c150d] focus:outline-0 focus:ring-0 border-none bg-[#f4eee7] focus:border-none h-14 placeholder:text-[#9c7849] p-4 text-base font-normal leading-normal"
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <label className="text-[#1c150d] text-base font-medium leading-normal pb-2 block">
+                                    Descrição Resumida
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="Descrição resumida"
+                                    value={form.descricao}
+                                    onChange={(e) => setForm({ ...form, descricao: e.target.value })}
+                                    className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#1c150d] focus:outline-0 focus:ring-0 border-none bg-[#f4eee7] focus:border-none h-14 placeholder:text-[#9c7849] p-4 text-base font-normal leading-normal"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="text-[#1c150d] text-base font-medium leading-normal pb-2 block">
+                                    Descrição Detalhada
+                                </label>
+                                <textarea
+                                    placeholder="Descrição detalhada"
+                                    value={form.descricaoDetalhada}
+                                    onChange={(e) => setForm({ ...form, descricaoDetalhada: e.target.value })}
+                                    className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#1c150d] focus:outline-0 focus:ring-0 border-none bg-[#f4eee7] focus:border-none min-h-[100px] placeholder:text-[#9c7849] p-4 text-base font-normal leading-normal"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="text-[#1c150d] text-base font-medium leading-normal pb-2 block">
+                                    Preço
+                                </label>
+                                <input
+                                    type="number"
+                                    placeholder="Preço"
+                                    value={form.preco}
+                                    onChange={(e) => setForm({ ...form, preco: e.target.value })}
+                                    className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#1c150d] focus:outline-0 focus:ring-0 border-none bg-[#f4eee7] focus:border-none h-14 placeholder:text-[#9c7849] p-4 text-base font-normal leading-normal"
+                                    step="0.01"
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <label className="text-[#1c150d] text-base font-medium leading-normal pb-2 block">
+                                    URL da Imagem (opcional)
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="URL da imagem"
+                                    value={form.imagem}
+                                    onChange={(e) => setForm({ ...form, imagem: e.target.value })}
+                                    className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#1c150d] focus:outline-0 focus:ring-0 border-none bg-[#f4eee7] focus:border-none h-14 placeholder:text-[#9c7849] p-4 text-base font-normal leading-normal"
+                                />
+                            </div>
+
+                            <div className="space-y-3">
+                                <label className="block">
+                                    <span className="inline-block bg-[#f4eee7] hover:bg-[#e8dfd3] text-[#1c150d] font-medium px-4 py-2 rounded-xl cursor-pointer">
+                                        Selecionar imagem
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={(e) => setImagem(e.target.files[0])}
+                                            className="hidden"
+                                        />
+                                    </span>
+                                </label>
+                                <button
+                                    onClick={handleUpload}
+                                    className="bg-[#f28f0d] hover:bg-[#e0860c] text-[#1c150d] px-6 py-2 rounded-xl font-medium"
+                                >
+                                    Enviar imagem
+                                </button>
+
+                                {url && (
+                                    <div className="text-center mt-4">
+                                        <p className="mb-2 text-[#1c150d]">Imagem enviada:</p>
+                                        <img src={url} alt="Preview" className="w-48 mx-auto rounded-lg shadow" />
+                                    </div>
+                                )}
+                            </div>
                         </div>
-                    )}
-                </div>
 
-                <div className="flex justify-center">
-                    <button
-                        type="submit"
-                        className={`${buttonClasses} bg-green-600 text-white hover:bg-green-700`}
-                        disabled={loading}
-                    >
-                        {loading ? 'Enviando...' : 'Criar Produto'}
-                    </button>
+                        {/* Botão de Submit */}
+                        <div className="flex px-4 py-3 justify-center">
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 flex-1 bg-[#f28f0d] text-[#1c150d] text-sm font-bold leading-normal tracking-[0.015em]"
+                            >
+                                <span className="truncate">{loading ? "Enviando..." : "Criar Produto"}</span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </section>
+            </div>
+        </div>
     );
 }
