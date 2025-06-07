@@ -50,7 +50,7 @@ export default function Home() {
 
             <div className="grid grid-cols-2 items-center px-10 py-[7px] bg-white mb-8 font-semibold border-b border-gray-300">
                 {/* Coluna da esquerda - Título */}
-                <h1 className="text-left" style={{
+                <h1 className="text-left relative right-8" style={{
                     fontFamily: "'Be Vietnam Pro', sans-serif",
                     lineHeight: '21px',
                 }}> Lolo_Personalizado</h1>
@@ -121,7 +121,7 @@ export default function Home() {
             </div>
 
 
-            <div className="container mx-auto px-4">
+            <div className="container flex w-full max-w-[1500px] px-4 justify-center">
                 {loading ? (
                     <div className="text-center py-16 text-lg text-gray-500 animate-pulse">
                         Carregando produtos...
@@ -135,7 +135,7 @@ export default function Home() {
 
 
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 justify-items-center">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 justify-items-center">
                         {Array.isArray(produtos) ? (
                             produtos.map((produto) => (
                                 <ProductCard
