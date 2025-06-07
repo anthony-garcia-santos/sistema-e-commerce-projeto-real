@@ -28,61 +28,57 @@ index:
   - License
 
 ## 🎯 Business Objective
-business:
-  purpose: "Developed to solve real issues in product management and user authentication in digital business environments."
-  benefits:
-    - title: "💼 Sales Automation"
-      items:
-        - "Quick product registration"
-        - "Stock and user management"
-        - "Reduces manual tasks by up to 40%"
-    - title: "📊 Conversion Management"
-      items:
-        - "Admin dashboard for future metrics"
-        - "User segmentation (behavior / permissions)"
-        - "Ready for Google Analytics / Meta Pixel integration"
-    - title: "🛡 Corporate Security"
-      items:
-        - "JWT encryption"
-        - "Cookies protected against theft"
-        - "Rate limiting against brute-force (5 attempts / 15min)"
+
+**Purpose:**  
+Developed to solve real issues in product management and user authentication in digital business environments.
+
+### 💼 Sales Automation
+
+- Quick product registration  
+- Stock and user management  
+- Reduces manual tasks by up to 40%  
+
+### 📊 Conversion Management
+
+- Admin dashboard for future metrics  
+- User segmentation (behavior / permissions)  
+- Ready for Google Analytics / Meta Pixel integration  
+
+### 🛡 Corporate Security
+
+- JWT encryption  
+- Cookies protected against theft  
+- Rate limiting against brute-force (5 attempts / 15 min)
+
 
 ## ✨ Features
-frontend:
-  stack: "React + Tailwind"
-  items:
-    - "Login, logout, and user registration"
-    - "Routes protected by access level"
-    - "Auto-redirect based on user type"
-    - "Product listing and creation (admin only)"
-    - "Mobile-first responsive interface"
-backend:
-  stack: "Node.js + Express"
-  items:
-    - "Authentication with JWT in HTTP-only cookies"
-    - "Token verification middleware"
-    - "Secure and modular RESTful API"
-    - "Database using MongoDB/Mongoose"
-    - "Validation with express-validator"
-    - "Integrated rate limiting"
+
+### ⚙️ Frontend (React + Tailwind)
+
+- Login, logout, and user registration  
+- Routes protected by access level  
+- Auto-redirect based on user type  
+- Product listing and creation (admin only)  
+- Mobile-first responsive interface  
+
+### 🔐 Backend (Node.js + Express)
+
+- Authentication with JWT in HTTP-only cookies  
+- Token verification middleware  
+- Secure and modular RESTful API  
+- Database using MongoDB/Mongoose  
+- Validation with express-validator  
+- Integrated rate limiting  
 
 ## 🛠 Technologies Used
-technologies:
-  frontend:
-    - React 18
-    - Vite
-    - TailwindCSS
-    - React Router DOM v6
-    - Axios
-  backend:
-    - Node.js
-    - Express
-    - JWT
-    - BcryptJS
-    - Express Validator
-  database:
-    - MongoDB
-    - Mongoose
+
+| Frontend            | Backend            | Database    |
+|---------------------|--------------------|-------------|
+| React 18            | Node.js            | MongoDB     |
+| Vite                | Express            | Mongoose    |
+| TailwindCSS         | JWT                |             |
+| React Router DOM v6 | BcryptJS           |             |
+| Axios               | Express Validator  |             |
 
 ## 🔐 Authentication Flow
 auth_flow: |
