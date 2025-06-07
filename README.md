@@ -1,7 +1,7 @@
 
 
 🔽 Want to read in Portuguese? [Click here](#português-versão)  
-🔽 Para ver a versão em português, [clique aqui](#portugues-versao)  
+🔽 Para ver a versão em português, [clique aqui](#português-versão)
 
 
 <h1 id="top">🔐🚀 Authentication and Product Management System</h1>
