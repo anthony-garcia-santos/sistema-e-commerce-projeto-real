@@ -1,3 +1,4 @@
+```markdown
 # Sistema de Autenticação e Gestão de Produtos 🔐🚀  
 ![Status](https://img.shields.io/badge/status-Em%20Desenvolvimento-yellow)  
 ![Licença](https://img.shields.io/badge/license-Portf%C3%B3lio%20Pessoal-red)  
@@ -125,3 +126,4 @@ Este projeto é disponibilizado **exclusivamente para fins de portfólio pessoal
 
 **Desenvolvido por [Anthony Garcia Santos](https://www.linkedin.com/in/anthony-santos-17820b358/)**  
 > "Código seguro, funcional e feito para resolver problemas reais." 💼💡
+```
