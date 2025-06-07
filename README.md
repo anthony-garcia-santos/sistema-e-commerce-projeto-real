@@ -81,6 +81,8 @@ Developed to solve real issues in product management and user authentication in 
 | Axios               | Express Validator  |             |
 
 ## 🔐 Authentication Flow
+
+```mermaid
 graph TD
 A[User logs in or registers] --> B{Valid data?}
 B -- Yes --> C[Generate JWT + Cookie]
@@ -90,6 +92,7 @@ E -- Admin --> F[Admin Panel]
 E -- Regular --> G[Home Page]
 F & G --> H[Future requests with cookie]
 H --> I[Middleware checks JWT]
+```
 
 ## 🔮 Roadmap (Next Steps)
 
