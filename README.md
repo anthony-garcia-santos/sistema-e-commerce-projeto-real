@@ -80,13 +80,15 @@ Desenvolvido para resolver problemas reais de **gestão de produtos e autentica�
 ```mermaid
 graph TD
 A[Usuário faz login ou cadastro] --> B{Dados válidos?}
-B -- Sim --> C[Gera JWT + Cookie]
-C --> D[Redireciona conforme tipo]
-D --> E{Admin ou Comum?}
-E -- Admin --> F[Painel Administrativo]
-E -- Comum --> G[Página Inicial]
-F & G --> H[Requisições futuras com cookie]
-H --> I[Middleware verifica JWT]
+B --> A [Não refaz login e cadastro]
+C -- Sim  --> D[Gera JWT + Cookie]
+
+D --> E[Redireciona conforme tipo]
+E --> F{Admin ou Comum?}
+F -- Admin --> G[Painel Administrativo]
+G -- Comum --> H[Página Inicial]
+H & F --> H[Requisições futuras com cookie]
+I --> F[Middleware verifica JWT]
 ```
 
 ---
