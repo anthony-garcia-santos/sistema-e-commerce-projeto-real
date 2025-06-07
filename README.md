@@ -1,4 +1,3 @@
-markdown
 # Sistema de Autenticação e Gestão de Produtos 🔐🚀  
 ![Status](https://img.shields.io/badge/status-Em%20Desenvolvimento-yellow)  
 ![Licença](https://img.shields.io/badge/license-Portf%C3%B3lio%20Pessoal-red)  
@@ -81,15 +80,13 @@ Desenvolvido para resolver problemas reais de **gestão de produtos e autentica�
 ```mermaid
 graph TD
 A[Usuário faz login ou cadastro] --> B{Dados válidos?}
-B --> A [Não refaz login e cadastro]
-C -- Sim  --> D[Gera JWT + Cookie]
-
-D --> E[Redireciona conforme tipo]
-E --> F{Admin ou Comum?}
-F -- Admin --> G[Painel Administrativo]
-G -- Comum --> H[Página Inicial]
-H & F --> H[Requisições futuras com cookie]
-I --> F[Middleware verifica JWT]
+B -- Sim --> C[Gera JWT + Cookie]
+C --> D[Redireciona conforme tipo]
+D --> E{Admin ou Comum?}
+E -- Admin --> F[Painel Administrativo]
+E -- Comum --> G[Página Inicial]
+F & G --> H[Requisições futuras com cookie]
+H --> I[Middleware verifica JWT]
 ```
 
 ---
@@ -122,7 +119,7 @@ Este projeto é disponibilizado **exclusivamente para fins de portfólio pessoal
 
 ---
 
-## Sobre mim
+## 🙋 Sobre o Autor
 
 **Desenvolvido por [Anthony Garcia Santos](https://www.linkedin.com/in/anthony-santos-17820b358/)**  
 > "Código seguro, funcional e feito para resolver problemas reais." 💼💡
