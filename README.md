@@ -1,124 +1,256 @@
-# Sistema de Autenticação e Gestão de Produtos 🔒
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
-![License](https://img.shields.io/badge/license-Pessoal-red)
-![Stack](https://img.shields.io/badge/stack-Node.js%20%2B%20React-blue)
-
-Um sistema full-stack completo com:
-✔ Autenticação segura via JWT (cookies HTTP-only)
-✔ Controle de acesso por níveis (usuário/admin)
-✔ CRUD de produtos (apenas para administradores)
-✔ UI moderna e responsiva com TailwindCSS
-
-## 📌 Índice
-1. [Objetivo Comercial](#objetivo-comercial)
-2. [Funcionalidades](#funcionalidades)
-3. [Tecnologias Utilizadas](#tecnologias-utilizadas)
-4. [Estrutura do Projeto](#estrutura-do-projeto)
-5. [Fluxo de Autenticação](#fluxo-de-autenticação)
-6. [Roadmap](#roadmap)
-7. [Licença](#licença)
 
 
-## 🎯 Objetivo Comercial
-Sistema desenvolvido para **automatizar e otimizar processos de vendas**, resolvendo problemas críticos de gestão.
-
-### 🚀 Benefícios para Negócios
-- **Automação de Vendas**
-  - Cadastro inteligente de produtos
-  - Controle de estoque integrado
-  - Processos reduzidos em até 40%
-
-- **Gestão de Tráfego Qualificado**
-  - Painel administrativo para análise de conversões
-  - Segmentação de usuários por comportamento
-  - Integração futura com Google Analytics/Meta Pixel
-
-- **Segurança Transacional**
-  - Autenticação robusta para equipes comerciais
-  - Dados protegidos por criptografia JWT
-
-## ✨ Funcionalidades
-
-### Frontend (React)
-- **Autenticação segura**
-  - Login com validação de dados
-  - Cadastro de novos usuários
-  - Logout com remoção de cookies
-- **Controle de acesso**
-  - Rotas protegidas por perfil (usuário/admin)
-  - Redirecionamento automático baseado em role
-- **Gestão de produtos**
-  - Criação de produtos (apenas admin)
-  - Listagem dinâmica de produtos
-- **UI moderna**
-  - Design responsivo (mobile-first)
-  - Feedback visual em ações
-
-### Backend (Node.js/Express)
-- **Segurança reforçada**
-  - Autenticação JWT com cookies HTTP-only
-  - Rate limiting (5 tentativas de login/15min)
-  - Validação de dados com express-validator
-- **Banco de dados**
-  - MongoDB com Mongoose
-  - Schemas para Usuários e Produtos
-- **API RESTful**
-  - Endpoints bem definidos
-  - Tratamento de erros detalhado
-
-## 🛠 Tecnologias Utilizadas
-
-| **Frontend**       | **Backend**         | **Banco de Dados** |
-|--------------------|--------------------|--------------------|
-| React 18           | Node.js            | MongoDB            |
-| Vite               | Express            | Mongoose           |
-| React Router 6     | JWT                |                    |
-| Axios              | BcryptJS           |                    |
-| TailwindCSS        | Express Validator  |                    |
+🔽 Want to read in Portuguese? [Click here](#português-versão)  
+🔽 Para ver a versão em português, [clique aqui](#português-versão)
 
 
-## 🔐 Fluxo de Autenticação
-1. Usuário faz login/cadastro
-2. Servidor valida dados e gera JWT
-   - Armazenado em cookie HTTP-only seguro
-3. Frontend redireciona conforme perfil
-   - Admin → Painel administrativo
-   - Usuário → Página inicial
-4. Todas requisições subsequentes
-   - Incluem cookie automaticamente
-5. Middleware verifica token
-   - Rotas protegidas exigem autenticação válida
+<h1 id="top">🔐🚀 Authentication and Product Management System</h1>
+# ![Status](https://img.shields.io/badge/status-In%20Development-yellow)  
+# ![License](https://img.shields.io/badge/license-Personal%20Portfolio-red)  
+# ![Stack](https://img.shields.io/badge/stack-Node.js%20%2B%20React-blue)  
 
-## 🔮 Roadmap (Próximas Features)
-- [ ] Integrar APIs de pagamento (ex: Stripe, MercadoPago)
-- [ ] Criar dashboard de métricas de vendas (gráficos em tempo real)
-- [ ] Implementar sistema de cupons e promoções
-- [ ] Realizar deploy com hospedagem e domínio personalizados
+description: "A robust full-stack system focused on security, performance, and smart product management."
 
-      
-## 📝 Licença
+## 🧠 Key Features
+features:
+  - "Authentication using secure JWT with HTTP-only cookies"
+  - "User access control (admin / regular)"
+  - "Product CRUD with admin panel (admin only)"
+  - "Modern and responsive interface with TailwindCSS"
 
-© 2025 Anthony Garcia Santos — **Todos os direitos reservados**
+## 📌 Index
+index:
+  - Business Objective
+  - Features
+  - Technologies Used
+  - Authentication Flow
+  - Roadmap
+  - License
 
-Este projeto é disponibilizado **exclusivamente para fins de portfólio pessoal**.
+## 🎯 Business Objective
 
-### ✔ Permissões
-- Visualização e análise do código
-- Inspiração para projetos educacionais ou portfólios pessoais
+**Purpose:**  
+Developed to solve real issues in product management and user authentication in digital business environments.
 
-### ❌ Restrições
-- É **proibida** a cópia, modificação ou redistribuição
-- **Uso comercial ou em produção não autorizado**
+### 💼 Sales Automation
 
-📧 Para solicitações de uso especial ou parcerias:  
-**Anthony.garcia.santos17@gmail.com**
+- Quick product registration  
+- Stock and user management  
+- Reduces manual tasks by up to 40%  
+
+### 📊 Conversion Management
+
+- Admin dashboard for future metrics  
+- User segmentation (behavior / permissions)  
+- Ready for Google Analytics / Meta Pixel integration  
+
+### 🛡 Corporate Security
+
+- JWT encryption  
+- Cookies protected against theft  
+- Rate limiting against brute-force (5 attempts / 15 min)
+
+
+## ✨ Features
+
+### ⚙️ Frontend (React + Tailwind)
+
+- Login, logout, and user registration  
+- Routes protected by access level  
+- Auto-redirect based on user type  
+- Product listing and creation (admin only)  
+- Mobile-first responsive interface  
+
+### 🔐 Backend (Node.js + Express)
+
+- Authentication with JWT in HTTP-only cookies  
+- Token verification middleware  
+- Secure and modular RESTful API  
+- Database using MongoDB/Mongoose  
+- Validation with express-validator  
+- Integrated rate limiting  
+
+## 🛠 Technologies Used
+
+| Frontend            | Backend            | Database    |
+|---------------------|--------------------|-------------|
+| React 18            | Node.js            | MongoDB     |
+| Vite                | Express            | Mongoose    |
+| TailwindCSS         | JWT                |             |
+| React Router DOM v6 | BcryptJS           |             |
+| Axios               | Express Validator  |             |
+
+## 🔐 Authentication Flow
+
+```mermaid
+graph TD
+A[User logs in or registers] --> B{Valid data?}
+B -- Yes --> C[Generate JWT + Cookie]
+C --> D[Redirect based on user type]
+D --> E{Admin or Regular?}
+E -- Admin --> F[Admin Panel]
+E -- Regular --> G[Home Page]
+F & G --> H[Future requests with cookie]
+H --> I[Middleware checks JWT]
+```
+
+## 🔮 Roadmap (Next Steps)
+
+  - "[ ] Smart shopping cart (in development)"
+  - "[ ] Integration with payment gateways (Stripe/MercadoPago)"
+  - "[ ] Sales dashboard with real-time charts (D3.js or Chart.js)"
+  - "[ ] Discount coupons and promotions"
+  - "[ ] Deployment with professional domain and CI/CD"
+
+## 📝 License
+
+copyright: "© 2025 Anthony Garcia Santos — All rights reserved."
+
+- "Viewing and analyzing the code"
+- "Inspiration for study or personal reimplementation"
+- "Commercial use or publication without permission"
+- "Redistribution or code modification without authorization"
+- "anthony.garcia.santos17@gmail.com"
+
+## 🙋 About the Author
+
+"Anthony Garcia Santos"
+"https://www.linkedin.com/in/anthony-santos-17820b358/"
+"\"Secure, functional code made to solve real problems.\" 💼💡"
 
 
 ---
 
-**Desenvolvido por [Anthony Garcia Santos]**  
-🔗 [LinkedIn](https://www.linkedin.com/in/anthony-santos-17820b358/)  
+---
 
-> "Código seguro, eficiente e feito para resolver sérios problemas de negócios!" 💼🚀
+## Português Versão
 
+# Sistema de Autenticação e Gestão de Produtos 🔐🚀  
+![Status](https://img.shields.io/badge/status-Em%20Desenvolvimento-yellow)  
+![Licença](https://img.shields.io/badge/license-Portf%C3%B3lio%20Pessoal-red)  
+![Stack](https://img.shields.io/badge/stack-Node.js%20%2B%20React-blue)
+
+Um sistema full-stack robusto, com foco em segurança, performance e gestão inteligente de produtos.
+
+## 🧠 Principais Recursos
+- Autenticação via **JWT seguro com cookies HTTP-only**  
+- Controle de acesso por nível de usuário (**admin / comum**)  
+- CRUD de produtos com painel administrativo (somente admin)  
+- Interface moderna e responsiva com **TailwindCSS**
+
+---
+
+## 📌 Índice
+1. [Objetivo Comercial](#objetivo-comercial)  
+2. [Funcionalidades](#funcionalidades)  
+3. [Tecnologias Utilizadas](#tecnologias-utilizadas)  
+4. [Fluxo de Autenticação](#fluxo-de-autenticação)  
+5. [Roadmap](#roadmap)  
+6. [Licença](#licença)  
+
+---
+
+## 🎯 Objetivo Comercial
+Desenvolvido para resolver problemas reais de **gestão de produtos e autenticação de usuários** em ambientes comerciais digitais.
+
+### 💼 Benefícios para Negócios
+- **Automação de Vendas**
+  - Cadastro ágil de produtos
+  - Controle de estoque e usuários
+  - Redução de tarefas manuais em até **40%**
+
+- **Gestão de Conversões**
+  - Área administrativa com painel para métricas futuras
+  - Segmentação de usuários (comportamento / permissões)
+  - Pronto para integrar com **Google Analytics / Meta Pixel**
+
+- **Segurança Corporativa**
+  - Criptografia via JWT
+  - Cookies protegidos contra roubo
+  - **Rate limiting** contra brute-force (5 tentativas / 15min)
+
+---
+
+## ✨ Funcionalidades
+
+### ⚙️ Frontend (React + Tailwind)
+- Login, logout e cadastro de usuários
+- Rotas protegidas por nível de acesso
+- Redirecionamento automático conforme tipo de usuário
+- Listagem e criação de produtos (admin)
+- Interface responsiva (mobile-first)
+
+### 🔐 Backend (Node.js + Express)
+- Autenticação via JWT em cookies HTTP-only
+- Middleware de verificação de token
+- API RESTful segura e modular
+- Banco de dados com MongoDB/Mongoose
+- Validação com express-validator
+- Rate limiting integrado
+
+---
+
+## 🛠 Tecnologias Utilizadas
+
+| Frontend              | Backend              | Banco de Dados |
+|-----------------------|----------------------|----------------|
+| React 18              | Node.js              | MongoDB        |
+| Vite                  | Express              | Mongoose       |
+| TailwindCSS           | JWT                  |                |
+| React Router DOM v6   | BcryptJS             |                |
+| Axios                 | Express Validator    |                |
+
+---
+
+## 🔐 Fluxo de Autenticação
+
+```mermaid
+graph TD
+A[Usuário faz login ou cadastro] --> B{Dados válidos?}
+B -- Sim --> C[Gera JWT + Cookie]
+C --> D[Redireciona conforme tipo]
+D --> E{Admin ou Comum?}
+E -- Admin --> F[Painel Administrativo]
+E -- Comum --> G[Página Inicial]
+F & G --> H[Requisições futuras com cookie]
+H --> I[Middleware verifica JWT]
+```
+
+---
+
+## 🔮 Roadmap (Próximas Etapas)
+- [ ] Carrinho de compras inteligente (em desenvolvimento)
+- [ ] Integração com gateways de pagamento (Stripe/MercadoPago)
+- [ ] Painel de vendas com gráficos em tempo real (D3.js ou Chart.js)
+- [ ] Cupom de descontos e promoções
+- [ ] Deploy com domínio profissional e CI/CD
+
+---
+
+## 📝 Licença
+
+© 2025 Anthony Garcia Santos — **Todos os direitos reservados.**
+
+Este projeto é disponibilizado **exclusivamente para fins de portfólio pessoal**.
+
+**✔ Permissões**  
+- Visualização e análise do código  
+- Inspiração para estudos ou reimplementações pessoais  
+
+**❌ Restrições**  
+- Proibido uso comercial ou publicação sem autorização  
+- Proibida a redistribuição ou modificação deste código  
+
+📬 Para parcerias, propostas ou permissões especiais:  
+**anthony.garcia.santos17@gmail.com**
+
+---
+
+## 🙋 Sobre o Autor
+
+**Desenvolvido por [Anthony Garcia Santos](https://www.linkedin.com/in/anthony-santos-17820b358/)**  
+> "Código seguro, funcional e feito para resolver problemas reais." 💼💡
+
+
+🔼 [Voltar ao topo / Back to top](#top)
 
