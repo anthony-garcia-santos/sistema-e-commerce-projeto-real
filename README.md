@@ -81,19 +81,18 @@ Developed to solve real issues in product management and user authentication in 
 | Axios               | Express Validator  |             |
 
 ## 🔐 Authentication Flow
-auth_flow: |
-  graph TD
-  A[User logs in or registers] --> B{Valid data?}
-  B -- Yes --> C[Generate JWT + Cookie]
-  C --> D[Redirect based on user type]
-  D --> E{Admin or Regular?}
-  E -- Admin --> F[Admin Panel]
-  E -- Regular --> G[Home Page]
-  F & G --> H[Future requests with cookie]
-  H --> I[Middleware checks JWT]
+graph TD
+A[User logs in or registers] --> B{Valid data?}
+B -- Yes --> C[Generate JWT + Cookie]
+C --> D[Redirect based on user type]
+D --> E{Admin or Regular?}
+E -- Admin --> F[Admin Panel]
+E -- Regular --> G[Home Page]
+F & G --> H[Future requests with cookie]
+H --> I[Middleware checks JWT]
 
 ## 🔮 Roadmap (Next Steps)
-roadmap:
+
   - "[ ] Smart shopping cart (in development)"
   - "[ ] Integration with payment gateways (Stripe/MercadoPago)"
   - "[ ] Sales dashboard with real-time charts (D3.js or Chart.js)"
@@ -101,22 +100,20 @@ roadmap:
   - "[ ] Deployment with professional domain and CI/CD"
 
 ## 📝 License
-license:
-  copyright: "© 2025 Anthony Garcia Santos — All rights reserved."
-  usage:
-    allowed:
-      - "Viewing and analyzing the code"
-      - "Inspiration for study or personal reimplementation"
-    restricted:
-      - "Commercial use or publication without permission"
-      - "Redistribution or code modification without authorization"
-  contact: "anthony.garcia.santos17@gmail.com"
+
+copyright: "© 2025 Anthony Garcia Santos — All rights reserved."
+
+- "Viewing and analyzing the code"
+- "Inspiration for study or personal reimplementation"
+- "Commercial use or publication without permission"
+- "Redistribution or code modification without authorization"
+- "anthony.garcia.santos17@gmail.com"
 
 ## 🙋 About the Author
-author:
-  name: "Anthony Garcia Santos"
-  linkedin: "https://www.linkedin.com/in/anthony-santos-17820b358/"
-  quote: "\"Secure, functional code made to solve real problems.\" 💼💡"
+
+"Anthony Garcia Santos"
+"https://www.linkedin.com/in/anthony-santos-17820b358/"
+"\"Secure, functional code made to solve real problems.\" 💼💡"
 
 
 ---
@@ -133,10 +130,10 @@ author:
 Um sistema full-stack robusto, com foco em segurança, performance e gestão inteligente de produtos.
 
 ## 🧠 Principais Recursos
-✔️ Autenticação via **JWT seguro com cookies HTTP-only**  
-✔️ Controle de acesso por nível de usuário (**admin / comum**)  
-✔️ CRUD de produtos com painel administrativo (somente admin)  
-✔️ Interface moderna e responsiva com **TailwindCSS**
+- Autenticação via **JWT seguro com cookies HTTP-only**  
+- Controle de acesso por nível de usuário (**admin / comum**)  
+- CRUD de produtos com painel administrativo (somente admin)  
+- Interface moderna e responsiva com **TailwindCSS**
 
 ---
 
