@@ -61,7 +61,7 @@ export default function Cadastrar() {
 
                 {/* inputs etc */}
 
-                <div className="relative -top-10 px-40 flex flex-1 justify-center py-5">
+                <div className="relative flex flex-1 justify-center py-5 px-4 md:justify-start md:px-40 -top-10">
 
                     <form onSubmit={handleSubmit} className="layout-content-container flex flex-col w-[512px] py-5 max-w-[960px] flex-1">
 
