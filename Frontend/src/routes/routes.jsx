@@ -9,8 +9,9 @@ import Home from '../pages/Home.jsx';
 import Login from '../pages/Login.jsx';
 import Admin from '../pages/administração.jsx';
 import PaginaProduto from '../pages/paginaProduto.jsx';
-//import PrivateUserRoute from './PrivateRoutesUsers.jsx';
+import Carrinho from '../pages/carrinho.jsx';
 import PrivateAdminRoutes from './privateRoutes.jsx'; 
+import PrivateUserRoute from './PrivateRoutesUsers.jsx';
 
 export default function Rotas() {
 
@@ -23,8 +24,10 @@ export default function Rotas() {
         <Route path="/" element={<Home />} />
         <Route path="/Login" element={<Login />} />
 
+
+        <Route path='/carrinho' element={<PrivateUserRoute> <Carrinho /> </PrivateUserRoute>} />
         <Route path="/produto/:id" element={<PaginaProduto />}/>
-        <Route path='/admin' element={<PrivateAdminRoutes><Admin /></PrivateAdminRoutes>} />
+        <Route path='/admin' element={<PrivateAdminRoutes>< Admin /></PrivateAdminRoutes>} />
       </Routes>
 
     </>

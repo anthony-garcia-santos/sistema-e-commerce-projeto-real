@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
-import { produtoId } from '../services/authService';
 import ProductCard from '../Components/ComponentCard';
 import { useNavigate } from 'react-router-dom';
-import { listarProdutos, BuscarProduto } from '../services/authService';
+import { produtoId, listarProdutos, verificarUsuarioLogado } from '../services/authService';
 import '../index.css/index.css'
+import carrinhoIMG from '../index.css/assets/carrinho.svg'
 
 
 export default function PaginaProduto() {
@@ -98,11 +98,72 @@ export default function PaginaProduto() {
         );
     }
 
+
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErro("");
+    setLoading(true);
+
+    try {
+        await verificarUsuarioLogado();
+        navigate('/carrinho');
+    } catch (erro) {
+        console.error('Usuário não está logado:', erro);
+        navigate('/login');
+    } finally {
+        setLoading(false);
+    }
+}
+
+
     return (
+
+
         <div
             className="relative flex size-full min-h-screen flex-col bg-[#fcfaf8] overflow-x-hidden"
             style={{ fontFamily: '"Be Vietnam Pro", "Noto Sans", sans-serif' }}
         >
+
+
+
+            <div className="grid grid-cols-2 items-center px-10 py-[7px] bg-white mb-8 font-semibold border-b border-gray-300">
+                {/* Coluna da esquerda - Título */}
+                <h1 className="text-left relative right-8" style={{
+                    fontFamily: "'Be Vietnam Pro', sans-serif",
+                    lineHeight: '21px',
+                }}> Lolo_Personalizado</h1>
+
+                {/* Coluna da direita - Campo de busca + botão */}
+                <div className="flex justify-end items-center gap-5">
+                    <button
+                        onClick={IrLogin}
+                        className="flex items-center justify-center rounded-[20px] text-[12px] w-[84px] h-[40px] bg-[#F5EDE8] font-bold text-center cursor-pointer"
+                        style={{
+                            fontFamily: "'Be Vietnam Pro', sans-serif",
+                            lineHeight: '21px',
+                        }}
+                    >
+                        Log in
+                    </button>
+
+                    <button onClick={handleSubmit} 
+                    className="flex items-center justify-center rounded-full w-[40px] h-[40px] bg-[#F5EDE8] cursor-pointer"
+                    >
+
+                    </button>
+
+                    <img onClick={handleSubmit}
+                        src={carrinhoIMG} alt="carrinho"
+                        className="absolute right-13 cursor-pointer"
+                    />
+
+                </div>
+            </div>
+
+
+
+
+
             {/* Home/Produto */}
             <div className="relative left-40 top-6 p-4 px-10">
                 <button

@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/UserModel');
 
 const verificarUsuario = async (req, res, next) => {
+  
   const token = req.cookies.token;
   if (!token) {
     return res.status(401).json({ error: 'Token não fornecido' });

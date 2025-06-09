@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import ProductCard from '../Components/ComponentCard';
-import { listarProdutos, BuscarProduto } from '../services/authService';
+import { listarProdutos, BuscarProduto, verificarUsuarioLogado } from '../services/authService';
 
 import busca from '../index.css/assets/busca.svg'
 import login from '../index.css/assets/login.png'
+import carrinhoIMG from '../index.css/assets/carrinho.svg'
 
 
 export default function Home() {
@@ -44,54 +45,89 @@ export default function Home() {
         };
     }, [query]);
 
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError(null);
+        setLoading(true);
+
+        try {
+            await verificarUsuarioLogado();
+            navigate('/carrinho');
+        } catch (erro) {
+            console.error('Usuário não está logado:', erro);
+            navigate('/login');
+        } finally {
+            setLoading(false);
+        }
+    }
+
+
+
     return (
         <div className="w-full min-h-screen">
             {/* Header com botões */}
 
-            <div className="grid grid-cols-2 items-center px-10 py-[7px] bg-white mb-8 font-semibold border-b border-gray-300">
-                {/* Coluna da esquerda - Título */}
-                <h1 className="text-left relative right-8" style={{
-                    fontFamily: "'Be Vietnam Pro', sans-serif",
-                    lineHeight: '21px',
-                }}> Lolo_Personalizado</h1>
+            <div className="w-full bg-white mb-8 border-b border-gray-300 px-4 sm:px-6 lg:px-10 py-2">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
 
-                {/* Coluna da direita - Campo de busca + botão */}
-                <div className="flex justify-end items-center gap-5">
-                    <div className="relative w-[164px] h-[40px]">
-                        <input
-                            className="w-full h-full pl-5 pr-2 rounded-[6px] text-[12px] bg-[#F5EDE8] text-[#9C784A] font-normal text-center"
-                            type="text"
-                            placeholder="Search"
+                    {/* Título */}
+                    <h1 className="text-xl font-semibold text-left"
+                        style={{
+                            fontFamily: "'Be Vietnam Pro', sans-serif",
+                            lineHeight: '21px',
+                        }}>
+                        Lolo_Personalizado
+                    </h1>
+
+                    {/* Campo de busca e botões */}
+                    <div className="flex flex-wrap justify-end items-center gap-3">
+                        <div className="relative w-[164px] h-[40px]">
+                            <input
+                                className="w-full h-full pl-8 pr-2 rounded-[6px] text-[12px] bg-[#F5EDE8] text-[#9C784A] font-normal text-center"
+                                type="text"
+                                placeholder="Search"
+                                style={{
+                                    fontFamily: "'Be Vietnam Pro', sans-serif",
+                                    lineHeight: '21px',
+                                }}
+                                value={buscar}
+                                onChange={e => setBuscar(e.target.value)}
+                                onKeyDown={e => {
+                                    if (e.key === 'Enter') {
+                                        setQuery(buscar.trim());
+                                    }
+                                }}
+                            />
+                            <img
+                                src={busca}
+                                alt="busca"
+                                className="absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4"
+                            />
+                        </div>
+
+                        <button
+                            onClick={IrLogin}
+                            className="rounded-[20px] text-[12px] w-[84px] h-[40px] bg-[#F5EDE8] font-bold text-center cursor-pointer"
                             style={{
                                 fontFamily: "'Be Vietnam Pro', sans-serif",
                                 lineHeight: '21px',
                             }}
-                            value={buscar}
-                            onChange={e => setBuscar(e.target.value)}
-                            onKeyDown={e => {
-                                if (e.key === 'Enter') {
-                                    setQuery(buscar.trim());
-                                }
-                            }}
-                        />
-                        <img
-                            src={busca} alt="busca"
-                            className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4"
-                        />
-                    </div>
+                        >
+                            Log in
+                        </button>
 
-                    <button
-                        onClick={IrLogin}
-                        className="flex items-center justify-center rounded-[20px] text-[12px] w-[84px] h-[40px] bg-[#F5EDE8] font-bold text-center cursor-pointer"
-                        style={{
-                            fontFamily: "'Be Vietnam Pro', sans-serif",
-                            lineHeight: '21px',
-                        }}
-                    >
-                        Log in
-                    </button>
+                        <button
+                            onClick={handleSubmit}
+                            className="rounded-full w-[40px] h-[40px] bg-[#F5EDE8] flex items-center justify-center cursor-pointer"
+                        >
+                            <img src={carrinhoIMG} alt="carrinho" className="w-5 h-5" />
+                        </button>
+                    </div>
                 </div>
             </div>
+
 
 
             {/* Conteúdo */}
