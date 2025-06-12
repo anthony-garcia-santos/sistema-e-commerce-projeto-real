@@ -92,6 +92,19 @@ export const BuscarProduto = async (query = "") => {
 
 
 
+export const adicionarAoCarrinho = async ({ userId, productId, quantity }) => {
+  const response = await api.post('/api/cart/add', { userId, productId, quantity }, { withCredentials: true });
+  return response.data;
+};
+
+export const buscarCarrinho = async (userId) => {
+  const response = await api.get(`/api/cart/${userId}`, { withCredentials: true });
+  return response.data;
+};
+
+
+
+
 
 
 // Front_end/src/services/uploadService.js

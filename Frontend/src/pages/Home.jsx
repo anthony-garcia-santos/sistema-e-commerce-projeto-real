@@ -129,7 +129,7 @@ export default function Home() {
             </div>
 
 
-
+ 
             {/* Conteúdo */}
             <div className="flex justify-center mb-5 mt-[-10px]">
                 <div className="relative rounded-2xl overflow-hidden w-full max-w-[955px] aspect-[928/500]">

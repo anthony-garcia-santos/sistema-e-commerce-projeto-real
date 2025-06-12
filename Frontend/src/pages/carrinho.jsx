@@ -1,45 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { verificarUsuarioLogado, buscarCarrinho } from '../../src/services/authService';
 
-import '../index.css/index.css'
+export default function Carrinho() {
 
-export default function carrinho() {
+    const navigate = useNavigate();
+    const [itens, setItens] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [erro, setErro] = useState(null);
 
-    const navigate = useNavigate(); 
+    useEffect(() => {
+        if (!userId) return; // evita chamada com undefined
 
-    const Home = () => navigate("/");
+        async function carregarCarrinho() {
+            try {
+                const response = await axios.get(`/api/cart/${userId}`);
+                setCarrinho(response.data);
+            } catch (error) {
+                console.error("Erro ao carregar carrinho:", error);
+            }
+        }
 
+        carregarCarrinho();
+    }, [userId]);
+
+
+    if (loading) {
+        return <p>Carregando...</p>;
+    }
+
+    if (erro) {
+        return <p>{erro}</p>;
+    }
 
     return (
+        <div className="container mx-auto p-5">
+            <h1 className="text-2xl mb-4">Seu Carrinho</h1>
 
-        <div
-            className="relative flex size-full min-h-screen flex-col bg-[#fcfaf8] overflow-x-hidden"
-            style={{ fontFamily: '"Be Vietnam Pro", "Noto Sans", sans-serif' }}
-        >
-            <div className="grid grid-cols-2 items-center px-10 py-[7px] bg-white mb-8 font-semibold border-b border-gray-300">
-                {/* Coluna da esquerda - Título */}
-                <h1 className="text-left relative right-8" style={{
-                    fontFamily: "'Be Vietnam Pro', sans-serif",
-                    lineHeight: '21px',
-                }}> Lolo_Personalizado</h1>
+            {itens.length === 0 ? (
+                <p>Seu carrinho está vazio.</p>
+            ) : (
+                <ul>
+                    {itens.map(item => (
+                        <li key={item._id} className="mb-4 border p-3 rounded">
+                            <p>Produto ID: {item.productId}</p>
+                            <p>Quantidade: {item.quantity}</p>
+                        </li>
+                    ))}
+                </ul>
+            )}
 
-                <div className="flex justify-end items-center gap-5">
-
-                    <button
-                        onClick={Home}
-                        className="flex items-center justify-center rounded-[20px] text-[12px] w-[50px] h-[40px] bg-[#F5EDE8] font-bold text-center cursor-pointer"
-                    >eae</button>
-
-                </div>
-
-
-            </div>
+            <button onClick={() => navigate('/')} className="mt-5 bg-orange-500 px-4 py-2 rounded text-white">
+                Continuar comprando
+            </button>
         </div>
-
-
-
-    )
-
-
-
+    );
 }

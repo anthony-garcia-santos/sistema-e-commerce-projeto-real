@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import ProductCard from '../Components/ComponentCard';
 import { useNavigate } from 'react-router-dom';
-import { produtoId, listarProdutos, verificarUsuarioLogado } from '../services/authService';
+import { produtoId, listarProdutos, verificarUsuarioLogado, adicionarAoCarrinho } from '../../src/services/authService';
 import '../index.css/index.css'
 import carrinhoIMG from '../index.css/assets/carrinho.svg'
 
@@ -99,21 +99,42 @@ export default function PaginaProduto() {
     }
 
 
-const handleSubmit = async (e) => {
-    e.preventDefault();
-    setErro("");
-    setLoading(true);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setErro("");
+        setLoading(true);
 
-    try {
-        await verificarUsuarioLogado();
-        navigate('/carrinho');
-    } catch (erro) {
-        console.error('Usuário não está logado:', erro);
-        navigate('/login');
-    } finally {
-        setLoading(false);
+        try {
+            await verificarUsuarioLogado();
+            navigate('/carrinho');
+        } catch (erro) {
+            console.error('Usuário não está logado:', erro);
+            navigate('/login');
+        } finally {
+            setLoading(false);
+        }
     }
-}
+
+    const handleAdicionarAoCarrinho = async () => {
+        try {
+            // Pega o usuário logado
+            const user = await verificarUsuarioLogado();
+
+            // Faz a chamada para o service já pronto
+            await adicionarAoCarrinho({
+                userId: user._id,
+                productId: produto._id,
+                quantity: 1
+            });
+
+            alert("Produto adicionado ao carrinho!");
+        } catch (error) {
+            console.error("Erro ao adicionar ao carrinho:", error);
+            navigate("/login");
+        }
+    }
+
+
 
 
     return (
@@ -146,8 +167,8 @@ const handleSubmit = async (e) => {
                         Log in
                     </button>
 
-                    <button onClick={handleSubmit} 
-                    className="flex items-center justify-center rounded-full w-[40px] h-[40px] bg-[#F5EDE8] cursor-pointer"
+                    <button onClick={handleSubmit}
+                        className="flex items-center justify-center rounded-full w-[40px] h-[40px] bg-[#F5EDE8] cursor-pointer"
                     >
 
                     </button>
@@ -201,11 +222,16 @@ const handleSubmit = async (e) => {
                                 <p className="text-[#9c7849] text-sm font-light">
                                     {produto.descricao}
                                 </p>
+
+
                                 <button
                                     className="h-12 w-fit px-6 rounded-full bg-[#f28f0d] text-[#1c150d] text-sm font-medium cursor-pointer"
+                                    onClick={handleAdicionarAoCarrinho}
                                 >
                                     Adicionar ao carrinho
                                 </button>
+
+
                             </div>
                         </div>
                     </div>
