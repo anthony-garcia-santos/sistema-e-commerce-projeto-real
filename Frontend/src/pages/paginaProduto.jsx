@@ -117,20 +117,40 @@ export default function PaginaProduto() {
 
     const handleAdicionarAoCarrinho = async () => {
         try {
-            // Pega o usuário logado
             const user = await verificarUsuarioLogado();
+            console.log("Usuário logado:", user);
 
-            // Faz a chamada para o service já pronto
-            await adicionarAoCarrinho({
+            if (!produto || !produto._id) {
+                throw new Error("Produto não disponível");
+            }
+            console.log("Produto ID:", produto._id);
+
+            const resposta = await adicionarAoCarrinho({
                 userId: user._id,
                 productId: produto._id,
                 quantity: 1
             });
 
+            console.log("Resposta da API:", resposta);
             alert("Produto adicionado ao carrinho!");
         } catch (error) {
-            console.error("Erro ao adicionar ao carrinho:", error);
-            navigate("/login");
+            console.error("Erro completo:", error);
+
+            // Log detalhado da resposta de erro
+            if (error.response) {
+                console.error("Status do erro:", error.response.status);
+                console.error("Dados do erro:", error.response.data);
+                console.error("Cabeçalhos do erro:", error.response.headers);
+
+                alert(`Erro: ${error.response.data.message || error.message}`);
+            } else {
+                console.error("Sem resposta do servidor");
+                alert("Erro de conexão com o servidor");
+            }
+
+            if (error.response?.status === 401) {
+                navigate("/login");
+            }
         }
     }
 

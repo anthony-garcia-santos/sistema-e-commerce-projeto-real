@@ -93,8 +93,43 @@ export const BuscarProduto = async (query = "") => {
 
 
 export const adicionarAoCarrinho = async ({ userId, productId, quantity }) => {
-  const response = await api.post('/api/cart/add', { userId, productId, quantity }, { withCredentials: true });
-  return response.data;
+  try {
+    console.log('Enviando requisição para adicionar ao carrinho:', {
+      userId,
+      productId,
+      quantity
+    });
+    
+    const response = await api.post('/api/cart/add', 
+      { userId, productId, quantity }, 
+      { 
+        withCredentials: true,
+        timeout: 10000 // 10 segundos de timeout
+      }
+    );
+    
+    console.log('Resposta do servidor:', response.data);
+    return response.data;
+    
+  } catch (error) {
+    let errorDetails = {
+      message: error.message,
+      code: error.code
+    };
+    
+    if (error.response) {
+      errorDetails = {
+        status: error.response.status,
+        data: error.response.data,
+        headers: error.response.headers
+      };
+    } else if (error.request) {
+      errorDetails.request = error.request;
+    }
+    
+    console.error('Erro detalhado ao adicionar ao carrinho:', errorDetails);
+    throw new Error('Falha ao adicionar item ao carrinho');
+  }
 };
 
 export const buscarCarrinho = async (userId) => {

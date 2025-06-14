@@ -16,7 +16,7 @@ router.post('/cart/add', cartController.adicionarAoCarrinho);
 
 
 router.get('/cart/:userId', cartController.buscarCarrinho);
-router.get('/produtos', listarProdutos ); // protegida
+router.get('/produtos/lista', listarProdutos ); // protegida
 router.get('/produtos/:id', produtoId);  // protegida
 
 router.get('/buscar-produto', (req, res, next) => {

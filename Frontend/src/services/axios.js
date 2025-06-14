@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL.replace(/\/api$/, ''), // Remove /api do final
+  baseURL: import.meta.env.VITE_API_URL.replace(/\/api$/, ''),
   timeout: 5000,
   withCredentials: true,
 });
