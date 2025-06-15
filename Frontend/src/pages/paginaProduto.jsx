@@ -2,14 +2,13 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import ProductCard from '../Components/ComponentCard';
 import { useNavigate } from 'react-router-dom';
-import { produtoId, listarProdutos, verificarUsuarioLogado, adicionarAoCarrinho } from '../../src/services/authService';
+import { produtoId, listarProdutos, verificarUsuarioLogado, createCart, addItem, buscarCarrinho } from '../../src/services/authService';
 import '../index.css/index.css'
 import carrinhoIMG from '../index.css/assets/carrinho.svg'
 
 
 export default function PaginaProduto() {
     const navigate = useNavigate();
-    const IrCadastro = () => navigate("/Cadastrar");
     const IrLogin = () => navigate("/Login");
     const Home = () => navigate("/");
 
@@ -18,6 +17,7 @@ export default function PaginaProduto() {
     const [produtos, setProdutos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [erro, setErro] = useState(null);
+    const [cart, setCart] = useState(null);
 
     // ---------- Primeira lógica de carregamento (já existia) ----------
     useEffect(() => {
@@ -98,12 +98,10 @@ export default function PaginaProduto() {
         );
     }
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErro("");
         setLoading(true);
-
         try {
             await verificarUsuarioLogado();
             navigate('/carrinho');
@@ -115,44 +113,34 @@ export default function PaginaProduto() {
         }
     }
 
+
+
     const handleAdicionarAoCarrinho = async () => {
         try {
-            const user = await verificarUsuarioLogado();
-            console.log("Usuário logado:", user);
+            const usuario = await verificarUsuarioLogado(); // pega o user logado
+            const userId = usuario._id;
 
-            if (!produto || !produto._id) {
-                throw new Error("Produto não disponível");
+            let existingCart = await buscarCarrinho(userId);
+            if (!existingCart) {
+                existingCart = await createCart(userId);
             }
-            console.log("Produto ID:", produto._id);
 
-            const resposta = await adicionarAoCarrinho({
-                userId: user._id,
-                productId: produto._id,
-                quantity: 1
-            });
+            const produtoId = produto._id;
+            const quantidade = 1;
 
-            console.log("Resposta da API:", resposta);
-            alert("Produto adicionado ao carrinho!");
+            const updatedCart = await addItem(existingCart._id, produtoId, quantidade);
+
+            setCart(updatedCart);
+            alert("Produto adicionado ao carrinho com sucesso!");
+
         } catch (error) {
-            console.error("Erro completo:", error);
-
-            // Log detalhado da resposta de erro
-            if (error.response) {
-                console.error("Status do erro:", error.response.status);
-                console.error("Dados do erro:", error.response.data);
-                console.error("Cabeçalhos do erro:", error.response.headers);
-
-                alert(`Erro: ${error.response.data.message || error.message}`);
-            } else {
-                console.error("Sem resposta do servidor");
-                alert("Erro de conexão com o servidor");
-            }
-
+            console.error("Erro ao adicionar ao carrinho", error);
             if (error.response?.status === 401) {
                 navigate("/login");
             }
         }
     }
+
 
 
 

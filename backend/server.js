@@ -13,7 +13,7 @@ require("dotenv").config();
 const userRoutes = require('./src/routes/UserRoutes');
 const ProductRoutes = require('./src/routes/productsRoutes');
 const UploadRoutes = require('./src/routes/UploadRoutes')
-
+const CartRoutes = require('./src/routes/CartRoutes')
 
 
 mongoose.connect(process.env.MONGO_URL)
@@ -41,7 +41,7 @@ app.use((req, res, next) => {
 });
 
 
-
+app.use("/api", CartRoutes)
 app.use("/api", UploadRoutes)
 app.use("/api", userRoutes);
 app.use("/api", ProductRoutes);
