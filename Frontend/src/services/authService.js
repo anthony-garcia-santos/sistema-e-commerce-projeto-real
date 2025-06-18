@@ -17,6 +17,17 @@ export const verificarUsuarioLogado = async () => {
   return response.data;
 };
 
+export const logoutUsuario = () => {
+  return api.post("/api/logout", {}, { withCredentials: true });
+};
+
+
+
+
+
+
+
+
 
 
 
@@ -34,9 +45,14 @@ export const obterAdminData = async () => {
 };
 
 
-export const logoutUsuario = () => {
-  return api.post("/api/logout", {}, { withCredentials: true });
-};
+
+
+
+
+
+
+
+
 
 
 
@@ -94,14 +110,21 @@ export const BuscarProduto = async (query = "") => {
 
 
 
+
+
+
+
 export const createCart = async (userId, userNome) => {
   const response = await api.post('/api/create', { userId, userNome });
   return response.data;
 }
 
 
-export const addItem = async (cartId, produtoId, quantidade) => {
-  const response = await api.post('/api/add-item', { cartId, produtoId, quantidade });
+export const addItem = async (produtoId, quantidade) => {
+  const response = await api.post('/api/add-item', { 
+    produtoId, 
+    quantidade 
+  });
   return response.data;
 }
 

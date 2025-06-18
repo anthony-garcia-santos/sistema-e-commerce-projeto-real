@@ -13,7 +13,9 @@ export default function Carrinho() {
         const obterUsuario = async () => {
             try {
                 const user = await verificarUsuarioLogado();
-                setUserId(user._id);
+                console.log('Usuário logado:', user);
+
+                setUserId(user.usuario._id);
             } catch (error) {
                 setErro("Usuário não autenticado");
                 setLoading(false);
@@ -28,6 +30,9 @@ export default function Carrinho() {
 
         const carregarCarrinho = async () => {
             try {
+
+                setLoading(true);
+
                 const data = await buscarCarrinho(userId);
                 console.log('Dados do carrinho:', data);
                 setCarrinho(data);
@@ -41,6 +46,30 @@ export default function Carrinho() {
         carregarCarrinho();
     }, [userId]);
 
+
+
+
+    const atualizarQuantidade = (productId, operacao) => {
+        setCarrinho(prevCarrinho => {
+            const novosItems = prevCarrinho.items.map(item => {
+                if (item.productId._id === productId) {
+                    const novaQuantidade =
+                        operacao === 'incrementar'
+                            ? item.quantity + 1
+                            : Math.max(item.quantity - 1, 1); // Não deixa cair pra zero
+                    return { ...item, quantity: novaQuantidade };
+                }
+                return item;
+            });
+
+            return { ...prevCarrinho, items: novosItems };
+        });
+    };
+
+
+
+
+
     if (loading) {
         return <p>Carregando...</p>;
     }
@@ -53,18 +82,36 @@ export default function Carrinho() {
         <div className="container mx-auto p-5">
             <h1 className="text-2xl mb-4">Seu Carrinho</h1>
 
-            {carrinho.items.length === 0 ? (
-                <p>Seu carrinho está vazio.</p>
-            ) : (
-                <ul>
-                    {carrinho.items.map(item => (
-                        <li key={item._id} className="mb-4 border p-3 rounded">
-                            <p>Produto ID: {item.productId}</p>
-                            <p>Quantidade: {item.quantity}</p>
-                        </li>
-                    ))}
-                </ul>
-            )}
+            {carrinho.items.map(item => (
+                <div key={item._id} className="mb-4 border p-10 rounded">
+                    
+                    <p>Produto: {item.productId.nome}</p>
+
+                    <div className='flex-row'>
+
+                        <div className="flex items-center gap-2">
+
+                            <p>Preço: R$ {item.productId.preco}</p>
+
+                            <button
+                                onClick={() => atualizarQuantidade(item.productId._id, 'decrementar')}
+                                className="px-2 py-1 bg-gray-300 rounded"
+                            >
+                                −
+                            </button>
+
+                            <span>{item.quantity}</span>
+
+                            <button
+                                onClick={() => atualizarQuantidade(item.productId._id, 'incrementar')}
+                                className="px-2 py-1 bg-gray-300 rounded"
+                            >
+                                +
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            ))}
 
             <button
                 onClick={() => navigate('/')}

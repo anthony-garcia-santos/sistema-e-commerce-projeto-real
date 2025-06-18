@@ -46,14 +46,15 @@ const LogarUsuario = async (req, res) => {
                 role: usuario.role
             },
             process.env.JWT_SECRET,
-            { expiresIn: process.env.JWT_EXPIRES}
+            { expiresIn: process.env.JWT_EXPIRES }
         );
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'none',
-            maxAge:  24 * 60 * 60 * 1000
+            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+            maxAge: 24 * 60 * 60 * 1000, // 24 horas
         });
+
 
         // Retorna resposta SEM o token no body
 

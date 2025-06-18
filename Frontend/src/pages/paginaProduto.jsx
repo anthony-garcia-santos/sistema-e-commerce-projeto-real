@@ -117,20 +117,11 @@ export default function PaginaProduto() {
 
     const handleAdicionarAoCarrinho = async () => {
         try {
-            const usuario = await verificarUsuarioLogado(); // pega o user logado
-            const userId = usuario._id;
-
-            let existingCart = await buscarCarrinho(userId);
-            if (!existingCart) {
-                existingCart = await createCart(userId);
-            }
-
+            await verificarUsuarioLogado(); // Verifica se usuário está logado
             const produtoId = produto._id;
             const quantidade = 1;
 
-            const updatedCart = await addItem(existingCart._id, produtoId, quantidade);
-
-            setCart(updatedCart);
+            await addItem(produtoId, quantidade);
             alert("Produto adicionado ao carrinho com sucesso!");
 
         } catch (error) {

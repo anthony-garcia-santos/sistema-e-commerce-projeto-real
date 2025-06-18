@@ -24,13 +24,10 @@ const RegistrarUsuario = async (req, res) => {
     }
 
     try {
-
         const novoUsuario = new Usuarios({ nome, email, senha: await bcrypt.hash(senha, 10), role: 'user', });
 
         await novoUsuario.save();
-
         res.status(201).json({ message: "Usuário registrado com sucesso!" });
-
 
     } catch (erro) {
         console.error("Erro ao salvar no MongoDB:", erro);

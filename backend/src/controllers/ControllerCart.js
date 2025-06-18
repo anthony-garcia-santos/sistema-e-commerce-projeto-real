@@ -25,32 +25,37 @@ exports.createCart = async (req, res) => {
 
 exports.AddCart = async (req, res) => {
   try {
-    const { cartId, produtoId, quantidade } = req.body;
+    const userId = req.usuario._id; // Obtém o ID do usuário do token
+    const { produtoId, quantidade } = req.body;
 
-    const produto = await Product.findById(produtoId);
-    if (!produto) {
-      return res.status(404).json({ message: 'Produto não encontrado' });
-    }
-
-    const cart = await Cart.findById(cartId);
+    // Busca ou cria carrinho
+    let cart = await Cart.findOne({ userId });
     if (!cart) {
-      return res.status(404).json({ message: 'Carrinho não encontrado' });
+      cart = new Cart({ userId, items: [] });
     }
 
-    cart.items.push({
-      productId: produto._id,
-      quantity: quantidade
-    });
+    // Adiciona item ao carrinho
+    const existingItem = cart.items.find(item => 
+      item.productId.toString() === produtoId
+    );
+
+    if (existingItem) {
+      existingItem.quantity += quantidade;
+    } else {
+      cart.items.push({
+        productId: produtoId,
+        quantity: quantidade
+      });
+    }
 
     await cart.save();
-
     res.json(cart);
+    
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Erro ao adicionar item no carrinho' });
   }
 };
-
 
 
 

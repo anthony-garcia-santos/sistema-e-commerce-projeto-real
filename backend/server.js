@@ -14,6 +14,7 @@ const userRoutes = require('./src/routes/UserRoutes');
 const ProductRoutes = require('./src/routes/productsRoutes');
 const UploadRoutes = require('./src/routes/UploadRoutes')
 const CartRoutes = require('./src/routes/CartRoutes')
+console.log("CartRoutes carregado com sucesso:", CartRoutes);
 
 
 mongoose.connect(process.env.MONGO_URL)
@@ -21,13 +22,28 @@ mongoose.connect(process.env.MONGO_URL)
   .catch((erro) => console.error("Erro ao conectar ao MongoDB:", erro));
 
 
+  
+const isProd = process.env.NODE_ENV === 'production';
+
+const allowedOrigins = isProd
+  ? ['https://sistema-e-commerce-projeto-real.onrender.com']
+  : ['http://localhost:5173'];
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://sistema-e-commerce-projeto-real.onrender.com'],
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization'],
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
+
+
 
 
 app.use(bodyParser.json());
