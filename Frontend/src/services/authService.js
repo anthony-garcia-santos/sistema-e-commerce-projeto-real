@@ -160,5 +160,4 @@ export const uploadImagem = async (imagem) => {
 };
 
 
-//pagamento
 

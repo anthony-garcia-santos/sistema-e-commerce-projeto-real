@@ -13,6 +13,8 @@ import Carrinho from '../pages/carrinho.jsx';
 import Pagamento from '../pages/pagamento.jsx';
 import PrivateAdminRoutes from './privateRoutes.jsx'; 
 import PrivateUserRoute from './PrivateRoutesUsers.jsx';
+import Pix from '../pages/pix.jsx';
+import Confirmacao from '../pages/Confirmação.jsx';
 
 export default function Rotas() {
 
@@ -25,7 +27,10 @@ export default function Rotas() {
         <Route path="/" element={<Home />} />
         <Route path="/Login" element={<Login />} />
 
-        <Route path='/Pagamento' element={<Pagamento/>} />
+        <Route path='/Confirmacao' element={<PrivateUserRoute> <Confirmacao/> </PrivateUserRoute>} />
+
+        <Route path='/pix' element={<PrivateUserRoute> <Pix/> </PrivateUserRoute>} />
+        <Route path='/Pagamento' element={<PrivateUserRoute> <Pagamento/> </PrivateUserRoute>} />
         <Route path='/carrinho' element={<PrivateUserRoute> <Carrinho /> </PrivateUserRoute>} />
         <Route path="/produto/:id" element={<PaginaProduto />}/>
         <Route path='/admin' element={<PrivateAdminRoutes>< Admin /></PrivateAdminRoutes>} />

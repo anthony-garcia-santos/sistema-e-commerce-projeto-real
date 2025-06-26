@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { PaymentElement, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import api from '/src/services/axios.js';
 
 export default function Pagamento() {
@@ -26,6 +26,12 @@ export default function Pagamento() {
     const [resumoPedido, setResumoPedido] = useState(calcularTotais());
     const [loading, setLoading] = useState(false);
     const [paymentError, setPaymentError] = useState(null);
+    const [formErrors, setFormErrors] = useState({
+        endereco: '',
+        cidade: '',
+        estado: '',
+        cep: ''
+    });
 
     useEffect(() => {
         setResumoPedido(calcularTotais());
@@ -34,7 +40,10 @@ export default function Pagamento() {
     // Verificar se o carrinho está vazio
     useEffect(() => {
         if (carrinho.items.length === 0) {
-            navigate('/carrinho');
+            const savedCart = localStorage.getItem('cart');
+            if (!savedCart) {
+                navigate('/carrinho');
+            }
         }
     }, [carrinho, navigate]);
 
@@ -51,14 +60,54 @@ export default function Pagamento() {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setDadosPagamento(prev => ({ ...prev, [name]: value }));
+
+        // Limpar erro ao modificar o campo
+        if (formErrors[name]) {
+            setFormErrors(prev => ({ ...prev, [name]: '' }));
+        }
     };
 
     const handleMetodoPagamento = (metodo) => {
         setDadosPagamento(prev => ({ ...prev, metodoPagamento: metodo }));
     };
 
+    // Função de validação do formulário
+    const validateForm = () => {
+        const errors = {};
+        let isValid = true;
+
+        if (!dadosPagamento.endereco.trim()) {
+            errors.endereco = 'Endereço é obrigatório';
+            isValid = false;
+        }
+
+        if (!dadosPagamento.cidade.trim()) {
+            errors.cidade = 'Cidade é obrigatória';
+            isValid = false;
+        }
+
+        if (!dadosPagamento.estado.trim()) {
+            errors.estado = 'Estado é obrigatório';
+            isValid = false;
+        }
+
+        if (!/^\d{5}-?\d{3}$/.test(dadosPagamento.cep)) {
+            errors.cep = 'CEP inválido';
+            isValid = false;
+        }
+
+        setFormErrors(errors);
+        return isValid;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Validar formulário antes de enviar
+        if (!validateForm()) {
+            return;
+        }
+
         setLoading(true);
         setPaymentError(null);
 
@@ -73,28 +122,24 @@ export default function Pagamento() {
 
             // 2. Processar pagamento conforme método selecionado
             if (dadosPagamento.metodoPagamento === 'creditCard') {
-                const { error, paymentIntent } = await stripe.confirmPayment({
-                    elements,
-                    clientSecret: data.clientSecret,
-                    confirmParams: {
-                        return_url: `${window.location.origin}/confirmacao`,
-                        payment_method_data: {
-                            billing_details: {
-                                name: dadosPagamento.nomeCartao,
-                                address: {
-                                    line1: dadosPagamento.endereco,
-                                    city: dadosPagamento.cidade,
-                                    state: dadosPagamento.estado,
-                                    postal_code: dadosPagamento.cep
-                                }
+                const cardElement = elements.getElement(CardElement);
+                const { error, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret, {
+                    payment_method: {
+                        card: cardElement,
+                        billing_details: {
+                            name: dadosPagamento.nomeCartao,
+                            address: {
+                                line1: dadosPagamento.endereco,
+                                city: dadosPagamento.cidade,
+                                state: dadosPagamento.estado,
+                                postal_code: dadosPagamento.cep,
                             }
                         }
-                    },
-                    redirect: 'if_required'
+                    }
                 });
 
                 if (error) throw error;
-                
+
                 navigate('/confirmacao', {
                     state: {
                         pedido: {
@@ -105,7 +150,8 @@ export default function Pagamento() {
                         }
                     }
                 });
-            } 
+            }
+
             else if (dadosPagamento.metodoPagamento === 'pix') {
                 navigate('/pix', {
                     state: {
@@ -125,7 +171,18 @@ export default function Pagamento() {
             }
         } catch (error) {
             console.error('Erro no pagamento:', error);
-            setPaymentError(error.message || 'Erro ao processar pagamento');
+
+            // Tratamento detalhado de erros
+            let errorMessage = 'Erro ao processar pagamento';
+            if (error.response?.data?.message) {
+                errorMessage = error.response.data.message;
+            } else if (error.message) {
+                errorMessage = error.message;
+            } else if (error.code) {
+                errorMessage = `Erro Stripe: ${error.code}`;
+            }
+
+            setPaymentError(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -156,7 +213,7 @@ export default function Pagamento() {
                         </div>
 
                         {paymentError && (
-                            <div className="p-4 mb-4 text-red-600 bg-red-100 rounded-md">
+                            <div className="p-4 mb-4 text-red-600 bg-red-100 rounded-md" aria-live="polite">
                                 {paymentError}
                             </div>
                         )}
@@ -235,7 +292,7 @@ export default function Pagamento() {
                             {dadosPagamento.metodoPagamento === 'creditCard' && (
                                 <>
                                     <div className="p-4 bg-white border border-[#e8dace] rounded-md mb-4">
-                                        <CardElement 
+                                        <CardElement
                                             options={{
                                                 style: {
                                                     base: {
@@ -274,11 +331,12 @@ export default function Pagamento() {
                                     <input
                                         name="endereco"
                                         placeholder="Digite seu endereço"
-                                        className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border border-[#e8dace] bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal"
+                                        className={`form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border ${formErrors.endereco ? 'border-red-500' : 'border-[#e8dace]'} bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal`}
                                         value={dadosPagamento.endereco}
                                         onChange={handleChange}
                                         required
                                     />
+                                    {formErrors.endereco && <span className="text-red-500 text-sm mt-1">{formErrors.endereco}</span>}
                                 </label>
                             </div>
                             <div className="flex flex-wrap items-end gap-4 px-4 py-3">
@@ -287,11 +345,12 @@ export default function Pagamento() {
                                     <input
                                         name="cidade"
                                         placeholder="Digite sua cidade"
-                                        className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border border-[#e8dace] bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal"
+                                        className={`form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border ${formErrors.cidade ? 'border-red-500' : 'border-[#e8dace]'} bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal`}
                                         value={dadosPagamento.cidade}
                                         onChange={handleChange}
                                         required
                                     />
+                                    {formErrors.cidade && <span className="text-red-500 text-sm mt-1">{formErrors.cidade}</span>}
                                 </label>
                             </div>
                             <div className="flex flex-wrap items-end gap-4 px-4 py-3">
@@ -300,22 +359,24 @@ export default function Pagamento() {
                                     <input
                                         name="estado"
                                         placeholder="Selecione seu estado"
-                                        className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border border-[#e8dace] bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal"
+                                        className={`form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border ${formErrors.estado ? 'border-red-500' : 'border-[#e8dace]'} bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal`}
                                         value={dadosPagamento.estado}
                                         onChange={handleChange}
                                         required
                                     />
+                                    {formErrors.estado && <span className="text-red-500 text-sm mt-1">{formErrors.estado}</span>}
                                 </label>
                                 <label className="flex flex-col min-w-40 flex-1">
                                     <p className="text-[#1c140d] text-base font-medium leading-normal pb-2">CEP</p>
                                     <input
                                         name="cep"
-                                        placeholder="Digite seu CEP"
-                                        className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border border-[#e8dace] bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal"
+                                        placeholder="Digite seu CEP (ex: 12345678)"
+                                        className={`form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border ${formErrors.cep ? 'border-red-500' : 'border-[#e8dace]'} bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal`}
                                         value={dadosPagamento.cep}
                                         onChange={handleChange}
                                         required
                                     />
+                                    {formErrors.cep && <span className="text-red-500 text-sm mt-1">{formErrors.cep}</span>}
                                 </label>
                             </div>
 
@@ -353,10 +414,18 @@ export default function Pagamento() {
 
                                     <button
                                         type="submit"
-                                        className="flex min-w-[180px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-[#f38124] text-[#1c140d] text-base font-bold leading-normal tracking-[0.015em] transition hover:bg-[#e5721b]"
+                                        className={`flex min-w-[180px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-[#f38124] text-[#1c140d] text-base font-bold leading-normal tracking-[0.015em] transition hover:bg-[#e5721b] ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
                                         disabled={!stripe || loading}
                                     >
-                                        {loading ? 'Processando...' : 'Confirmar Pagamento'}
+                                        {loading ? (
+                                            <div className="flex items-center">
+                                                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                </svg>
+                                                Processando...
+                                            </div>
+                                        ) : 'Confirmar Pagamento'}
                                     </button>
                                 </div>
                             </div>
