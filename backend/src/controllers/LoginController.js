@@ -1,12 +1,9 @@
-//backend/src/controller/LoginController.js
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const Usuarios = require('../models/UserModel');
 
 const LogarUsuario = async (req, res) => {
-
-
     const erros = validationResult(req);
     if (!erros.isEmpty()) {
         return res.status(400).json({
@@ -38,7 +35,6 @@ const LogarUsuario = async (req, res) => {
             });
         }
 
-
         const token = jwt.sign(
             {
                 id: usuario._id,
@@ -48,19 +44,23 @@ const LogarUsuario = async (req, res) => {
             process.env.JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRES }
         );
-        res.cookie('token', token, {
+
+        // Configuração do cookie
+        const cookieOptions = {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
             maxAge: 24 * 60 * 60 * 1000, // 24 horas
-        });
+            path: '/'
+        };
 
+        res.cookie('token', token, cookieOptions);
 
-        // Retorna resposta SEM o token no body
-
+        // Retorna resposta COM o token no body (para flexibilidade)
         return res.status(200).json({
             sucesso: true,
             mensagem: `Bem-vindo, ${usuario.nome}!`,
+            token, // Envia o token no body também
             usuario: {
                 id: usuario._id,
                 nome: usuario.nome,
@@ -68,7 +68,6 @@ const LogarUsuario = async (req, res) => {
                 role: usuario.role
             }
         });
-
 
     } catch (erro) {
         console.error("Erro no login:", erro);
@@ -80,23 +79,20 @@ const LogarUsuario = async (req, res) => {
     }
 };
 
-
-
 const LogoutUsuario = (req, res) => {
-    res.clearCookie('token', {
+    const cookieOptions = {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'none',
+        sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
         path: '/'
-    });
-    res.status(200).json({ message: 'Logout realizado com sucesso' });
+    };
 
-
+    res.clearCookie('token', cookieOptions);
+    
     return res.status(200).json({
         sucesso: true,
         mensagem: 'Logout realizado com sucesso.'
     });
 };
-
 
 module.exports = { LogarUsuario, LogoutUsuario };

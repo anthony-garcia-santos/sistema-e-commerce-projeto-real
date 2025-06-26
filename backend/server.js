@@ -14,6 +14,9 @@ const userRoutes = require('./src/routes/UserRoutes');
 const ProductRoutes = require('./src/routes/productsRoutes');
 const UploadRoutes = require('./src/routes/UploadRoutes')
 const CartRoutes = require('./src/routes/CartRoutes')
+
+const pagamento = require('./src/routes/pagamento')
+
 console.log("CartRoutes carregado com sucesso:", CartRoutes);
 
 
@@ -22,25 +25,32 @@ mongoose.connect(process.env.MONGO_URL)
   .catch((erro) => console.error("Erro ao conectar ao MongoDB:", erro));
 
 
-  
+
+// Substitua a configuração atual do CORS por esta:
+
 const isProd = process.env.NODE_ENV === 'production';
 
 const allowedOrigins = isProd
   ? ['https://sistema-e-commerce-projeto-real.onrender.com']
-  : ['http://localhost:5173'];
+  : ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:3000'];
 
 app.use(cors({
   origin: function (origin, callback) {
+    // Permite requisições sem origem (como mobile apps ou curl requests)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
+
+    // Verifica se a origem está na lista de permitidas ou se é um ambiente de desenvolvimento
+    if (allowedOrigins.includes(origin) || !isProd) {
+      return callback(null, true);
     }
+
+    // Para produção, rejeita origens não listadas
+    callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  optionsSuccessStatus: 200 // Alguns navegadores antigos (IE11) têm problemas com 204
 }));
 
 
@@ -57,11 +67,11 @@ app.use((req, res, next) => {
 });
 
 
-app.use("/api", CartRoutes)
-app.use("/api", UploadRoutes)
+app.use("/api", CartRoutes);
+app.use("/api", UploadRoutes);
 app.use("/api", userRoutes);
 app.use("/api", ProductRoutes);
-
+app.use("/api", pagamento);
 
 
 const port = process.env.PORT;

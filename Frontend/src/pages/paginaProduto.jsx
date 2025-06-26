@@ -285,12 +285,6 @@ export default function PaginaProduto() {
                             ▶
                         </button>
                     </div>
-
-
-
-
-
-
                 </div>
             </div>
         </div>

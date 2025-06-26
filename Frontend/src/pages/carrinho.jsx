@@ -126,7 +126,19 @@ export default function Carrinho() {
                         </div>
 
                         <div className="flex justify-end gap-4 mt-4">
-                            <button className="h-12 px-5 rounded-full bg-[#f28f0d] text-[#1c150d] font-bold cursor-pointer">Finalizar Compra</button>
+                            <button
+                                className="h-12 px-5 rounded-full bg-[#f28f0d] text-[#1c150d] font-bold cursor-pointer"
+                                onClick={() => navigate('/pagamento', {
+                                    state: {
+                                        carrinho: {
+                                            ...carrinho,
+                                            total: calcularTotal()
+                                        }
+                                    }
+                                })}
+                            >
+                                Finalizar Compra
+                            </button>
                         </div>
 
                         <div className="mt-6">
