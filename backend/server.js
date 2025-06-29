@@ -21,20 +21,17 @@ const CartRoutes = require('./src/routes/CartRoutes');
 const pagamento = require('./src/routes/pagamento');
 const isProd = process.env.NODE_ENV === 'production';
 const allowedOrigins = [
-  'https://localhost:5173', // Seu frontend Vite (HTTPS)
-  'http://localhost:5173',  // Versão HTTP caso exista
+  'https://localhost:5173', 
+  'http://localhost:5173',  
   'http://127.0.0.1:5173',
-  'https://api-lolopersonalizado.onrender.com' // pode ser útil também
-  // Alternativa comum
+  'https://sistema-e-commerce-projeto-real.onrender.com'
 ];
 
-// Conexão com MongoDB
 mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log("Conectado ao MongoDB Atlas"))
   .catch((erro) => console.error("Erro ao conectar ao MongoDB:", erro));
 
 
-// Configuração de sessão corrigida:
 
 app.use('/api/webhook', express.raw({ type: 'application/json' }));
 
@@ -50,23 +47,20 @@ app.use(session({
   }
 }));
 
-// Configuração do CORS
 
 
 
 
 app.use(cors({
   origin: allowedOrigins,
-  credentials: true, // Permite cookies/tokens
-  methods: ['GET', 'POST', 'PUT', 'DELETE'] // Métodos permitidos
+  credentials: true, 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'] 
 }));
 
-// Middlewares
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
-// Headers de segurança
 app.use((req, res, next) => {
   res.setHeader(
     "Content-Security-Policy",
@@ -75,14 +69,12 @@ app.use((req, res, next) => {
   next();
 });
 
-// Rotas
 app.use("/api", CartRoutes);
 app.use("/api", UploadRoutes);
 app.use("/api", userRoutes);
 app.use("/api", ProductRoutes);
 app.use("/api", pagamento);
 
-// Inicia o servidor
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}/api`);
