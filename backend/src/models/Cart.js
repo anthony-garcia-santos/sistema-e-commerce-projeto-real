@@ -3,14 +3,14 @@ const mongoose = require ('mongoose');
 const cartSchema = new mongoose.Schema({
   userId: { 
     type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Usuario', // Deve corresponder ao nome do modelo de usuário
+    ref: 'Usuario', 
     required: true,
     index: true
   },
   items: [{
     productId: { 
       type: mongoose.Schema.Types.ObjectId, 
-      ref: 'produto', // Deve corresponder ao nome do modelo de produto
+      ref: 'produto', 
       required: true 
     },
     quantity: { 
@@ -28,5 +28,5 @@ cartSchema.pre('save', function(next) {
   next();
 });
 
-// CORREÇÃO: Exporte como 'Cart' para manter consistência
+
 module.exports = mongoose.model('Cart', cartSchema);

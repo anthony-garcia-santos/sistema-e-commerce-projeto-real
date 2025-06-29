@@ -7,7 +7,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import './index.css/index.css';
 import Rootas from './routes/routes';
 
-// Carrega o Stripe.js com sua chave pública
+
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

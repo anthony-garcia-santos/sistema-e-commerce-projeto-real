@@ -1,4 +1,4 @@
-//backend/src/validators/validatorUsers.js
+
 
 const { body } = require('express-validator');
 

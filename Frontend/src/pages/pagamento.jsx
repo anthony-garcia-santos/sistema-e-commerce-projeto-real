@@ -9,10 +9,10 @@ export default function Pagamento() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Obter dados do carrinho do estado de navegação
+    
     const carrinho = location.state?.carrinho || { items: [] };
 
-    // Calcular totais baseados no carrinho
+    
     const calcularTotais = () => {
         const subtotal = carrinho.items.reduce((total, item) =>
             total + (item.productId.preco * item.quantity), 0);
@@ -37,7 +37,7 @@ export default function Pagamento() {
         setResumoPedido(calcularTotais());
     }, [carrinho]);
 
-    // Verificar se o carrinho está vazio
+    
     useEffect(() => {
         if (carrinho.items.length === 0) {
             const savedCart = localStorage.getItem('cart');
@@ -47,7 +47,7 @@ export default function Pagamento() {
         }
     }, [carrinho, navigate]);
 
-    // Dados do pagamento
+    
     const [dadosPagamento, setDadosPagamento] = useState({
         nomeCartao: '',
         endereco: '',
@@ -61,7 +61,7 @@ export default function Pagamento() {
         const { name, value } = e.target;
         setDadosPagamento(prev => ({ ...prev, [name]: value }));
 
-        // Limpar erro ao modificar o campo
+        
         if (formErrors[name]) {
             setFormErrors(prev => ({ ...prev, [name]: '' }));
         }
@@ -71,7 +71,7 @@ export default function Pagamento() {
         setDadosPagamento(prev => ({ ...prev, metodoPagamento: metodo }));
     };
 
-    // Função de validação do formulário
+    
     const validateForm = () => {
         const errors = {};
         let isValid = true;
@@ -103,7 +103,7 @@ export default function Pagamento() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Validar formulário antes de enviar
+        
         if (!validateForm()) {
             return;
         }
@@ -112,7 +112,7 @@ export default function Pagamento() {
         setPaymentError(null);
 
         try {
-            // 1. Criar payment intent no backend
+            
             const { data } = await api.post('/api/create-payment-intent', {
                 total: resumoPedido.total,
                 metodo: dadosPagamento.metodoPagamento,
@@ -120,7 +120,7 @@ export default function Pagamento() {
                 endereco: dadosPagamento
             });
 
-            // 2. Processar pagamento conforme método selecionado
+            
             if (dadosPagamento.metodoPagamento === 'creditCard') {
                 const cardElement = elements.getElement(CardElement);
                 const { error, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret, {
@@ -166,13 +166,13 @@ export default function Pagamento() {
                 });
             }
             else {
-                // Para PayPal ou outros métodos
+                
                 window.location.href = data.approval_url;
             }
         } catch (error) {
             console.error('Erro no pagamento:', error);
 
-            // Tratamento detalhado de erros
+            
             let errorMessage = 'Erro ao processar pagamento';
             if (error.response?.data?.message) {
                 errorMessage = error.response.data.message;
@@ -222,7 +222,7 @@ export default function Pagamento() {
                         )}
 
                         <form onSubmit={handleSubmit}>
-                            {/* Itens do Pedido */}
+                            {}
                             <h3 className="text-[#1c140d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Itens do Pedido</h3>
 
                             <div className="p-4 bg-white border border-[#e8dace] rounded-md mb-4">
@@ -231,7 +231,7 @@ export default function Pagamento() {
                                         <div className="flex items-center gap-3">
                                             <div
                                                 className="w-12 h-12 bg-cover bg-center rounded"
-                                                style={{ backgroundImage: `url(${item.productId.imagem || 'https://via.placeholder.com/70'})` }}
+                                                style={{ backgroundImage: `url(${item.productId.imagem || 'https:
                                             />
                                             <div>
                                                 <p className="text-[#1c140d] text-sm font-medium">{item.productId.nome}</p>
@@ -245,7 +245,7 @@ export default function Pagamento() {
                                 ))}
                             </div>
 
-                            {/* Método de Pagamento */}
+                            {}
                             <h3 className="text-[#1c140d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Método de Pagamento</h3>
                             <div className="flex flex-col gap-3 p-4">
                                 <label className={`flex items-center gap-4 rounded-lg border border-solid p-[15px] flex-row-reverse 
@@ -294,7 +294,7 @@ export default function Pagamento() {
                                 
 
 
-                                {/* Dados do Cartão (visível apenas se cartão de crédito selecionado) */}
+                                {}
                                 {dadosPagamento.metodoPagamento === 'creditCard' && (
                                     <>
                                         <div className="p-4 bg-white border border-[#e8dace] rounded-md mb-4">
@@ -329,7 +329,7 @@ export default function Pagamento() {
                                     </>
                                 )}
 
-                                {/* Endereço de Cobrança */}
+                                {}
                                 <h3 className="text-[#1c140d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Endereço de Cobrança</h3>
                                 <div className="flex flex-wrap items-end gap-4 px-4 py-3">
                                     <label className="flex flex-col min-w-40 flex-1">
@@ -386,7 +386,7 @@ export default function Pagamento() {
                                     </label>
                                 </div>
 
-                                {/* Resumo do Pedido */}
+                                {}
                                 <h3 className="text-[#1c140d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Resumo do Pedido</h3>
                                 <div className="p-4 bg-white border border-[#e8dace] rounded-md">
                                     <div className="flex justify-between gap-x-6 py-2">
@@ -407,7 +407,7 @@ export default function Pagamento() {
                                     </div>
                                 </div>
 
-                                {/* Botões de Ação */}
+                                {}
                                 <div className="flex justify-stretch mt-6">
                                     <div className="flex flex-1 gap-3 flex-wrap px-4 py-3 justify-between">
                                         <button
@@ -425,7 +425,7 @@ export default function Pagamento() {
                                         >
                                             {loading ? (
                                                 <div className="flex items-center">
-                                                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http:
                                                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                                     </svg>

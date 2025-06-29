@@ -4,7 +4,7 @@ export default function ProductCard({ produto, onClick }) {
       className="rounded-lg  cursor-pointer "
       onClick={onClick}
     >
-      {/* Imagem com tamanho fixo */}
+      {}
       <div className="flex justify-center overflow-hidden transition-transform duration-300 hover:scale-105 active:scale-95">
         <img
           src={produto.imagem}
@@ -13,7 +13,7 @@ export default function ProductCard({ produto, onClick }) {
         />
       </div>
 
-      {/* Conteúdo abaixo da imagem */}
+      {}
       <div className="p-4 space-y-1">
         <h3 className="text-[#1C140D] font-medium text-sm truncate text-[16px]"
           style={{

@@ -1,4 +1,4 @@
-// Verifique o nome exato do arquivo do modelo
+
 import produtoModel from '../models/productmodel.js';
 
 const buscarProduto = async (req, res) => {

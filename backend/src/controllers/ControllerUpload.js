@@ -1,4 +1,4 @@
-const cloudinary = require('../utils/cloudinary');   // <-- caminho certo, com "l"
+const cloudinary = require('../utils/cloudinary');   
 const fs         = require('fs');
 
 const UploadController = async (req, res) => {
@@ -7,7 +7,7 @@ const UploadController = async (req, res) => {
       folder: 'produtos',
     });
 
-    fs.unlinkSync(req.file.path);               // remove temp
+    fs.unlinkSync(req.file.path);               
     res.json({ url: result.secure_url });
   } catch (error) {
     console.error('Erro no upload:', error);

@@ -1,4 +1,4 @@
-// src/pages/pix.jsx
+
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import api from '/src/services/axios.js';
@@ -10,7 +10,7 @@ export default function Pix() {
 
   const [copied, setCopied] = useState(false);
   const [status, setStatus] = useState(null);
-  const [tempoRestante, setTempoRestante] = useState(30 * 60); // 30 minutos em segundos
+  const [tempoRestante, setTempoRestante] = useState(30 * 60); 
 
   const verificarPagamento = async () => {
     try {

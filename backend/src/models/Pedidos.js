@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const pedidoSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario', required: false }, // se quiser permitir guest
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario', required: false }, 
   itens: [{
     nome: String,
     preco: Number,

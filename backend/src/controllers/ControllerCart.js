@@ -25,16 +25,16 @@ exports.createCart = async (req, res) => {
 
 exports.AddCart = async (req, res) => {
   try {
-    const userId = req.usuario._id; // Obtém o ID do usuário do token
+    const userId = req.usuario._id; 
     const { produtoId, quantidade } = req.body;
 
-    // Busca ou cria carrinho
+    
     let cart = await Cart.findOne({ userId });
     if (!cart) {
       cart = new Cart({ userId, items: [] });
     }
 
-    // Adiciona item ao carrinho
+    
     const existingItem = cart.items.find(item =>
       item.productId.toString() === produtoId
     );
@@ -86,12 +86,12 @@ exports.removerItem = async (req, res) => {
     const cart = await Cart.findOne({ userId });
     if (!cart) return res.status(404).json({ message: 'Carrinho não encontrado' });
 
-    // Remove o item do carrinho
+    
     cart.items = cart.items.filter(item => item.productId.toString() !== produtoId);
 
     await cart.save();
 
-    // POPULA o carrinho atualizado com os dados do produto
+    
     const cartAtualizado = await Cart.findOne({ userId }).populate('items.productId');
 
     res.json(cartAtualizado);

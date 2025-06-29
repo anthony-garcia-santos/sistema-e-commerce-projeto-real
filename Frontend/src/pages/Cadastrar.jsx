@@ -1,4 +1,4 @@
-// Front_end/src/pages/Cadastrar.jsx
+
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -38,7 +38,7 @@ export default function Cadastrar() {
 
     return (
 
-        //navbar 
+        
 
         <div
             className="relative flex w-full h-screen flex-col bg-[#fcfaf8] overflow-hidden"
@@ -59,7 +59,7 @@ export default function Cadastrar() {
                 </header>
 
 
-                {/* inputs etc */}
+                {}
 
                 <div className="relative flex flex-1 justify-center py-5 px-4 md:justify-start md:px-40 -top-10">
 
@@ -79,7 +79,7 @@ export default function Cadastrar() {
 
 
 
-                        {/* Name Field */}
+                        {}
                         <div className="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
 
                             <label className="flex flex-col min-w-40 flex-1">
@@ -102,7 +102,7 @@ export default function Cadastrar() {
 
                         </div>
 
-                        {/* Email Field */}
+                        {}
                         <div className="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
 
                             <label className="flex flex-col min-w-40 flex-1">
@@ -125,7 +125,7 @@ export default function Cadastrar() {
                             </label>
                         </div>
 
-                        {/* Password Field */}
+                        {}
                         <div className="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
 
                             <label className="flex flex-col min-w-40 flex-1">
@@ -150,7 +150,7 @@ export default function Cadastrar() {
 
 
 
-                        {/* Submit Button */}
+                        {}
                         <div className="flex px-4 py-3">
 
                             <button
@@ -162,7 +162,7 @@ export default function Cadastrar() {
                             </button>
                         </div>
 
-                        {/* Login Link */}
+                        {}
                         <div className="flex justify-center px-4 py-3">
 
                             <button

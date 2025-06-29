@@ -1,4 +1,4 @@
-// Front_end/src/services/authService.js
+
 
 import api from "/src/services/axios.js";
 
@@ -33,7 +33,7 @@ export const logoutUsuario = () => {
 
 export const obterAdminData = async () => {
   try {
-    // Adicione /api antes da rota
+    
     const response = await api.get("/api/admin", {
       withCredentials: true
     });
@@ -155,7 +155,7 @@ export const removerItemCarrinho = async (produtoId) => {
 export const Pedidos = async () => {
   try {
     const response = await api.get('/api/pedidos', {
-      withCredentials: true  // Isso garante que o cookie de sessão seja enviado
+      withCredentials: true  
     });
     return response.data;
   } catch (error) {
@@ -174,7 +174,7 @@ export const Pedidos = async () => {
 
 
 
-// Front_end/src/services/uploadService.js
+
 
 
 export const uploadImagem = async (imagem) => {
@@ -188,7 +188,7 @@ export const uploadImagem = async (imagem) => {
     },
   });
 
-  return response.data; // { url: 'https://...cloudinary.com/...' }
+  return response.data; 
 };
 
 

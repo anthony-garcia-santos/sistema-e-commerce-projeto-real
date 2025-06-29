@@ -45,22 +45,22 @@ const LogarUsuario = async (req, res) => {
             { expiresIn: process.env.JWT_EXPIRES }
         );
 
-        // Configuração do cookie
+        
         const cookieOptions = {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
-            maxAge: 24 * 60 * 60 * 1000, // 24 horas
+            maxAge: 24 * 60 * 60 * 1000, 
             path: '/'
         };
 
         res.cookie('token', token, cookieOptions);
 
-        // Retorna resposta COM o token no body (para flexibilidade)
+        
         return res.status(200).json({
             sucesso: true,
             mensagem: `Bem-vindo, ${usuario.nome}!`,
-            token, // Envia o token no body também
+            token, 
             usuario: {
                 id: usuario._id,
                 nome: usuario.nome,

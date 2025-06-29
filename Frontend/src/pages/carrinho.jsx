@@ -54,7 +54,7 @@ export default function Carrinho() {
         });
     };
 
-    // ...
+    
 
     const handleRemoverItem = async (produtoId) => {
         try {
@@ -94,7 +94,7 @@ export default function Carrinho() {
                                 <div className="flex items-start gap-4">
                                     <div
                                         className="bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg w-[70px]"
-                                        style={{ backgroundImage: `url(${item.productId.imagem || 'https://via.placeholder.com/70'})` }}
+                                        style={{ backgroundImage: `url(${item.productId.imagem || 'https:
                                     />
                                     <div className="flex flex-col justify-center">
                                         <p className="text-[#1c150d] text-base font-medium">{item.productId.nome}</p>
@@ -114,7 +114,7 @@ export default function Carrinho() {
                                     />
                                     <button onClick={() => atualizarQuantidade(item.productId._id, 'incrementar')} className="h-7 w-7 bg-[#f4eee7] rounded-full flex items-center justify-center">+</button>
 
-                                    {/* NOVO: Botão de remover */}
+                                    {}
                                     <button
                                         onClick={() => handleRemoverItem(item.productId._id)}
                                         className="ml-2 text-red-600 text-sm underline"

@@ -23,7 +23,9 @@ const isProd = process.env.NODE_ENV === 'production';
 const allowedOrigins = [
   'https://localhost:5173', // Seu frontend Vite (HTTPS)
   'http://localhost:5173',  // Versão HTTP caso exista
-  'http://127.0.0.1:5173'   // Alternativa comum
+  'http://127.0.0.1:5173',
+  'https://api-lolopersonalizado.onrender.com' // pode ser útil também
+  // Alternativa comum
 ];
 
 // Conexão com MongoDB

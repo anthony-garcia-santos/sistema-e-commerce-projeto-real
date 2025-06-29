@@ -1,13 +1,19 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import basicSsl from '@vitejs/plugin-basic-ssl'
 
 export default defineConfig(({ command }) => ({
   plugins: [
     react(),
     tailwindcss(),
-    command === 'serve' && basicSsl()  // só no dev
+    command === 'serve' && basicSsl()
   ].filter(Boolean),
+  build: {
+    rollupOptions: {
+      external: ['@stripe/react-stripe-js']
+    }
+  },
   server: {
     host: true,
     port: 5173,

@@ -67,12 +67,12 @@ export default function Home() {
 
     return (
         <div className="w-full min-h-screen">
-            {/* Header com botões */}
+            {}
 
             <div className="w-full bg-white mb-8 border-b border-gray-300 px-4 sm:px-6 lg:px-10 py-2">
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
 
-                    {/* Título */}
+                    {}
                     <h1 className="text-xl font-semibold text-left"
                         style={{
                             fontFamily: "'Be Vietnam Pro', sans-serif",
@@ -81,7 +81,7 @@ export default function Home() {
                         Lolo_Personalizado
                     </h1>
 
-                    {/* Campo de busca e botões */}
+                    {}
                     <div className="flex flex-wrap justify-end items-center gap-3">
                         <div className="relative w-[164px] h-[40px]">
                             <input
@@ -130,7 +130,7 @@ export default function Home() {
 
 
  
-            {/* Conteúdo */}
+            {}
             <div className="flex justify-center mb-5 mt-[-10px]">
                 <div className="relative rounded-2xl overflow-hidden w-full max-w-[955px] aspect-[928/500]">
 
@@ -139,10 +139,10 @@ export default function Home() {
                         className="w-full h-full object-cover"
                     />
 
-                    {/* Degradê por cima da imagem */}
+                    {}
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.1),rgba(0,0,0,0.4))]"></div>
 
-                    {/* Botão centralizado por cima de tudo */}
+                    {}
                     <div className="absolute inset-0 z-30 top-9/12 flex justify-center items-center">
                         <button
                             className="bg-orange-400 text-black font-semibold px-6 py-2 rounded-full shadow-md hover:bg-orange-500 transition cursor-pointer"

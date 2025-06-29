@@ -10,7 +10,7 @@ const PrivateUserRoute = ({ children }) => {
         verificarUsuarioLogado()
             .then(() => setAutorizado(true))
             .catch((err) => {
-                console.error("Erro ao verificar usuário logado:", err); // mostra erro no console
+                console.error("Erro ao verificar usuário logado:", err); 
                 setErro(err?.response?.data?.error || "Erro desconhecido");
                 setAutorizado(false);
             });
@@ -19,7 +19,7 @@ const PrivateUserRoute = ({ children }) => {
     if (autorizado === null) return <div>Carregando verificação do usuário...</div>;
 
     if (!autorizado) {
-        return <Navigate to="/login" replace />; // Retorne APENAS o Navigate
+        return <Navigate to="/login" replace />; 
     }
 
     return children;

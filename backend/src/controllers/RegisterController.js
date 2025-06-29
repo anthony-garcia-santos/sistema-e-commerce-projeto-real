@@ -1,4 +1,4 @@
-//backend/src/controller/RegisterController.js
+
 
 const Usuarios = require('../models/UserModel');
 const bcrypt = require('bcryptjs');
@@ -39,7 +39,7 @@ const RegistrarUsuario = async (req, res) => {
 
 
 
-// Função para listar todos os usuários
+
 const BuscarUsuario = async (req, res) => {
     try {
         const usuarios = await Usuarios.find({}, "-senha");

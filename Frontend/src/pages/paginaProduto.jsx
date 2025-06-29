@@ -19,7 +19,7 @@ export default function PaginaProduto() {
     const [erro, setErro] = useState(null);
     const [cart, setCart] = useState(null);
 
-    // ---------- Primeira lógica de carregamento (já existia) ----------
+    
     useEffect(() => {
         let isMounted = true;
 
@@ -36,7 +36,7 @@ export default function PaginaProduto() {
             catch (err) {
                 if (isMounted) {
                     setErro("erro ao carregar produtos");
-                    setProdutos([]);      // <- aqui
+                    setProdutos([]);      
                 }
 
             } finally {
@@ -51,12 +51,12 @@ export default function PaginaProduto() {
     }, [id]);
 
 
-    // ------------------------------------------------------------------
+    
 
-    // Referência ao container do carrossel
+    
     const scrollRef = useRef(null);
 
-    // Funções para rolar com os botões de seta
+    
     const scrollLeft = () => {
         scrollRef.current?.scrollBy({ left: -250, behavior: 'smooth' });
     };
@@ -64,7 +64,7 @@ export default function PaginaProduto() {
         scrollRef.current?.scrollBy({ left: 200, behavior: 'smooth' });
     };
 
-    // Segundo useEffect: converte scroll vertical em horizontal
+    
     useEffect(() => {
         const container = scrollRef.current;
         if (!container) return;
@@ -117,7 +117,7 @@ export default function PaginaProduto() {
 
     const handleAdicionarAoCarrinho = async () => {
         try {
-            await verificarUsuarioLogado(); // Verifica se usuário está logado
+            await verificarUsuarioLogado(); 
             const produtoId = produto._id;
             const quantidade = 1;
             await addItem(produtoId, quantidade);
@@ -146,13 +146,13 @@ export default function PaginaProduto() {
 
 
             <div className="grid grid-cols-2 items-center px-10 py-[7px] bg-white mb-8 font-semibold border-b border-gray-300">
-                {/* Coluna da esquerda - Título */}
+                {}
                 <h1 className="text-left relative right-8" style={{
                     fontFamily: "'Be Vietnam Pro', sans-serif",
                     lineHeight: '21px',
                 }}> Lolo_Personalizado</h1>
 
-                {/* Coluna da direita - Campo de busca + botão */}
+                {}
                 <div className="flex justify-end items-center gap-5">
                     <button
                         onClick={IrLogin}
@@ -183,7 +183,7 @@ export default function PaginaProduto() {
 
 
 
-            {/* Home/Produto */}
+            {}
             <div className="relative left-40 top-6 p-4 px-10">
                 <button
                     onClick={Home}
@@ -195,12 +195,12 @@ export default function PaginaProduto() {
                 <span className="text-[#1c150d] text-base font-medium leading-normal">Produto</span>
             </div>
 
-            {/* Área Principal */}
+            {}
             <div className="px-10 flex justify-center py-5">
                 <div className="flex flex-col max-w-[960px] flex-1 w-full">
                     <div className="p-4">
                         <div className="flex flex-col md:flex-row gap-6 items-start">
-                            {/* Imagem do Produto */}
+                            {}
                             <div className="w-full md:w-[464px]">
                                 <img
                                     src={produto.imagem}
@@ -209,7 +209,7 @@ export default function PaginaProduto() {
                                 />
                             </div>
 
-                            {/* Detalhes do Produto */}
+                            {}
                             <div className="flex flex-col justify-center gap-4 w-full">
                                 <p className="text-[#9c7849] text-sm font-light">
                                     R$ {produto.preco.toFixed(2)}
@@ -235,7 +235,7 @@ export default function PaginaProduto() {
                     </div>
 
 
-                    {/* Detalhes do Produto */}
+                    {}
                     <div className="px-4">
                         <h2 className="text-[#1c150d] text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-5">
                             Detalhes do Produto
@@ -248,14 +248,14 @@ export default function PaginaProduto() {
 
 
 
-                    {/* Carrossel de Produtos Similares */}
+                    {}
                     <div className="flex items-center px-4 py-6 relative">
-                        {/* Botão Esquerda */}
+                        {}
                         <button onClick={scrollLeft} className="bg-orange-400 hover:bg-orange-500 rounded-full shadow p-3 cursor-pointer z-10">
                             ◀
                         </button>
 
-                        {/* Carrossel */}
+                        {}
                         <div
                             ref={scrollRef}
                             className="overflow-x-auto whitespace-nowrap no-scrollbar snap-x snap-mandatory scroll-smooth mx-1 flex items-center h-[280px]"
@@ -279,7 +279,7 @@ export default function PaginaProduto() {
                             </div>
                         </div>
 
-                        {/* Botão Direita */}
+                        {}
                         <button onClick={scrollRight} className="bg-orange-400 hover:bg-orange-500 rounded-full shadow p-3 cursor-pointer z-10">
                             ▶
                         </button>

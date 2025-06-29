@@ -115,7 +115,7 @@ export default function Admin() {
 
 
 
-                        {/* Campos do Produto */}
+                        {}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-[960px] mx-auto px-4">
                             <div>
                                 <label className="text-[#1c150d] text-base font-medium leading-normal pb-2 block">
@@ -212,7 +212,7 @@ export default function Admin() {
                             </div>
                         </div>
 
-                        {/* Botão de Submit */}
+                        {}
                         <div className="flex px-4 py-3 justify-center">
                             <button
                                 type="submit"
