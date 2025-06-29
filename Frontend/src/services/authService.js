@@ -121,9 +121,9 @@ export const createCart = async (userId, userNome) => {
 
 
 export const addItem = async (produtoId, quantidade) => {
-  const response = await api.post('/api/add-item', { 
-    produtoId, 
-    quantidade 
+  const response = await api.post('/api/add-item', {
+    produtoId,
+    quantidade
   });
   return response.data;
 }
@@ -132,6 +132,38 @@ export const buscarCarrinho = async () => {
   const response = await api.get('/api/cart');
   return response.data;
 };
+
+
+
+export const removerItemCarrinho = async (produtoId) => {
+  const response = await api.post('/api/remover-item', { produtoId });
+  return response.data;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const Pedidos = async () => {
+  try {
+    const response = await api.get('/api/pedidos', {
+      withCredentials: true  // Isso garante que o cookie de sessão seja enviado
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar pedidos:', error);
+    throw error;
+  }
+};
+
 
 
 

@@ -5,6 +5,8 @@ const { verificarUsuario } = require('../validator/verifyUsers')
 
 router.post('/create', cartController.createCart);
 router.post('/add-item', verificarUsuario, cartController.AddCart);
+router.post('/remover-item', verificarUsuario, cartController.removerItem);
+
 router.get('/cart', verificarUsuario, cartController.buscarCarrinho);
 
 module.exports = router;

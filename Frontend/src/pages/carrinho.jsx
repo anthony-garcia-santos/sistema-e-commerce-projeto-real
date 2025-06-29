@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { verificarUsuarioLogado, buscarCarrinho } from '../../src/services/authService';
+import { removerItemCarrinho } from '../../src/services/authService';
 
 export default function Carrinho() {
     const navigate = useNavigate();
@@ -53,6 +54,17 @@ export default function Carrinho() {
         });
     };
 
+    // ...
+
+    const handleRemoverItem = async (produtoId) => {
+        try {
+            const novoCarrinho = await removerItemCarrinho(produtoId);
+            setCarrinho(novoCarrinho);
+        } catch (error) {
+            console.error("Erro ao remover item:", error);
+        }
+    };
+
     const calcularTotal = () => {
         return carrinho.items.reduce((total, item) => total + (item.productId.preco * item.quantity), 0).toFixed(2);
     };
@@ -101,7 +113,16 @@ export default function Carrinho() {
                                         readOnly
                                     />
                                     <button onClick={() => atualizarQuantidade(item.productId._id, 'incrementar')} className="h-7 w-7 bg-[#f4eee7] rounded-full flex items-center justify-center">+</button>
+
+                                    {/* NOVO: Botão de remover */}
+                                    <button
+                                        onClick={() => handleRemoverItem(item.productId._id)}
+                                        className="ml-2 text-red-600 text-sm underline"
+                                    >
+                                        Remover
+                                    </button>
                                 </div>
+
                             </div>
                         ))}
 

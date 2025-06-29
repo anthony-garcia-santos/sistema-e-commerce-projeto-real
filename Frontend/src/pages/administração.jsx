@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { obterAdminData, criarProduto, uploadImagem } from '../services/authService';
+import { obterAdminData, criarProduto, uploadImagem, Pedidos } from '../services/authService';
 
 export default function Admin() {
     const [loading, setLoading] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [pedidos, setPedidos] = useState([]);
 
     const [form, setForm] = useState({
         nome: '',
@@ -16,6 +17,21 @@ export default function Admin() {
 
     const [imagem, setImagem] = useState(null);
     const [url, setUrl] = useState('');
+
+
+    useEffect(() => {
+        const fetchPedidos = async () => {
+            try {
+                const data = await Pedidos();
+                setPedidos(data);
+            } catch (error) {
+                console.error("Erro ao buscar pedidos:", error);
+            }
+        };
+
+        fetchPedidos();
+    }, []);
+
 
     useEffect(() => {
         const verificarAdmin = async () => {
@@ -206,6 +222,25 @@ export default function Admin() {
                                 <span className="truncate">{loading ? "Enviando..." : "Criar Produto"}</span>
                             </button>
                         </div>
+
+
+                        <h2 className="text-xl font-bold">Pedidos Recentes</h2>
+
+                        <ul>
+                            {pedidos.map((pedido) => (
+                                <li key={pedido._id} className="border p-4 my-2 rounded">
+                                    <p><strong>Usuário:</strong> {pedido.userId || 'Visitante'}</p>
+                                    <p><strong>Total:</strong> R$ {pedido.total.toFixed(2)}</p>
+                                    <p><strong>Itens:</strong></p>
+                                    <ul className="ml-4">
+                                        {pedido.itens.map((item, idx) => (
+                                            <li key={idx}>{item.nome} x{item.quantidade}</li>
+                                        ))}
+                                    </ul>
+                                </li>
+                            ))}
+                        </ul>
+
                     </form>
                 </div>
             </div>

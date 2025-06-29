@@ -189,6 +189,9 @@ export default function Pagamento() {
     };
 
     return (
+
+
+
         <div className="relative flex min-h-screen flex-col bg-[#fcfaf8] overflow-x-hidden"
             style={{ fontFamily: "'Plus Jakarta Sans', 'Noto Sans', sans-serif" }}>
             <div className="layout-container flex flex-col flex-1">
@@ -258,7 +261,7 @@ export default function Pagamento() {
                                         <p className="text-[#1c140d] text-sm font-medium leading-normal">Cartão de Crédito</p>
                                     </div>
                                 </label>
-
+                                {/* 
                                 <label className={`flex items-center gap-4 rounded-lg border border-solid p-[15px] flex-row-reverse 
                                     ${dadosPagamento.metodoPagamento === 'pix' ? 'border-[#f38124] bg-[#fef6f0]' : 'border-[#e8dace]'}`}>
                                     <input
@@ -286,149 +289,152 @@ export default function Pagamento() {
                                         <p className="text-[#1c140d] text-sm font-medium leading-normal">PayPal</p>
                                     </div>
                                 </label>
+                                */}
                             </div>
+                                
 
-                            {/* Dados do Cartão (visível apenas se cartão de crédito selecionado) */}
-                            {dadosPagamento.metodoPagamento === 'creditCard' && (
-                                <>
-                                    <div className="p-4 bg-white border border-[#e8dace] rounded-md mb-4">
-                                        <CardElement
-                                            options={{
-                                                style: {
-                                                    base: {
-                                                        fontSize: '16px',
-                                                        color: '#1c140d',
-                                                        '::placeholder': {
-                                                            color: '#9c6f49',
+
+                                {/* Dados do Cartão (visível apenas se cartão de crédito selecionado) */}
+                                {dadosPagamento.metodoPagamento === 'creditCard' && (
+                                    <>
+                                        <div className="p-4 bg-white border border-[#e8dace] rounded-md mb-4">
+                                            <CardElement
+                                                options={{
+                                                    style: {
+                                                        base: {
+                                                            fontSize: '16px',
+                                                            color: '#1c140d',
+                                                            '::placeholder': {
+                                                                color: '#9c6f49',
+                                                            },
                                                         },
                                                     },
-                                                },
-                                            }}
-                                        />
-                                    </div>
-
-                                    <div className="flex flex-wrap items-end gap-4 px-4 py-3">
-                                        <label className="flex flex-col min-w-40 flex-1">
-                                            <p className="text-[#1c140d] text-base font-medium leading-normal pb-2">Nome no Cartão</p>
-                                            <input
-                                                name="nomeCartao"
-                                                placeholder="Digite o nome como aparece no cartão"
-                                                className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border border-[#e8dace] bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal"
-                                                value={dadosPagamento.nomeCartao}
-                                                onChange={handleChange}
-                                                required
+                                                }}
                                             />
-                                        </label>
+                                        </div>
+
+                                        <div className="flex flex-wrap items-end gap-4 px-4 py-3">
+                                            <label className="flex flex-col min-w-40 flex-1">
+                                                <p className="text-[#1c140d] text-base font-medium leading-normal pb-2">Nome no Cartão</p>
+                                                <input
+                                                    name="nomeCartao"
+                                                    placeholder="Digite o nome como aparece no cartão"
+                                                    className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border border-[#e8dace] bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal"
+                                                    value={dadosPagamento.nomeCartao}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                            </label>
+                                        </div>
+                                    </>
+                                )}
+
+                                {/* Endereço de Cobrança */}
+                                <h3 className="text-[#1c140d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Endereço de Cobrança</h3>
+                                <div className="flex flex-wrap items-end gap-4 px-4 py-3">
+                                    <label className="flex flex-col min-w-40 flex-1">
+                                        <p className="text-[#1c140d] text-base font-medium leading-normal pb-2">Endereço</p>
+                                        <input
+                                            name="endereco"
+                                            placeholder="Digite seu endereço"
+                                            className={`form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border ${formErrors.endereco ? 'border-red-500' : 'border-[#e8dace]'} bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal`}
+                                            value={dadosPagamento.endereco}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                        {formErrors.endereco && <span className="text-red-500 text-sm mt-1">{formErrors.endereco}</span>}
+                                    </label>
+                                </div>
+                                <div className="flex flex-wrap items-end gap-4 px-4 py-3">
+                                    <label className="flex flex-col min-w-40 flex-1">
+                                        <p className="text-[#1c140d] text-base font-medium leading-normal pb-2">Cidade</p>
+                                        <input
+                                            name="cidade"
+                                            placeholder="Digite sua cidade"
+                                            className={`form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border ${formErrors.cidade ? 'border-red-500' : 'border-[#e8dace]'} bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal`}
+                                            value={dadosPagamento.cidade}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                        {formErrors.cidade && <span className="text-red-500 text-sm mt-1">{formErrors.cidade}</span>}
+                                    </label>
+                                </div>
+                                <div className="flex flex-wrap items-end gap-4 px-4 py-3">
+                                    <label className="flex flex-col min-w-40 flex-1">
+                                        <p className="text-[#1c140d] text-base font-medium leading-normal pb-2">Estado</p>
+                                        <input
+                                            name="estado"
+                                            placeholder="Selecione seu estado"
+                                            className={`form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border ${formErrors.estado ? 'border-red-500' : 'border-[#e8dace]'} bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal`}
+                                            value={dadosPagamento.estado}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                        {formErrors.estado && <span className="text-red-500 text-sm mt-1">{formErrors.estado}</span>}
+                                    </label>
+                                    <label className="flex flex-col min-w-40 flex-1">
+                                        <p className="text-[#1c140d] text-base font-medium leading-normal pb-2">CEP</p>
+                                        <input
+                                            name="cep"
+                                            placeholder="Digite seu CEP (ex: 12345678)"
+                                            className={`form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border ${formErrors.cep ? 'border-red-500' : 'border-[#e8dace]'} bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal`}
+                                            value={dadosPagamento.cep}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                        {formErrors.cep && <span className="text-red-500 text-sm mt-1">{formErrors.cep}</span>}
+                                    </label>
+                                </div>
+
+                                {/* Resumo do Pedido */}
+                                <h3 className="text-[#1c140d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Resumo do Pedido</h3>
+                                <div className="p-4 bg-white border border-[#e8dace] rounded-md">
+                                    <div className="flex justify-between gap-x-6 py-2">
+                                        <p className="text-[#9c6f49] text-sm font-normal leading-normal">Subtotal</p>
+                                        <p className="text-[#1c140d] text-sm font-normal leading-normal text-right">R$ {resumoPedido.subtotal.toFixed(2)}</p>
                                     </div>
-                                </>
-                            )}
+                                    <div className="flex justify-between gap-x-6 py-2">
+                                        <p className="text-[#9c6f49] text-sm font-normal leading-normal">Frete</p>
+                                        <p className="text-[#1c140d] text-sm font-normal leading-normal text-right">R$ {resumoPedido.frete.toFixed(2)}</p>
+                                    </div>
+                                    <div className="flex justify-between gap-x-6 py-2">
+                                        <p className="text-[#9c6f49] text-sm font-normal leading-normal">Taxas</p>
+                                        <p className="text-[#1c140d] text-sm font-normal leading-normal text-right">R$ {resumoPedido.taxas.toFixed(2)}</p>
+                                    </div>
+                                    <div className="flex justify-between gap-x-6 pt-2 border-t border-[#e8dace] mt-2">
+                                        <p className="text-[#1c140d] text-base font-bold leading-normal">Total</p>
+                                        <p className="text-[#1c140d] text-base font-bold leading-normal text-right">R$ {resumoPedido.total.toFixed(2)}</p>
+                                    </div>
+                                </div>
 
-                            {/* Endereço de Cobrança */}
-                            <h3 className="text-[#1c140d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Endereço de Cobrança</h3>
-                            <div className="flex flex-wrap items-end gap-4 px-4 py-3">
-                                <label className="flex flex-col min-w-40 flex-1">
-                                    <p className="text-[#1c140d] text-base font-medium leading-normal pb-2">Endereço</p>
-                                    <input
-                                        name="endereco"
-                                        placeholder="Digite seu endereço"
-                                        className={`form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border ${formErrors.endereco ? 'border-red-500' : 'border-[#e8dace]'} bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal`}
-                                        value={dadosPagamento.endereco}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                    {formErrors.endereco && <span className="text-red-500 text-sm mt-1">{formErrors.endereco}</span>}
-                                </label>
-                            </div>
-                            <div className="flex flex-wrap items-end gap-4 px-4 py-3">
-                                <label className="flex flex-col min-w-40 flex-1">
-                                    <p className="text-[#1c140d] text-base font-medium leading-normal pb-2">Cidade</p>
-                                    <input
-                                        name="cidade"
-                                        placeholder="Digite sua cidade"
-                                        className={`form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border ${formErrors.cidade ? 'border-red-500' : 'border-[#e8dace]'} bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal`}
-                                        value={dadosPagamento.cidade}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                    {formErrors.cidade && <span className="text-red-500 text-sm mt-1">{formErrors.cidade}</span>}
-                                </label>
-                            </div>
-                            <div className="flex flex-wrap items-end gap-4 px-4 py-3">
-                                <label className="flex flex-col min-w-40 flex-1">
-                                    <p className="text-[#1c140d] text-base font-medium leading-normal pb-2">Estado</p>
-                                    <input
-                                        name="estado"
-                                        placeholder="Selecione seu estado"
-                                        className={`form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border ${formErrors.estado ? 'border-red-500' : 'border-[#e8dace]'} bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal`}
-                                        value={dadosPagamento.estado}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                    {formErrors.estado && <span className="text-red-500 text-sm mt-1">{formErrors.estado}</span>}
-                                </label>
-                                <label className="flex flex-col min-w-40 flex-1">
-                                    <p className="text-[#1c140d] text-base font-medium leading-normal pb-2">CEP</p>
-                                    <input
-                                        name="cep"
-                                        placeholder="Digite seu CEP (ex: 12345678)"
-                                        className={`form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#1c140d] focus:outline-0 focus:ring-0 border ${formErrors.cep ? 'border-red-500' : 'border-[#e8dace]'} bg-[#fcfaf8] focus:border-[#f38124] h-14 placeholder:text-[#9c6f49] p-[15px] text-base font-normal leading-normal`}
-                                        value={dadosPagamento.cep}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                    {formErrors.cep && <span className="text-red-500 text-sm mt-1">{formErrors.cep}</span>}
-                                </label>
-                            </div>
+                                {/* Botões de Ação */}
+                                <div className="flex justify-stretch mt-6">
+                                    <div className="flex flex-1 gap-3 flex-wrap px-4 py-3 justify-between">
+                                        <button
+                                            type="button"
+                                            className="flex min-w-[120px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-[#f4ede7] text-[#1c140d] text-base font-bold leading-normal tracking-[0.015em] transition hover:bg-[#e8dace]"
+                                            onClick={() => navigate(-1)}
+                                        >
+                                            <span className="truncate">Voltar</span>
+                                        </button>
 
-                            {/* Resumo do Pedido */}
-                            <h3 className="text-[#1c140d] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Resumo do Pedido</h3>
-                            <div className="p-4 bg-white border border-[#e8dace] rounded-md">
-                                <div className="flex justify-between gap-x-6 py-2">
-                                    <p className="text-[#9c6f49] text-sm font-normal leading-normal">Subtotal</p>
-                                    <p className="text-[#1c140d] text-sm font-normal leading-normal text-right">R$ {resumoPedido.subtotal.toFixed(2)}</p>
+                                        <button
+                                            type="submit"
+                                            className={`flex min-w-[180px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-[#f38124] text-[#1c140d] text-base font-bold leading-normal tracking-[0.015em] transition hover:bg-[#e5721b] ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                                            disabled={!stripe || loading}
+                                        >
+                                            {loading ? (
+                                                <div className="flex items-center">
+                                                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                    </svg>
+                                                    Processando...
+                                                </div>
+                                            ) : 'Confirmar Pagamento'}
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className="flex justify-between gap-x-6 py-2">
-                                    <p className="text-[#9c6f49] text-sm font-normal leading-normal">Frete</p>
-                                    <p className="text-[#1c140d] text-sm font-normal leading-normal text-right">R$ {resumoPedido.frete.toFixed(2)}</p>
-                                </div>
-                                <div className="flex justify-between gap-x-6 py-2">
-                                    <p className="text-[#9c6f49] text-sm font-normal leading-normal">Taxas</p>
-                                    <p className="text-[#1c140d] text-sm font-normal leading-normal text-right">R$ {resumoPedido.taxas.toFixed(2)}</p>
-                                </div>
-                                <div className="flex justify-between gap-x-6 pt-2 border-t border-[#e8dace] mt-2">
-                                    <p className="text-[#1c140d] text-base font-bold leading-normal">Total</p>
-                                    <p className="text-[#1c140d] text-base font-bold leading-normal text-right">R$ {resumoPedido.total.toFixed(2)}</p>
-                                </div>
-                            </div>
-
-                            {/* Botões de Ação */}
-                            <div className="flex justify-stretch mt-6">
-                                <div className="flex flex-1 gap-3 flex-wrap px-4 py-3 justify-between">
-                                    <button
-                                        type="button"
-                                        className="flex min-w-[120px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-[#f4ede7] text-[#1c140d] text-base font-bold leading-normal tracking-[0.015em] transition hover:bg-[#e8dace]"
-                                        onClick={() => navigate(-1)}
-                                    >
-                                        <span className="truncate">Voltar</span>
-                                    </button>
-
-                                    <button
-                                        type="submit"
-                                        className={`flex min-w-[180px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-[#f38124] text-[#1c140d] text-base font-bold leading-normal tracking-[0.015em] transition hover:bg-[#e5721b] ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
-                                        disabled={!stripe || loading}
-                                    >
-                                        {loading ? (
-                                            <div className="flex items-center">
-                                                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                                </svg>
-                                                Processando...
-                                            </div>
-                                        ) : 'Confirmar Pagamento'}
-                                    </button>
-                                </div>
-                            </div>
                         </form>
                     </div>
                 </main>

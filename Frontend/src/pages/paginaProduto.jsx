@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import ProductCard from '../Components/ComponentCard';
 import { useNavigate } from 'react-router-dom';
-import { produtoId, listarProdutos, verificarUsuarioLogado, createCart, addItem, buscarCarrinho } from '../../src/services/authService';
+import { produtoId, listarProdutos, verificarUsuarioLogado, createCart, addItem,} from '../../src/services/authService';
 import '../index.css/index.css'
 import carrinhoIMG from '../index.css/assets/carrinho.svg'
 
@@ -120,7 +120,6 @@ export default function PaginaProduto() {
             await verificarUsuarioLogado(); // Verifica se usuário está logado
             const produtoId = produto._id;
             const quantidade = 1;
-
             await addItem(produtoId, quantidade);
             alert("Produto adicionado ao carrinho com sucesso!");
 

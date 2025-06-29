@@ -35,7 +35,7 @@ exports.AddCart = async (req, res) => {
     }
 
     // Adiciona item ao carrinho
-    const existingItem = cart.items.find(item => 
+    const existingItem = cart.items.find(item =>
       item.productId.toString() === produtoId
     );
 
@@ -50,7 +50,7 @@ exports.AddCart = async (req, res) => {
 
     await cart.save();
     res.json(cart);
-    
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Erro ao adicionar item no carrinho' });
@@ -75,3 +75,29 @@ exports.buscarCarrinho = async (req, res) => {
     res.status(500).json({ message: 'Erro ao buscar carrinho' });
   }
 };
+
+
+
+exports.removerItem = async (req, res) => {
+  try {
+    const userId = req.usuario._id;
+    const { produtoId } = req.body;
+
+    const cart = await Cart.findOne({ userId });
+    if (!cart) return res.status(404).json({ message: 'Carrinho não encontrado' });
+
+    // Remove o item do carrinho
+    cart.items = cart.items.filter(item => item.productId.toString() !== produtoId);
+
+    await cart.save();
+
+    // POPULA o carrinho atualizado com os dados do produto
+    const cartAtualizado = await Cart.findOne({ userId }).populate('items.productId');
+
+    res.json(cartAtualizado);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erro ao remover item do carrinho' });
+  }
+};
+

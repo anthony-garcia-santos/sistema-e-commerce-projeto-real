@@ -1,15 +1,14 @@
-import Stripe from 'stripe';
+const Stripe = require('stripe');
+const Pedido = require('../models/Pedidos');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2022-11-15',
 });
 
-// Criar payment intent
-exports.criarPaymentIntent = async (req, res) => {
+const criarPaymentIntent = async (req, res) => {
   try {
     const { total, metodo, itens, endereco } = req.body;
 
-    // Validações básicas
     if (!total || isNaN(total) || total <= 0) {
       return res.status(400).json({ error: 'Total inválido' });
     }
@@ -18,10 +17,8 @@ exports.criarPaymentIntent = async (req, res) => {
       return res.status(400).json({ error: 'Carrinho vazio' });
     }
 
-    // Converter para centavos (valor inteiro)
     const amount = Math.round(parseFloat(total) * 100);
 
-    // Montar metadata, cuidado com campos undefined
     const itensMetadata = itens.map(item => ({
       id: item.productId?._id || 'undefined',
       nome: item.productId?.nome || 'undefined',
@@ -37,36 +34,25 @@ exports.criarPaymentIntent = async (req, res) => {
         itens: JSON.stringify(itensMetadata),
         endereco: JSON.stringify(endereco)
       },
-      payment_method_types: [] // será definido abaixo
+      payment_method_types: []
     };
 
-    // Definir payment_method_types conforme método
     if (metodo === 'creditCard') {
       params.payment_method_types = ['card'];
-      // REMOVIDO: params.confirm = true;  // Confirmar separadamente no front
-    }
-    else if (metodo === 'pix') {
-      // ATENÇÃO: PIX pode não estar disponível em todas contas
+    } else if (metodo === 'pix') {
       params.payment_method_types = ['pix'];
       params.payment_method_options = {
-        pix: { expires_after_seconds: 60 * 30 } // 30 minutos
+        pix: { expires_after_seconds: 60 * 30 }
       };
-    }
-    else if (metodo === 'paypal') {
-      // PAYPAL não é nativo do Stripe, normalmente usa outro fluxo
-      // Aqui só como placeholder (provavelmente vai falhar)
+    } else if (metodo === 'paypal') {
       params.payment_method_types = ['paypal'];
-    }
-    else {
+    } else {
       return res.status(400).json({ error: 'Método de pagamento inválido' });
     }
 
-    // Criar Payment Intent
     const paymentIntent = await stripe.paymentIntents.create(params);
 
-    // Resposta específica por método
     if (metodo === 'pix') {
-      // Confirmar para gerar QR code
       const confirmedIntent = await stripe.paymentIntents.confirm(
         paymentIntent.id,
         { payment_method: 'pix' }
@@ -79,7 +65,6 @@ exports.criarPaymentIntent = async (req, res) => {
         expires_at: confirmedIntent.next_action?.pix_display_qr_code?.expires_at
       });
     } else {
-      // Para cartão, devolve clientSecret para front confirmar
       return res.json({
         clientSecret: paymentIntent.client_secret,
         paymentIntentId: paymentIntent.id
@@ -87,8 +72,6 @@ exports.criarPaymentIntent = async (req, res) => {
     }
   } catch (error) {
     console.error('Erro no pagamento:', error);
-    console.error(error.stack);
-
 
     let userMessage = 'Erro ao processar pagamento';
     if (error.code === 'amount_too_small') {
@@ -104,9 +87,7 @@ exports.criarPaymentIntent = async (req, res) => {
   }
 };
 
-
-// Verificar status do pagamento
-exports.verificarStatusPagamento = async (req, res) => {
+const verificarStatusPagamento = async (req, res) => {
   try {
     const { id } = req.params;
     const paymentIntent = await stripe.paymentIntents.retrieve(id);
@@ -136,14 +117,11 @@ exports.verificarStatusPagamento = async (req, res) => {
   }
 };
 
-
-// Webhook handler
-exports.handleWebhook = async (req, res) => {
+const handleWebhook = async (req, res) => {
   const sig = req.headers['stripe-signature'];
   let event;
 
   try {
-    // Use req.rawBody (express.raw middleware obrigatório!)
     event = stripe.webhooks.constructEvent(
       req.rawBody,
       sig,
@@ -154,20 +132,60 @@ exports.handleWebhook = async (req, res) => {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  // Processa eventos
   switch (event.type) {
-    case 'payment_intent.succeeded':
-      console.log(`Pagamento ${event.data.object.id} bem-sucedido!`);
+    case 'payment_intent.succeeded': {
+      const data = event.data.object;
+
+      try {
+        const userId = data.metadata?.userId || null;
+        const itens = JSON.parse(data.metadata?.itens || '[]');
+        const endereco = JSON.parse(data.metadata?.endereco || '{}');
+        const metodo = data.payment_method_types?.[0] || 'desconhecido';
+
+        if (!itens.length) {
+          console.warn(`⚠️ Nenhum item no pedido Stripe ID: ${data.id}`);
+          break;
+        }
+
+        await Pedido.create({
+          userId: userId !== 'guest' ? userId : null,
+          itens: itens.map(item => ({
+            nome: item.nome,
+            preco: item.preco,
+            quantidade: item.quantidade,
+            productId: item.id
+          })),
+          total: data.amount / 100,
+          endereco,
+          metodoPagamento: metodo,
+          status: 'pago'
+        });
+
+        console.log(`✅ Pedido salvo com sucesso (Stripe ID: ${data.id})`);
+      } catch (err) {
+        console.error(`❌ Erro ao salvar pedido:`, err);
+      }
+
       break;
+    }
+
     case 'payment_intent.payment_failed':
-      console.log(`Pagamento ${event.data.object.id} falhou. Razão: ${event.data.object.last_payment_error?.message}`);
+      console.log(`❌ Pagamento ${event.data.object.id} falhou.`);
       break;
+
     case 'payment_intent.created':
-      console.log(`Novo pagamento criado: ${event.data.object.id}`);
+      console.log(`ℹ️ Novo pagamento criado: ${event.data.object.id}`);
       break;
+
     default:
-      console.log(`Evento não tratado: ${event.type}`);
+      console.log(`📌 Evento Stripe não tratado: ${event.type}`);
   }
 
   res.json({ received: true });
+};
+
+module.exports = {
+  criarPaymentIntent,
+  verificarStatusPagamento,
+  handleWebhook
 };
