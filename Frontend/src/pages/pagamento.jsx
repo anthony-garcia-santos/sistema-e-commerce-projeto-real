@@ -229,13 +229,15 @@ export default function Pagamento() {
                                 {carrinho.items.map(item => (
                                     <div key={item._id} className="flex justify-between py-2 border-b border-[#e8dace] last:border-b-0">
                                         <div className="flex items-center gap-3">
-                                            <div
-                                                className="w-12 h-12 bg-cover bg-center rounded"
-                                                style={{
-                                                    backgroundImage: `url(${item.productId.imagem || 'https://imgur.com/algumaImagem.png'})`
-                                                }}
 
+
+                                            <div
+                                                className="bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg w-[70px]"
+                                                style={{
+                                                    backgroundImage: `url(${item.productId.imagem || 'https://via.placeholder.com/150'})`
+                                                }}
                                             />
+
                                             <div>
                                                 <p className="text-[#1c140d] text-sm font-medium">{item.productId.nome}</p>
                                                 <p className="text-[#9c6f49] text-xs">Quantidade: {item.quantity}</p>
