@@ -1,19 +1,18 @@
-
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import basicSsl from '@vitejs/plugin-basic-ssl'
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [
     react(),
     tailwindcss(),
-    basicSsl()
-  ],
+    command === 'serve' && basicSsl()  // só no dev
+  ].filter(Boolean),
   server: {
     host: true,
     port: 5173,
-    open: true, 
+    open: true,
     https: false
   }
-})
+}))
