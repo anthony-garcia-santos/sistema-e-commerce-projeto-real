@@ -9,10 +9,8 @@ export default defineConfig(({ command }) => ({
     tailwindcss(),
     command === 'serve' && basicSsl()
   ].filter(Boolean),
-  build: {
-    rollupOptions: {
-      external: ['@stripe/react-stripe-js']
-    }
+  optimizeDeps: {
+    include: ['@stripe/react-stripe-js', '@stripe/stripe-js']
   },
   server: {
     host: true,
