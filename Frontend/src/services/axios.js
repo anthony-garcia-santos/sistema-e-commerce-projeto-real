@@ -3,9 +3,9 @@ import axios from "axios";
 let baseURL;
 
 if (import.meta.env.MODE === 'development') {
-  baseURL = 'http:
+  baseURL = 'http://localhost:3000';
 } else {
-  baseURL = import.meta.env.VITE_API_URL || 'https:
+  baseURL = import.meta.env.VITE_API_URL || 'https://api-lolopersonalizado.onrender.com';
 }
 
 baseURL = baseURL.replace(/\/api$/, '');
