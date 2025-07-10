@@ -69,6 +69,7 @@ app.use("/api", userRoutes);
 app.use("/api", ProductRoutes);
 app.use("/api", pagamento);
 
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}/api`);

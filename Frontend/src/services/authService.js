@@ -33,7 +33,7 @@ export const logoutUsuario = () => {
 
 export const obterAdminData = async () => {
   try {
-    
+
     const response = await api.get("/api/admin", {
       withCredentials: true
     });
@@ -155,16 +155,40 @@ export const removerItemCarrinho = async (produtoId) => {
 export const Pedidos = async () => {
   try {
     const response = await api.get('/api/pedidos', {
-      withCredentials: true  
+      withCredentials: true
     });
-    return response.data;
+    return response.data || [];
   } catch (error) {
     console.error('Erro ao buscar pedidos:', error);
-    throw error;
+    return [];
   }
 };
 
+export const listarPagamento = async () => {
 
+  try {
+
+    const response = await api.get('/api/listarPagamento', {
+      withCredentials: true
+    });
+
+
+    return response.data || [];
+
+
+  } catch (error) {
+
+
+
+
+    console.error('Erro ao buscar pedidos:', error);
+    throw error; 
+
+  }
+
+
+
+}
 
 
 
@@ -188,7 +212,7 @@ export const uploadImagem = async (imagem) => {
     },
   });
 
-  return response.data; 
+  return response.data;
 };
 
 

@@ -94,7 +94,7 @@ export default function Carrinho() {
                                 <div className="flex items-start gap-4">
                                     <div
                                         className="bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg w-[70px]"
-                                        style={{ backgroundImage: `url(${item.productId.imagem || 'https://via.placeholder.com/150'})` }}
+                                        style={{ backgroundImage: `url(${item.productId.imagem})`}}
                                     />
                                     <div className="flex flex-col justify-center">
                                         <p className="text-[#1c150d] text-base font-medium">{item.productId.nome}</p>

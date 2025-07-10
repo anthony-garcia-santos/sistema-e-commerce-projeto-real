@@ -3,9 +3,9 @@ import axios from "axios";
 let baseURL;
 
 if (import.meta.env.MODE === 'development') {
-  baseURL = 'http://localhost:3000/api';
+  baseURL = 'http://localhost:3000';
 } else {
-  baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+  baseURL = import.meta.env.VITE_API_URL
 }
 
 baseURL = baseURL.replace(/\/api$/, '');
