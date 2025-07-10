@@ -38,7 +38,7 @@ export default function Cadastrar() {
 
     return (
 
-        
+
 
         <div
             className="relative flex w-full h-screen flex-col bg-[#fcfaf8] overflow-hidden"
@@ -59,7 +59,7 @@ export default function Cadastrar() {
                 </header>
 
 
-                {}
+                { }
 
                 <div className="relative flex flex-1 justify-center py-5 px-4 md:justify-start md:px-40 -top-10">
 
@@ -67,26 +67,26 @@ export default function Cadastrar() {
 
                         <h1 className="text-[#1c150d] tracking-light text-[32px] font-bold leading-tight px-4 text-center pb-3 pt-6">
 
-                            Let's get to know you
+                            Vamos conhecer você
 
                         </h1>
 
                         <p className="text-[#1c150d] text-base font-normal leading-normal pb-3 pt-1 px-4 text-center">
 
-                            We will use this information to personalize your experience
+                            Usaremos essas informações para personalizar sua experiência
 
                         </p>
 
 
 
-                        {}
+                        { }
                         <div className="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
 
                             <label className="flex flex-col min-w-40 flex-1">
 
                                 <p className="text-[#1c150d] text-base font-medium leading-normal pb-2">
 
-                                    Full name
+                                    Nome todo
 
                                 </p>
 
@@ -102,7 +102,7 @@ export default function Cadastrar() {
 
                         </div>
 
-                        {}
+                        { }
                         <div className="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
 
                             <label className="flex flex-col min-w-40 flex-1">
@@ -125,14 +125,14 @@ export default function Cadastrar() {
                             </label>
                         </div>
 
-                        {}
+                        { }
                         <div className="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
 
                             <label className="flex flex-col min-w-40 flex-1">
 
                                 <p className="text-[#1c150d] text-base font-medium leading-normal pb-2">
 
-                                    Password
+                                    Senha
 
                                 </p>
 
@@ -150,7 +150,7 @@ export default function Cadastrar() {
 
 
 
-                        {}
+                        { }
                         <div className="flex px-4 py-3">
 
                             <button
@@ -158,11 +158,11 @@ export default function Cadastrar() {
                                 disabled={loading}
                                 className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 flex-1 bg-[#f28f0d] text-[#1c150d] text-sm font-bold leading-normal tracking-[0.015em]"
                             >
-                                <span className="truncate">{loading ? "Creating account..." : "Continue"}</span>
+                                <span className="truncate">{loading ? "Creating account..." : "Cadastrar-se"}</span>
                             </button>
                         </div>
 
-                        {}
+                        { }
                         <div className="flex justify-center px-4 py-3">
 
                             <button
@@ -170,7 +170,7 @@ export default function Cadastrar() {
                                 onClick={() => navigate("/login")}
                                 className="text-[#1c150d] text-sm font-medium underline cursor-pointer hover:text-[#f28f0d] "
                             >
-                                Already have an account? Login
+                                Já tem uma conta? Entrar
 
                             </button>
 

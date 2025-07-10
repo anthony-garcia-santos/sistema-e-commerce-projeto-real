@@ -42,8 +42,14 @@ export default function Login() {
         <div className="min-h-screen bg-[#fcfaf8]" style={{ fontFamily: '"Be Vietnam Pro", "Noto Sans", sans-serif' }}>
             <div className="max-w-md mx-auto py-10 px-4">
                 <header className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-[#1c150d] mb-2">Welcome back</h1>
-                    <p className="text-[#1c150d]">Sign in to your account</p>
+                    <h1 className="text-3xl font-bold text-[#1c150d] mb-2">Bem vindo</h1>
+
+                    <p className="text-[#1c150d]">
+                        
+                        Entre na sua conta
+
+                    </p>
+
                 </header>
 
                 {erro && (
@@ -66,7 +72,7 @@ export default function Login() {
                     </div>
 
                     <div>
-                        <label className="block text-[#1c150d] font-medium mb-2">Password</label>
+                        <label className="block text-[#1c150d] font-medium mb-2">Senha</label>
                         <input
                             type="password"
                             placeholder="Your password"
@@ -91,7 +97,7 @@ export default function Login() {
                             onClick={() => navigate("/cadastrar")}
                             className="text-[#1c150d] text-sm underline hover:text-[#f28f0d] cursor-pointer"
                         >
-                            Create account
+                            Criar conta
                         </button>
 
                         <button
@@ -99,7 +105,7 @@ export default function Login() {
                             onClick={() => navigate("/")}
                             className="text-[#1c150d] text-sm underline hover:text-[#f28f0d] cursor-pointer "
                         >
-                            Back to home
+                            Voltar para Home
                         </button>
                     </div>
                 </form>
