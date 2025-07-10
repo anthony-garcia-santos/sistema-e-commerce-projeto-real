@@ -87,7 +87,7 @@ export default function Home() {
                             <input
                                 className="w-full h-full pl-8 pr-2 rounded-[6px] text-[12px] bg-[#F5EDE8] text-[#9C784A] font-normal text-center"
                                 type="text"
-                                placeholder="Search"
+                                placeholder="Pesquisar"
                                 style={{
                                     fontFamily: "'Be Vietnam Pro', sans-serif",
                                     lineHeight: '21px',
@@ -115,7 +115,7 @@ export default function Home() {
                                 lineHeight: '21px',
                             }}
                         >
-                            Log in
+                            Logar-se
                         </button>
 
                         <button
@@ -148,7 +148,7 @@ export default function Home() {
                             className="bg-orange-400 text-black font-semibold px-6 py-2 rounded-full shadow-md hover:bg-orange-500 transition cursor-pointer"
                             onClick={IrCadastro}
                         >
-                            Get started
+                            Criar conta
                         </button>
                     </div>
 

@@ -317,7 +317,7 @@ export default function Admin() {
                                                         </h3>
                                                         {pagamento.enderecoEntrega ? (
                                                             <div className="space-y-1 text-sm">
-                                                                <p>{pagamento.enderecoEntrega.rua}, {pagamento.enderecoEntrega.numero}</p>
+                                                                <p>{pagamento.enderecoEntrega.rua} {pagamento.enderecoEntrega.numero}</p>
                                                                 <p>{pagamento.enderecoEntrega.bairro}</p>
                                                                 <p>{pagamento.enderecoEntrega.cidade} - {pagamento.enderecoEntrega.estado}</p>
                                                                 <p>CEP: {pagamento.enderecoEntrega.cep}</p>
@@ -331,17 +331,7 @@ export default function Admin() {
                                                 {/* Rodapé com detalhes adicionais */}
                                                 <div className="p-4 bg-gray-50 border-t">
                                                     <div className="flex flex-wrap gap-4 text-sm">
-                                                        <div className="flex items-center gap-2">
-                                                            <span className={`inline-block w-2 h-2 rounded-full ${verification.cvc_check === 'pass' ? 'bg-red-500' : 'bg-green-500'
-                                                                }`}></span>
-                                                            <span>Verificação CVC: {verification.cvc_check === 'pass' ? 'Falhou' : 'Aprovada'}</span>
-                                                        </div>
 
-                                                        <div className="flex items-center gap-2">
-                                                            <span className={`inline-block w-2 h-2 rounded-full ${verification.avs_check === 'pass' ? 'bg-red-500' : 'bg-green-500'
-                                                                }`}></span>
-                                                            <span>Verificação Endereço: {verification.avs_check === 'pass' ? 'Falhou' : 'Aprovada'}</span>
-                                                        </div>
 
                                                         <div className="flex items-center gap-2">
                                                             <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
